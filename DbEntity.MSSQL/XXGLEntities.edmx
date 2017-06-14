@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="XXGLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Languages">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="ID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LnkOperationsLanguages">
+          <Key>
+            <PropertyRef Name="OperationsUnqiueID" />
+            <PropertyRef Name="LanguagesUniqueID" />
+          </Key>
+          <Property Name="OperationsUnqiueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="LanguagesUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Descrrption" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="LnkRolesWebFunctions">
+          <Key>
+            <PropertyRef Name="RolesUniqueID" />
+            <PropertyRef Name="WebFunctionUniqueID" />
+            <PropertyRef Name="OperationsUniqueID" />
+          </Key>
+          <Property Name="RolesUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="WebFunctionUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="OperationsUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LnkUsersRoles">
+          <Key>
+            <PropertyRef Name="UsersUniqueID" />
+            <PropertyRef Name="RolesUniqueID" />
+          </Key>
+          <Property Name="UsersUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="RolesUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LnkWebFunctionsLanguages">
+          <Key>
+            <PropertyRef Name="WebFunctionUniqueID" />
+            <PropertyRef Name="LanguagesUniqueID" />
+          </Key>
+          <Property Name="WebFunctionUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="LanguagesUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Operations">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="ID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Seq" Type="int" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="ID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="State" Type="bit" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
+          <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
+          <Property Name="ModifyTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="ID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PassWord" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="OrganizationUniqueID" Type="varchar" MaxLength="40" />
+          <Property Name="Photo" Type="varchar" MaxLength="80" />
+          <Property Name="Email" Type="varchar" MaxLength="40" />
+          <Property Name="BirthDay" Type="datetime" />
+          <Property Name="Title" Type="varchar" MaxLength="20" />
+          <Property Name="MobilePhone" Type="varchar" MaxLength="20" />
+          <Property Name="State" Type="bit" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
+          <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
+          <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="Other" Type="varchar" MaxLength="2000" />
+          <Property Name="Lanuage" Type="varchar" MaxLength="20" />
+          <Property Name="LastLoginTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WebFunctions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ParentID" Type="varchar" MaxLength="10" />
+          <Property Name="Area" Type="varchar" MaxLength="100" />
+          <Property Name="Controller" Type="varchar" MaxLength="100" />
+          <Property Name="Action" Type="varchar" MaxLength="100" />
+          <Property Name="Icon" Type="varchar" MaxLength="50" />
+          <Property Name="Seq" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
+          <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
+          <Property Name="ModifyTime" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="XXGLModelStoreContainer">
+          <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LnkOperationsLanguages" EntityType="Self.LnkOperationsLanguages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LnkRolesWebFunctions" EntityType="Self.LnkRolesWebFunctions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LnkUsersRoles" EntityType="Self.LnkUsersRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LnkWebFunctionsLanguages" EntityType="Self.LnkWebFunctionsLanguages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operations" EntityType="Self.Operations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WebFunctions" EntityType="Self.WebFunctions" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="XXGLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Languages">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LnkOperationsLanguages">
+          <Key>
+            <PropertyRef Name="OperationsUnqiueID" />
+            <PropertyRef Name="LanguagesUniqueID" />
+          </Key>
+          <Property Name="OperationsUnqiueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LanguagesUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descrrption" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="LnkRolesWebFunctions">
+          <Key>
+            <PropertyRef Name="RolesUniqueID" />
+            <PropertyRef Name="WebFunctionUniqueID" />
+            <PropertyRef Name="OperationsUniqueID" />
+          </Key>
+          <Property Name="RolesUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WebFunctionUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OperationsUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LnkUsersRoles">
+          <Key>
+            <PropertyRef Name="UsersUniqueID" />
+            <PropertyRef Name="RolesUniqueID" />
+          </Key>
+          <Property Name="UsersUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RolesUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LnkWebFunctionsLanguages">
+          <Key>
+            <PropertyRef Name="WebFunctionUniqueID" />
+            <PropertyRef Name="LanguagesUniqueID" />
+          </Key>
+          <Property Name="WebFunctionUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LanguagesUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Operations">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Seq" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="Boolean" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PassWord" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrganizationUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Photo" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="BirthDay" Type="DateTime" Precision="3" />
+          <Property Name="Title" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MobilePhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="Boolean" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="Other" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="Lanuage" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LastLoginTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="WebFunctions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ParentID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Area" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Controller" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Action" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Icon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Seq" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="XXGLEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Languages" EntityType="Self.Languages" />
+          <EntitySet Name="LnkOperationsLanguages" EntityType="Self.LnkOperationsLanguages" />
+          <EntitySet Name="LnkRolesWebFunctions" EntityType="Self.LnkRolesWebFunctions" />
+          <EntitySet Name="LnkUsersRoles" EntityType="Self.LnkUsersRoles" />
+          <EntitySet Name="LnkWebFunctionsLanguages" EntityType="Self.LnkWebFunctionsLanguages" />
+          <EntitySet Name="Operations" EntityType="Self.Operations" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="WebFunctions" EntityType="Self.WebFunctions" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="XXGLModelStoreContainer" CdmEntityContainer="XXGLEntities">
+          <EntitySetMapping Name="Languages">
+            <EntityTypeMapping TypeName="XXGLModel.Languages">
+              <MappingFragment StoreEntitySet="Languages">
+                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LnkOperationsLanguages">
+            <EntityTypeMapping TypeName="XXGLModel.LnkOperationsLanguages">
+              <MappingFragment StoreEntitySet="LnkOperationsLanguages">
+                <ScalarProperty Name="OperationsUnqiueID" ColumnName="OperationsUnqiueID" />
+                <ScalarProperty Name="LanguagesUniqueID" ColumnName="LanguagesUniqueID" />
+                <ScalarProperty Name="Descrrption" ColumnName="Descrrption" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LnkRolesWebFunctions">
+            <EntityTypeMapping TypeName="XXGLModel.LnkRolesWebFunctions">
+              <MappingFragment StoreEntitySet="LnkRolesWebFunctions">
+                <ScalarProperty Name="RolesUniqueID" ColumnName="RolesUniqueID" />
+                <ScalarProperty Name="WebFunctionUniqueID" ColumnName="WebFunctionUniqueID" />
+                <ScalarProperty Name="OperationsUniqueID" ColumnName="OperationsUniqueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LnkUsersRoles">
+            <EntityTypeMapping TypeName="XXGLModel.LnkUsersRoles">
+              <MappingFragment StoreEntitySet="LnkUsersRoles">
+                <ScalarProperty Name="UsersUniqueID" ColumnName="UsersUniqueID" />
+                <ScalarProperty Name="RolesUniqueID" ColumnName="RolesUniqueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LnkWebFunctionsLanguages">
+            <EntityTypeMapping TypeName="XXGLModel.LnkWebFunctionsLanguages">
+              <MappingFragment StoreEntitySet="LnkWebFunctionsLanguages">
+                <ScalarProperty Name="WebFunctionUniqueID" ColumnName="WebFunctionUniqueID" />
+                <ScalarProperty Name="LanguagesUniqueID" ColumnName="LanguagesUniqueID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operations">
+            <EntityTypeMapping TypeName="XXGLModel.Operations">
+              <MappingFragment StoreEntitySet="Operations">
+                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="XXGLModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="XXGLModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="OrganizationUniqueID" ColumnName="OrganizationUniqueID" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="Other" ColumnName="Other" />
+                <ScalarProperty Name="Lanuage" ColumnName="Lanuage" />
+                <ScalarProperty Name="LastLoginTime" ColumnName="LastLoginTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WebFunctions">
+            <EntityTypeMapping TypeName="XXGLModel.WebFunctions">
+              <MappingFragment StoreEntitySet="WebFunctions">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
