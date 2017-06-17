@@ -11,21 +11,20 @@ namespace XXGL.Base.IDAL
     {
       void  AddEntity(T entity);
 
+      void AddEntities(IEnumerable<T> entities);
+
 
       void UpdateEntity(T entity);
 
       void UpdateEntities(IEnumerable<T> entities);
 
-      
-      void Remove(T entity);
+      void RemoveEntity(T entity);
 
-      void Remove(string UniqueID);
+      void RemoveEntities(IEnumerable<T> entities);
 
-      void Remove(IEnumerable<T> entities);
+      IQueryable<T> GetAsQueryable();
 
-      IQueryable<T> GetList();
-
-      IQueryable<T> GetList(Expression<Func<T, bool>> where);
+      IQueryable<T> GetAsQueryable(Expression<Func<T, bool>> where);
 
       T GetEntity(Expression<Func<T,bool>> where);
 

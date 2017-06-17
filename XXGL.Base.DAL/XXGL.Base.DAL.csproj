@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BaseRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UsersRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -62,6 +63,10 @@
     <ProjectReference Include="..\DbEntity.MSSQL\DbEntity.MSSQL.csproj">
       <Project>{cef89cf2-0561-480a-8b06-2c1a7e3e409c}</Project>
       <Name>DbEntity.MSSQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XXGL.Base.IDAL\XXGL.Base.IDAL.csproj">
+      <Project>{34ee3d8c-0da2-4af8-8bf9-cbcbdfe6751c}</Project>
+      <Name>XXGL.Base.IDAL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

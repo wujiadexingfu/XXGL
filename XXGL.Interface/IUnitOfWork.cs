@@ -8,6 +8,6 @@ namespace XXGL.Interface
 {
    public interface IUnitOfWork
     {
-        int SaveChage();
+        bool SaveChage();
     }
 }

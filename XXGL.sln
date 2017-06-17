@@ -52,6 +52,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitOfWork", "UnitOfWork", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbCommon", "DbCommon\DbCommon.csproj", "{B6615F90-05C9-4C96-B5EC-81C5879488BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFacRegisterType", "AutoFacRegisterType\AutoFacRegisterType.csproj", "{CC3D89C8-8402-4210-8328-8E3D30EE8595}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{63C71D4B-B474-4E16-8ED0-880B75A60F7E}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +121,10 @@ Global
 		{B6615F90-05C9-4C96-B5EC-81C5879488BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6615F90-05C9-4C96-B5EC-81C5879488BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6615F90-05C9-4C96-B5EC-81C5879488BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC3D89C8-8402-4210-8328-8E3D30EE8595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC3D89C8-8402-4210-8328-8E3D30EE8595}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC3D89C8-8402-4210-8328-8E3D30EE8595}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC3D89C8-8402-4210-8328-8E3D30EE8595}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -134,5 +145,6 @@ Global
 		{A60BE949-1802-417D-90F7-986E7F37A60D} = {2167716F-B636-4A04-86A6-57DB40428A99}
 		{DBA69844-900A-4057-BE2B-B1E616512D90} = {457423A3-2DFB-4BBF-B724-7A28E4AD818D}
 		{B6615F90-05C9-4C96-B5EC-81C5879488BA} = {DBA69844-900A-4057-BE2B-B1E616512D90}
+		{CC3D89C8-8402-4210-8328-8E3D30EE8595} = {457423A3-2DFB-4BBF-B724-7A28E4AD818D}
 	EndGlobalSection
 EndGlobal

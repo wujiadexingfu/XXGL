@@ -39,6 +39,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.6.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.4.6.0\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -156,6 +164,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -199,7 +208,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Account\" />
   </ItemGroup>
@@ -209,6 +217,28 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutoFacRegisterType\AutoFacRegisterType.csproj">
+      <Project>{cc3d89c8-8402-4210-8328-8e3d30ee8595}</Project>
+      <Name>AutoFacRegisterType</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XXGL.Base.DAL\XXGL.Base.DAL.csproj">
+      <Project>{5581d5e4-f16f-42c6-969f-fdb307a78e8b}</Project>
+      <Name>XXGL.Base.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XXGL.Base.IDAL\XXGL.Base.IDAL.csproj">
+      <Project>{34ee3d8c-0da2-4af8-8bf9-cbcbdfe6751c}</Project>
+      <Name>XXGL.Base.IDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XXGL.Base.IService\XXGL.Base.IService.csproj">
+      <Project>{6c6fe0d3-73cf-4321-a817-1c538a1d7c9d}</Project>
+      <Name>XXGL.Base.IService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XXGL.Base.Models\XXGL.Base.Models.csproj">
+      <Project>{b2c79d34-ca5c-473a-b367-b9a3ca7c75ab}</Project>
+      <Name>XXGL.Base.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

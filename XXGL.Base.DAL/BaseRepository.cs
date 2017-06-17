@@ -17,6 +17,14 @@ namespace XXGL.Base.DAL
         db.Entry<T>(entity).State = EntityState.Added;
     }
 
+     public void AddEntities(IEnumerable<T> entities)
+     {
+         foreach (var entity in entities)
+         {
+             AddEntity(entity);
+         }
+     }
+
 
      public void UpdateEntity(T entity)
      {
@@ -33,18 +41,18 @@ namespace XXGL.Base.DAL
      }
 
 
-    public void Remove(T entity)
+    public void RemoveEntity(T entity)
     { 
         db.Set<T>().Attach(entity);
         db.Entry<T>(entity).State = EntityState.Deleted;
 
     }
 
-    void Remove(IEnumerable<T> entities)
+   public void RemoveEntities(IEnumerable<T> entities)
     {
         foreach (var entity in entities)
         {
-            Remove(entity);
+            RemoveEntity(entity);
         }
        
     }
@@ -54,12 +62,12 @@ namespace XXGL.Base.DAL
        return db.Set<T>().AsQueryable();
     }
 
-    IQueryable<T> GetAsQueryable(Expression<Func<T, bool>> where)
+    public  IQueryable<T> GetAsQueryable(Expression<Func<T, bool>> where)
     {
         return db.Set<T>().Where(where);
     }
 
-    T GetEntity(Expression<Func<T, bool>> where)
+    public  T GetEntity(Expression<Func<T, bool>> where)
     {
         return db.Set<T>().FirstOrDefault(where);
     }

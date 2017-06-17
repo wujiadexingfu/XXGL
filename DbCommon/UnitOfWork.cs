@@ -9,10 +9,17 @@ namespace DbCommon
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public int SaveChage()
+        public bool SaveChage()
         {
           var db=  DbSessionFactory.GetCurrenntDbSession();  //获取到数据库唯一的数据库连接对象
-          return db.SaveChanges();  //保存
+          if (db.SaveChanges() > 0)
+          {
+              return true;
+          }//保存
+          else
+          {
+              return false;
+          }
         }
     }
 }
