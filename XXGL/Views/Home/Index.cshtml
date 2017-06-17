@@ -1,7 +1,243 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    Layout = null;
+    
 }
 
-<h2>Index</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gentelella Alela! | </title>
+    <!-- Bootstrap -->
+    <link href="~/Scripts/gentelella/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="~/Scripts/gentelella/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!-- NProgress -->
+    <link href="~/Scripts/gentelella/nprogress/nprogress.css" rel="stylesheet" />
+    <!-- iCheck -->
+    
+    <link href="~/Scripts/gentelella/iCheck/skins/flat/grey.css" rel="stylesheet" />
+    <!-- bootstrap-progressbar -->
+    @*<link href="~/Scripts/gentelella/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" />*@
+    <!-- JQVMap -->
+    @*<link href="~/Scripts/gentelella/jqvmap/jqvmap.css" rel="stylesheet" />*@
+   
+    <!-- bootstrap-daterangepicker -->
+    @*<link href="~/Scripts/gentelella/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />*@
+    <!-- Custom Theme Style -->
+    <link href="~/Scripts/gentelella/build/css/custom.min.css" rel="stylesheet" />
+</head>
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>信息管理平台</span></a>
+                    </div>
+                   
+                    <div class="clearfix"></div>
+                    <div class="divider"></div>
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                          
+                            <ul class="nav side-menu">
+                                <li >
+                                    <a><i class="fa fa-cog"></i>人事管理<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>  <a class="fa fa-user " style="width:auto">  &nbsp用户管理</a></li>
+                                        <li>
+                                            <a class="fa fa-users " style="width:auto" href="#">&nbsp角色管理</a>
+                                            @*<a>Level One<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li class="sub_menu">
+                            <a href="level2.html">Level Two</a>
+                        </li>
+                        <li>
+                            <a href="#level2_1">Level Two</a>
+                        </li>
+                        <li>
+                            <a href="#level2_2">Level Two</a>
+                        </li>
+                    </ul>*@
+                                        </li>
+                                        <li>
+                                            <a href="#">用户权限查看</a>
+                                        </li>
 
+                                    </ul>
+                                </li>
+                            </ul>
+
+
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-sitemap"></i>微信公众平台<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="#">公众号管理</a>
+                                        <li>
+                                            <a href="#">自动回复</a>
+                                         
+                                        </li>
+                                        <li>
+                                            <a href="#">菜单设置</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+
+
+                         
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Lock">
+                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="@Url.Content("~/Content/images/img.jpg")" alt="">admin 系统管理员
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href="javascript:;">版本【v2017.06.17.1】</a></li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <span class="badge bg-red pull-right">50%</span>
+                                            <span class="fa  fa-wq">修改密码</span>
+                                        </a>
+                                    </li>
+                                    <li><a href="javascript:;">修改头像</a></li>
+                                    <li><a href="login.html"><i class="fa  fa-power-off "></i> 登出</a></li>
+                                </ul>
+                            </li>
+                           
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            @*<div>
+                <ul class="breadcrumb" style="height:auto; background-color:white">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">Home</a>
+                    </li>
+
+                    <li>
+                        <a href="#">Forms</a>
+                    </li>
+                    <li class="active">Form Elements</li>
+                </ul>
+            </div>*@
+
+           
+
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="" >
+                    <div class="page-title" style="width:auto">
+                        <div class="title_left" style="margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;">
+                            <ul class="breadcrumb" style="width:auto; background-color:white">
+                                <li>
+                                    <i class="ace-icon fa fa-home home-icon"></i>
+                                    <a href="#">Home</a>
+                                </li>
+
+                                <li>
+                                    <a href="#">Forms</a>
+                                </li>
+                                <li class="active">Form Elements</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                12312312321
+            </div>
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    2016-06-17 <a href="https://colorlib.com">Colorlib</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="~/Scripts/gentelella/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/Scripts/gentelella/bootstrap/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/Scripts/gentelella/fastclick/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="~/Scripts/gentelella/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    @*<script src="~/Scripts/gentelella/Chart.js/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="~/Scripts/gentelella/gauge.js/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->*@
+    @*<script src="~/Scripts/gentelella/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>*@
+    <!-- iCheck -->
+    <script src="~/Scripts/gentelella/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    @*<script src="~/Scripts/gentelella/skycons/skycons.js"></script>*@
+    <!-- Flot -->
+    @*<script src="~/Scripts/gentelella/Flot/jquery.flot.js"></script>
+    <script src="~/Scripts/gentelella/Flot/jquery.flot.pie.js"></script>
+    <script src="~/Scripts/gentelella/Flot/jquery.flot.time.js"></script>
+    <script src="~/Scripts/gentelella/Flot/jquery.flot.stack.js"></script>
+    <script src="~/Scripts/gentelella/Flot/jquery.flot.resize.js"></script>*@
+    <!-- Flot plugins -->
+    @*<script src="~/Scripts/gentelella/flot.orderbars/jquery.flot.orderBars.js"></script>
+    <script src="~/Scripts/gentelella/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="~/Scripts/gentelella/flot.curvedlines/curvedLines.js"></script>*@
+    <!-- DateJS -->
+    @*<script src="~/Scripts/gentelella/DateJS/date.js"></script>*@
+    <!-- JQVMap -->
+    @*<script src="~/Scripts/gentelella/jqvmap/jquery.vmap.js"></script>*@
+
+    <!-- bootstrap-daterangepicker -->
+    @*<script src="~/Scripts/gentelella/moment/min/moment.min.js"></script>*@
+    @*<script src="~/Scripts/gentelella/moment/min/moment.min.js"></script>
+    <script src="~/Scripts/gentelella/bootstrap-daterangepicker/daterangepicker.js"></script>*@
+    <!-- Custom Theme Scripts -->
+    <script src="~/Scripts/gentelella/build/js/custom.min.js"></script>
+
+</body>
+</html>
