@@ -39,7 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ILanguagesService.cs" />
+    <Compile Include="ILnkOperationsLanguagesService.cs" />
+    <Compile Include="ILnkRolesWebFunctionsService.cs" />
+    <Compile Include="ILnkUsersRolesService.cs" />
+    <Compile Include="ILnkWebFunctionsLanguagesService.cs" />
+    <Compile Include="IOperationsService.cs" />
+    <Compile Include="IRolesService.cs" />
     <Compile Include="IUsersService.cs" />
+    <Compile Include="IWebFunctionsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

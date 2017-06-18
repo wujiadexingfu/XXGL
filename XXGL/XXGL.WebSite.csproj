@@ -736,6 +736,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Shared\_WebFunctions.cshtml" />
+    <Content Include="Views\Shared\_BreadCrumb.cshtml" />
+    <Content Include="Views\Shared\_UserFunction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -753,6 +756,10 @@
     <ProjectReference Include="..\AutoFacRegisterType\AutoFacRegisterType.csproj">
       <Project>{cc3d89c8-8402-4210-8328-8e3d30ee8595}</Project>
       <Name>AutoFacRegisterType</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{a5bf972f-11b0-4219-9475-4cdfa423e6db}</Project>
+      <Name>Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\XXGL.Base.DAL\XXGL.Base.DAL.csproj">
       <Project>{5581d5e4-f16f-42c6-969f-fdb307a78e8b}</Project>

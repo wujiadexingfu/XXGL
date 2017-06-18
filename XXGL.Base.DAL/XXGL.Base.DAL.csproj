@@ -48,8 +48,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseRepository.cs" />
+    <Compile Include="LanguagesRepository.cs" />
+    <Compile Include="LnkOperationsLanguagesRepository.cs" />
+    <Compile Include="LnkRolesWebFunctionsRepository.cs" />
+    <Compile Include="LnkUsersRolesRepository.cs" />
+    <Compile Include="LnkWebFunctionsLanguagesRepository.cs" />
+    <Compile Include="OperationsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RolesRepository.cs" />
     <Compile Include="UsersRepository.cs" />
+    <Compile Include="WebFunctionsRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

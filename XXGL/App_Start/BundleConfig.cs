@@ -27,6 +27,25 @@ namespace XXGL
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
+            bundles.Add(new ScriptBundle("~/Basic/js").Include(
+                    "~/Scripts/gentelella/jquery/jquery.min.js",
+                    "~/Scripts/gentelella/bootstrap/js/bootstrap.min.js",
+                    "~/Scripts/gentelella/fastclick/fastclick.js",
+                    "~/Scripts/gentelella/nprogress/nprogress.js",
+                    "~/Scripts/gentelella/iCheck/icheck.min.js",
+                    "~/Scripts/gentelella/build/js/custom.min.js"
+                ));
+
+            bundles.Add(new StyleBundle("~/Basic/css").Include(
+                      "~/Scripts/gentelella/bootstrap/css/bootstrap.css",
+                      "~/Scripts/gentelella/font-awesome/css/font-awesome.css",
+                       "~/Scripts/gentelella/nprogress/nprogress.css",
+                      "~/Scripts/gentelella/iCheck/skins/flat/grey.css",
+                      "~/Scripts/gentelella/build/css/custom.min.css"
+                      ));
+
+
+
             // 将 EnableOptimizations 设为 false 以进行调试。有关详细信息，
             // 请访问 http://go.microsoft.com/fwlink/?LinkId=301862
             BundleTable.EnableOptimizations = true;

@@ -39,6 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authenticated\Account.cs" />
+    <Compile Include="Authenticated\FunctionItem.cs" />
+    <Compile Include="Authenticated\WebFunctionOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserModel.cs" />
   </ItemGroup>

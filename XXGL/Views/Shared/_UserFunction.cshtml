@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+}
+
+<nav>
+    <div class="nav toggle">
+        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="">
+            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <img src="@Url.Content("~/Content/images/img.jpg")" alt="">admin系统管理员
+                <span class=" fa fa-angle-down"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-usermenu pull-right">
+                <li><a href="javascript:;">版本 @Utility.Define.Version </a></li>
+                <li>
+                    <a href="javascript:;">
+                        <span class="badge bg-red pull-right">50%</span>
+                        <span class="fa  fa-wq">修改密码</span>
+                    </a>
+                </li>
+                <li><a href="javascript:;">修改头像1111111111111</a></li>
+                <li><a href="login.html"><i class="fa  fa-power-off "></i> 登出</a></li>
+            </ul>
+        </li>
+
+    </ul>
+</nav>

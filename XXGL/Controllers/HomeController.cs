@@ -18,8 +18,13 @@ namespace XXGL.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            var user = _userService.Login("admin", "系统管理员");
+           // var user = _userService.Login("admin", "系统管理员");
+           var m= _userService.GetAccount("admin");
+
             return View();
         }
+
+       
+
     }
 }

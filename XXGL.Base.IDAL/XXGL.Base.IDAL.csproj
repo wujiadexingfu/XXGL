@@ -40,7 +40,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBaseRepository.cs" />
+    <Compile Include="ILanguagesRepository.cs" />
+    <Compile Include="ILnkOperationsLanguagesRepository.cs" />
+    <Compile Include="ILnkRolesWebFunctionsRepository.cs" />
+    <Compile Include="ILnkUsersRolesRepository.cs" />
+    <Compile Include="ILnkWebFunctionsLanguagesRepository.cs" />
+    <Compile Include="IOperationsRepository.cs" />
+    <Compile Include="IRolesRepository.cs" />
     <Compile Include="IUsersRepository.cs" />
+    <Compile Include="IWebFunctionsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
