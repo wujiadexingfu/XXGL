@@ -1,40 +1,51 @@
-﻿@{
+﻿@model XXGL.Base.Models.Authenticated.Account
+@{
     Layout = null;
 }
-<div class="menu_section">
 
     <ul class="nav side-menu">
-        <li>
-            <a><i class="fa fa-cog"></i>人事管理<span class="fa fa-chevron-down"></span></a>
-            <ul class="nav child_menu">
-                <li>  <a class="fa fa-user " style="width:auto">  &nbsp用户管理</a></li>
-                <li>
-                    <a class="fa fa-users " style="width:auto" href="#">&nbsp角色管理</a>
+       @foreach (var ancestor in Model.FunctionItemList)
+        {
+            <li>
+                @if (string.IsNullOrEmpty (ancestor.Action))
+                {
+                    <a><i class="fa @ancestor.Icon"></i>@ancestor.Description <span class="fa fa-chevron-down"></span></a>
+                }
+                else
+                {
+                    <a  href="@Url.Action(ancestor.Action, ancestor.Controller, new { area=ancestor.Area})"><i class="fa @ancestor.Icon" ></i>@ancestor.Description <span class="fa fa-chevron-down"></span></a>
+                }
 
-                </li>
-                <li>
-                    <a href="#">用户权限查看</a>
-                </li>
+                @*<a><i class="fa @ancestor.Icon"></i>@ancestor.Description <span class="fa fa-chevron-down"></span></a>*@
+            
+                <ul class="nav child_menu">
+                    @foreach (var parent in ancestor.SubFunctionItemList)
+                    {
+                        if (parent.SubFunctionItemList.Count == 0)
+                        {
+                            <li>  <a  class="fa fa-user " style="width:auto" href="@Url.Action(parent.Action, parent.Controller, new { area=parent.Area})">  @parent.Description </a></li>
+                        }
+                        else
+                        {
+                            <li >
+                                <a  class="fa fa-users   "  style ="width:100%">@parent.Description <span class="fa fa-chevron-down "></span></a>
+                                @if (parent.SubFunctionItemList.Count != 0)
+                                {
+                                    <ul class="nav child_menu">
+                                        @foreach (var current in parent.SubFunctionItemList)
+                                        {
+                                            <li class=" sub_menu"><a href="@Url.Action(current.Action, current.Controller, new { area = current.Area })" class="fa fa-user " style="width:auto">   @current.Description</a></li>
+                                        }
+                                    </ul>
 
-            </ul>
-        </li>
-    </ul>
+                                }
+                            </li>
+                        }
 
 
-    <ul class="nav side-menu">
-        <li>
-            <a><i class="fa fa-sitemap"></i>微信公众平台<span class="fa fa-chevron-down"></span></a>
-            <ul class="nav child_menu">
-                <li><a href="#">公众号管理</a>
-                <li>
-                    <a href="#">自动回复</a>
+                    }
+                </ul>
 
-                </li>
-                <li>
-                    <a href="#">菜单设置</a>
-                </li>
-
-            </ul>
-        </li>
-    </ul>
-</div>
+            </li>
+        }
+        </ul>

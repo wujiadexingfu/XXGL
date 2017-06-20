@@ -1,6 +1,8 @@
-﻿@{
+﻿@model  XXGL.Base.Models.Authenticated.Account
+@{
     Layout = null;
 }
+
 
 <nav>
     <div class="nav toggle">
@@ -9,19 +11,19 @@
     <ul class="nav navbar-nav navbar-right">
         <li class="">
             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <img src="@Url.Content("~/Content/images/img.jpg")" alt="">admin系统管理员
+                <img src="@Url.Content("~/Content/images/img.jpg")" alt="">@Model.ID @Model.Name .
                 <span class=" fa fa-angle-down"></span>
             </a>
             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                <li><a href="javascript:;">版本 @Utility.Define.Version </a></li>
+                <li><a href="javascript:;">@Resources.Resource.Version @Utility.Define.Version </a></li>
                 <li>
                     <a href="javascript:;">
-                        <span class="badge bg-red pull-right">50%</span>
-                        <span class="fa  fa-wq">修改密码</span>
+                        @*<span class="badge bg-red pull-right">50%</span>*@
+                        <span class="fa  fa-wq">@Resources.Resource.EditPassword</span>
                     </a>
                 </li>
-                <li><a href="javascript:;">修改头像1111111111111</a></li>
-                <li><a href="login.html"><i class="fa  fa-power-off "></i> 登出</a></li>
+                <li><a href="javascript:;">@Resources.Resource.EditImage</a></li>
+                <li><a href="login.html"><i class="fa  fa-power-off "></i>&nbsp;  @Resources.Resource.Logout</a></li>
             </ul>
         </li>
 

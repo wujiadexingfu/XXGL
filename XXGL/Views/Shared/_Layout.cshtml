@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     Layout = null;
 
 }
@@ -41,58 +42,61 @@
                     <div class="divider"></div>
                     <!-- sidebar menu -->
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                        @Html.Partial("_WebFunctions")
-                    </div>
+                        @Html.Partial("_WebFunctions", Session["Account"] as XXGL.Base.Models.Authenticated.Account)
+                   
                     <!-- /sidebar menu -->
                     <!-- /menu footer buttons -->
-                    <div class="sidebar-footer hidden-small">
-                        <a data-toggle="tooltip" data-placement="top" title="Settings">
-                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Lock">
-                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                        </a>
+                        <div class="sidebar-footer hidden-small">
+                            <a data-toggle="tooltip" data-placement="top" title="Settings">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Lock">
+                                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                            </a>
+                        </div>
                     </div>
                     <!-- /menu footer buttons -->
+                </div >
+              
                 </div>
-            </div>
             <!-- top navigation -->
             <div class="top_nav">
                 <div class="nav_menu">
-                    @Html.Partial("_UserFunction")
+                    @Html.Partial("_UserFunction", Session["Account"] as XXGL.Base.Models.Authenticated.Account)
                 </div>
             </div>
 
             <!-- /top navigation -->
             <!-- page content -->
             <div class="right_col" role="main">
-                <div>
-                    @Html.Partial("_BreadCrumb")
-                </div>
 
-                <div class="row">
-                    @RenderBody()
-                </div>
+                @Html.Partial("_BreadCrumb",Session["Account"] as XXGL.Base.Models.Authenticated.Account)
+
+
+
+                @RenderBody()
+
 
 
             </div>
 
+
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    2016-06-17 <a href="https://colorlib.com">Colorlib</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
         </div>
-        <!-- /page content -->
-        <!-- footer content -->
-        <footer>
-            <div class="pull-right">
-                2016-06-17 <a href="https://colorlib.com">Colorlib</a>
-            </div>
-            <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
     </div>
 
     @Scripts.Render("~/Basic/js")

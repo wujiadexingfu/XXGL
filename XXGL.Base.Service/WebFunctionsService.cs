@@ -6,63 +6,84 @@ using System.Threading.Tasks;
 using XXGL.Base.IDAL;
 using XXGL.Base.IService;
 using XXGL.Base.Models.Authenticated;
+using XXGL.Base.Models.WebFunction;
 
 namespace XXGL.Base.Service
 {
     public class WebFunctionsService : IWebFunctionsService
     {
-        public static IWebFunctionsRepository _webFunctionsRepository { get; set; }
+        public IWebFunctionsRepository _webFunctionsRepository { get; set; }
 
-        public static ILnkWebFunctionsLanguagesRepository _lnkWebFunctionsLanguagesRepository { get; set; }
+        public ILnkWebFunctionsLanguagesRepository _lnkWebFunctionsLanguagesRepository { get; set; }
 
-        public static ILanguagesRepository _languagesRepository { get; set; }
+        public ILanguagesRepository _languagesRepository { get; set; }
 
-        public WebFunctionsService(IWebFunctionsRepository webFunctionsRepository, ILnkWebFunctionsLanguagesRepository lnkWebFunctionsLanguagesRepository, ILanguagesRepository languagesRepository)
+        public ILnkRolesWebFunctionsRepository _lnkRolesWebFunctionsRepository { get; set; }
+
+        public IRolesRepository _rolesRepository { get; set; }
+
+        public ILnkUsersRolesRepository _lnkUsersRolesRepository { get; set; }
+
+        public IOperationsRepository _operationsRepository { get; set; }
+
+
+        public WebFunctionsService(IWebFunctionsRepository webFunctionsRepository, ILnkWebFunctionsLanguagesRepository lnkWebFunctionsLanguagesRepository, ILanguagesRepository languagesRepository,
+            ILnkRolesWebFunctionsRepository lnkRolesWebFunctionsRepository, IRolesRepository rolesRepository, ILnkUsersRolesRepository LnkUsersRolesRepository,
+        IOperationsRepository operationsRepository
+            )
         {
+            _lnkRolesWebFunctionsRepository = lnkRolesWebFunctionsRepository;
             _webFunctionsRepository = webFunctionsRepository;
             _lnkWebFunctionsLanguagesRepository = lnkWebFunctionsLanguagesRepository;
             _languagesRepository = languagesRepository;
+            _rolesRepository = rolesRepository;
+            _lnkUsersRolesRepository = LnkUsersRolesRepository;
+            _operationsRepository = operationsRepository;
 
         }
 
 
         /// <summary>
-        /// 根据WebFunctionID和语言获取菜单的基本信息
+        /// 根据WebFunctionID和语言获取菜单的描述
         /// </summary>
-        /// <param name="WebFunctionID"></param>
-        /// <param name="Language"></param>
+        /// <param name="WebFunctionID">WebFunction表的ID</param>
+        /// <param name="Language">语言UniqueID</param>
         /// <returns></returns>
-        public   FunctionItem GetFunctionItem(string WebFunctionID,string Language)
+        public string GetWebFunctionDescription(string WebFunctionID, string Language)
         {
-
-            var m = (from webFunctions in _webFunctionsRepository.GetAsQueryable()
-                     join lnkWebFunctionsLanguages in _lnkWebFunctionsLanguagesRepository.GetAsQueryable() on webFunctions.ID equals lnkWebFunctionsLanguages.WebFunctionUniqueID
-                     join lanuages in _languagesRepository.GetAsQueryable() on lnkWebFunctionsLanguages.LanguagesUniqueID equals lanuages.UniqueID
-                     where webFunctions.ID == WebFunctionID && lanuages.UniqueID == Language
-                     select new FunctionItem()
-                     {
-                         ID = webFunctions.ID,
-                         Area = webFunctions.Area,
-                         Controller = webFunctions.Controller,
-                         Action = webFunctions.Action,
-                         Icon = webFunctions.Icon,
-                         Seq = webFunctions.Seq,
-                     }).AsQueryable();
-            var functionItem = (from webFunctions in _webFunctionsRepository.GetAsQueryable()
-                                join lnkWebFunctionsLanguages in _lnkWebFunctionsLanguagesRepository.GetAsQueryable() on webFunctions.ID equals lnkWebFunctionsLanguages.WebFunctionUniqueID
-                                join lanuages in _languagesRepository.GetAsQueryable() on lnkWebFunctionsLanguages.LanguagesUniqueID equals lanuages.UniqueID
-                                where webFunctions.ID == WebFunctionID && lanuages.UniqueID == Language
-                                select new FunctionItem()
-                                {
-                                    ID = webFunctions.ID,
-                                    Area = webFunctions.Area,
-                                    Controller = webFunctions.Controller,
-                                    Action = webFunctions.Action,
-                                    Icon = webFunctions.Icon,
-                                    Seq = webFunctions.Seq,
-                                }).FirstOrDefault();
-            return functionItem;
+            var description = (from lnkWebFunctionsLanguages in _lnkWebFunctionsLanguagesRepository.GetAsQueryable()
+                               join lanuages in _languagesRepository.GetAsQueryable() on lnkWebFunctionsLanguages.LanguagesUniqueID equals lanuages.UniqueID
+                               where lnkWebFunctionsLanguages.WebFunctionUniqueID == WebFunctionID && lanuages.UniqueID == Language
+                               select lnkWebFunctionsLanguages.Description).FirstOrDefault();
+            return description;
         }
+
+
+        /// <summary>
+        /// 根据用户表的UniqueID 获取到菜单的操作权限
+        /// </summary>
+        /// <param name="UserUniqueID"></param>
+        /// <returns></returns>
+        public List<WebFunctionOperationModel> GetWebFunctionsByUserUnqiueID(string UserUniqueID)
+        {
+            var list = (from lnkRolesWebFunctions in _lnkRolesWebFunctionsRepository.GetAsQueryable()
+                        join roles in _rolesRepository.GetAsQueryable() on lnkRolesWebFunctions.RolesUniqueID equals roles.UniqueID
+                        join lnkUsersRoles in _lnkUsersRolesRepository.GetAsQueryable() on roles.UniqueID equals lnkUsersRoles.RolesUniqueID
+                        join webFunctions in _webFunctionsRepository.GetAsQueryable() on lnkRolesWebFunctions.WebFunctionUniqueID equals webFunctions.ID
+                        join operations in _operationsRepository.GetAsQueryable() on lnkRolesWebFunctions.OperationsUniqueID equals operations.UniqueID
+                        where lnkUsersRoles.UsersUniqueID == UserUniqueID
+                        select new  WebFunctionOperationModel
+                        {   
+                            WebFunctionID = webFunctions.ID,
+                            Area = webFunctions.Area,
+                            Controller = webFunctions.Controller,
+                            Action = webFunctions.Controller,
+                            OperationID = operations.ID,
+                            ParentID = webFunctions.ParentID
+                        }).ToList();
+            return list;
+        }
+
 
 
     }

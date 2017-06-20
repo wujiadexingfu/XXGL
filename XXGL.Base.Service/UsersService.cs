@@ -11,40 +11,27 @@ using XXGL.Base.Models.Authenticated;
 
 namespace XXGL.Base.Service
 {
-    public class UsersService :IUsersService
+    public class UsersService : IUsersService
     {
-        public  static IUsersRepository _usersRepository { get; set; }
-        public  IRolesRepository _rolesRepository { get; set; }
-        public  ILnkUsersRolesRepository _lnkUsersRolesRepository { get; set; }
-        public  IWebFunctionsRepository _webFunctionsRepository { get; set; }
+        public static IUsersRepository _usersRepository { get; set; }
+     
+        public IWebFunctionsRepository _webFunctionsRepository { get; set; }
 
-        public  ILnkWebFunctionsLanguagesRepository _lnkWebFunctionsLanguagesRepository { get; set; }
+        public ILanguagesRepository _languagesRepository { get; set; }
+       
 
-        public  ILanguagesRepository _languagesRepository { get; set; }
-
-        public  IOperationsRepository _operationsRepository { get; set; }
-
-        public  ILnkOperationsLanguagesRepository _lnkOperationsLanguagesRepository { get; set; }
-
-        public   ILnkRolesWebFunctionsRepository _lnkRolesWebFunctionsRepository { get; set; }
+     
 
         public IWebFunctionsService _webFunctionsService { get; set; }
 
 
 
-        public UsersService(IUsersRepository usersRepository, IRolesRepository rolesRepository, ILnkUsersRolesRepository lnkUsersRolesRepository, IWebFunctionsRepository webFunctionsRepository, ILnkWebFunctionsLanguagesRepository lnkWebFunctionsLanguagesRepository,
-            ILanguagesRepository languagesRepository, IOperationsRepository operationsRepository, ILnkOperationsLanguagesRepository lnkOperationsLanguagesRepository, ILnkRolesWebFunctionsRepository lnkRolesWebFunctionsRepository, IWebFunctionsService webFunctionsService)
+        public UsersService(IUsersRepository usersRepository, IWebFunctionsRepository webFunctionsRepository,   IWebFunctionsService webFunctionsService,ILanguagesRepository languagesRepository)
         {
             _usersRepository = usersRepository;
-            _rolesRepository = rolesRepository;
-            _lnkUsersRolesRepository = lnkUsersRolesRepository;
             _webFunctionsRepository = webFunctionsRepository;
-            _lnkWebFunctionsLanguagesRepository = lnkWebFunctionsLanguagesRepository;
-            _languagesRepository = languagesRepository;
-            _operationsRepository = operationsRepository;
-            _lnkOperationsLanguagesRepository = lnkOperationsLanguagesRepository;
-            _lnkRolesWebFunctionsRepository = lnkRolesWebFunctionsRepository;
             _webFunctionsService = webFunctionsService;
+            _languagesRepository = languagesRepository;
         }
 
 
@@ -53,50 +40,31 @@ namespace XXGL.Base.Service
             var user = _usersRepository.GetEntity(x => x.ID == ID && x.Name == name);
 
             return new UserModel() { ID = user.ID, Name = user.Name };
-         
+
         }
 
-        public  Account GetAccount(string ID)
+        public Account GetAccount(string ID)
         {
             Account account = new Account();
-            var user= _usersRepository.GetEntity(x => x.ID == ID);
+            var user = _usersRepository.GetEntity(x => x.ID == ID);
 
             account.UniqueID = user.UniqueID;
             account.ID = user.ID;
             account.Name = user.Name;
             account.Title = user.Title;
-            account.Lanuage = user.Lanuage;
+            account.LanuageUniqueID = user.Lanuage;
             account.Photo = user.Photo;
+            account.LanuageID = _languagesRepository.GetEntity(x => x.UniqueID == user.Lanuage).ID;
 
-
-
-            var WebFunctionsOperations  = (from lnkRolesWebFunctions in _lnkRolesWebFunctionsRepository.GetAsQueryable()
-                     join roles in _rolesRepository.GetAsQueryable() on lnkRolesWebFunctions.RolesUniqueID equals roles.UniqueID
-                     join lnkUsersRoles in _lnkUsersRolesRepository.GetAsQueryable() on roles.UniqueID equals lnkUsersRoles.RolesUniqueID
-                     join users in _usersRepository.GetAsQueryable() on lnkUsersRoles.UsersUniqueID equals users.UniqueID
-                     join webFunctions in _webFunctionsRepository.GetAsQueryable() on lnkRolesWebFunctions.WebFunctionUniqueID equals webFunctions.ID
-                     join operations in _operationsRepository.GetAsQueryable() on lnkRolesWebFunctions.OperationsUniqueID equals operations.UniqueID
-                     where users.ID == "admin" 
-                     select new  
-                     { 
-                         WebFunctionID=webFunctions.ID,
-                         Area=webFunctions.Area,
-                         Controller=webFunctions.Controller,
-                         Action=webFunctions.Controller,
-                         Operation=operations.ID,
-                         ParentID=webFunctions.ParentID
-                     } ).ToList();  
-
-
-
-
+            var WebFunctionsOperations = _webFunctionsService.GetWebFunctionsByUserUnqiueID(user.UniqueID);
+         
             account.WebFunctionOperationList = WebFunctionsOperations.Select(x => new WebFunctionOperation()
             {
                 WebFunctionID = x.WebFunctionID,
                 Area = x.Area,
                 Controller = x.Controller,
                 Action = x.Area,
-                Operation = x.Operation
+                Operation = x.OperationID
             }).ToList();
 
 
@@ -106,97 +74,100 @@ namespace XXGL.Base.Service
                 ParentID = x.ParentID
             }).Distinct().ToList(); //获取到所有的子菜单，以便后续的查询
 
-            var functionItemList = new List<FunctionItem>();
 
             foreach (var item in webFunctionsDistinct)
             {
-                if (item.ParentID == "*") //ParentID 如果为* 则表示这个菜单为一级菜单
-                {
-                    var ancestorFunctionItem = functionItemList.FirstOrDefault(x => x.ID == item.WebFunctionID);
-                    if (ancestorFunctionItem == null)  //为空则表示这个一级菜单不存在
-                    {
-                        var functionItem = _webFunctionsService.GetFunctionItem(item.WebFunctionID, user.Lanuage);
-                        functionItemList.Add(functionItem);  //一级菜单
-                    }
+                var parentWebFunction = _webFunctionsRepository.GetEntity(x => x.ID == item.ParentID);
+                var currentWebFunction = _webFunctionsRepository.GetEntity(x => x.ID == item.WebFunctionID);
 
+                if (parentWebFunction.ParentID == "*") //如果不为空则表示当前节点为二级节点
+                {
+                    var ancestorFunctionItem = account.FunctionItemList.Where(x => x.ID == item.ParentID).FirstOrDefault();
+                    if (ancestorFunctionItem == null)
+                    {
+                        ancestorFunctionItem = new FunctionItem()
+                            {
+                                ID = parentWebFunction.ID,
+                                Area = string.Empty,
+                                Controller = string.Empty,
+                                Action = string.Empty,
+                                Icon = parentWebFunction.Icon,
+                                Seq = parentWebFunction.Seq,
+                                Description = _webFunctionsService.GetWebFunctionDescription(parentWebFunction.ID, user.Lanuage),
+                                ParentID = parentWebFunction.ParentID
+                            };
+
+                        account.FunctionItemList.Add(ancestorFunctionItem);
+                    }
+                    var currnentFunctionItem = new FunctionItem()
+                    {
+                        Area = currentWebFunction.Area,
+                        Controller = currentWebFunction.Controller,
+                        Action = currentWebFunction.Action,
+                        Icon = currentWebFunction.Icon,
+                        ID = currentWebFunction.ID,
+                        Seq = currentWebFunction.Seq,
+                        Description = _webFunctionsService.GetWebFunctionDescription(currentWebFunction.ID, user.Lanuage),
+                        ParentID = currentWebFunction.ParentID
+                    };
+                    ancestorFunctionItem.SubFunctionItemList.Add(currnentFunctionItem);
                 }
-                else 
+                else  //如果为空则表示当前节点为三级菜单，则从一级菜单开始遍历
                 {
-                    var parentFunctionItem = _webFunctionsRepository.GetEntity(x => x.ID == item.ParentID);
-                    if (parentFunctionItem.ParentID == "*")   //表示这个节点是一个二级菜单
+                    var ancestorWebFunction = _webFunctionsRepository.GetEntity(x => x.ID == parentWebFunction.ParentID);   //一级菜单
+
+                    var ancestorFunctionItem = account.FunctionItemList.Where(x => x.ID == ancestorWebFunction.ID).FirstOrDefault();  //判断一级菜单是否为空
+
+                    if (ancestorFunctionItem == null)
                     {
-                        var ancestorFunctionItem = functionItemList.FirstOrDefault(x => x.ID == parentFunctionItem.ID); //查看一级菜单是否存在
-
-                        if (ancestorFunctionItem == null)
+                        ancestorFunctionItem = new FunctionItem()
                         {
-                            var fistLevelFunctionItem = _webFunctionsService.GetFunctionItem(parentFunctionItem.ID, user.Lanuage);
-                            functionItemList.Add(fistLevelFunctionItem);
-                        }
-                        var secondLevelFunctionItem = _webFunctionsService.GetFunctionItem(item.WebFunctionID, user.Lanuage);
-
-                        functionItemList.Where(x => x.ID == parentFunctionItem.ID).First().SubFunctionItemList.Add(secondLevelFunctionItem);
-
-
-
+                            ID = ancestorWebFunction.ID,
+                            Area = string.Empty,
+                            Controller = string.Empty,
+                            Action = string.Empty,
+                            Description = _webFunctionsService.GetWebFunctionDescription(ancestorWebFunction.ID, user.Lanuage),
+                            Seq = ancestorWebFunction.Seq,
+                            Icon = ancestorWebFunction.Icon,
+                            ParentID = ancestorWebFunction.ParentID
+                        };
+                        account.FunctionItemList.Add(ancestorFunctionItem);
                     }
-                    else   //表示这个节点是一个三级菜单
-                    {
-                        var parentWebFunction = _webFunctionsRepository.GetEntity(x => x.ID == item.ParentID);//二级菜单
-                        var ancestorWebFunction = _webFunctionsRepository.GetEntity(x => x.ID == parentWebFunction.ID);//一级菜单
-
-                        var firstLevelFunctionItem=functionItemList.FirstOrDefault(x=>x.ID==ancestorWebFunction.ID);
-
-                        if (firstLevelFunctionItem == null)
-                        {
-                            firstLevelFunctionItem = _webFunctionsService.GetFunctionItem(ancestorWebFunction.ID, user.Lanuage);
-                                
-                            functionItemList.Add(firstLevelFunctionItem);
-                        }
-
-                        var secondLevelFunctionItem = firstLevelFunctionItem.SubFunctionItemList.FirstOrDefault(x => x.ID == parentWebFunction.ID);
-                        if (secondLevelFunctionItem == null)
-                        {
-                            secondLevelFunctionItem = _webFunctionsService.GetFunctionItem(parentWebFunction.ID, user.Lanuage);
-                            
-                            firstLevelFunctionItem.SubFunctionItemList.Add(secondLevelFunctionItem);
-                        }
-                        var thirdLevelFunctionItem = _webFunctionsService.GetFunctionItem(item.WebFunctionID, user.Lanuage); 
-
-                        secondLevelFunctionItem.SubFunctionItemList.Add(thirdLevelFunctionItem);
-
-                    }
-
                 
-                }
-            
+                    var parentFunctionItem = ancestorFunctionItem.SubFunctionItemList.Where(x => x.ID == parentWebFunction.ID).FirstOrDefault();  //判断二级菜单是否为空
+                    if (parentFunctionItem == null)
+                    {
+                        parentFunctionItem = new FunctionItem()
+                        {
+                            Area = string.Empty,
+                            Controller = string.Empty,
+                            Action = string.Empty,
+                            Icon = parentWebFunction.Icon,
+                            Seq = parentWebFunction.Seq,
+                            Description = _webFunctionsService.GetWebFunctionDescription(parentWebFunction.ID, user.Lanuage),
+                            ID = parentWebFunction.ID,
+                            ParentID = parentWebFunction.ParentID,
+                        };
+                        ancestorFunctionItem.SubFunctionItemList.Add(parentFunctionItem);
+                    }
+
+                    ///加入三级菜单
+                    parentFunctionItem.SubFunctionItemList.Add(new FunctionItem()
+                    {
+                        ID = currentWebFunction.ID,
+                        Area = currentWebFunction.Area,
+                        Controller = currentWebFunction.Controller,
+                        Action = currentWebFunction.Action,
+                        Icon = currentWebFunction.Icon,
+                        Seq = currentWebFunction.Seq,
+                        Description = _webFunctionsService.GetWebFunctionDescription(currentWebFunction.ID, user.Lanuage),
+                        ParentID = currentWebFunction.ParentID
+                    });
+
+
+                } 
             }
-
-
-
-
-
-            //account.WebFunctionOperationList = (from lnkRolesWebFunctions in _lnkRolesWebFunctionsRepository.GetAsQueryable()
-            //                                    join roles in _rolesRepository.GetAsQueryable() on lnkRolesWebFunctions.RolesUniqueID equals roles.ID
-            //                                    join lnkUsersRoles in _lnkUsersRolesRepository.GetAsQueryable() on roles.ID equals lnkUsersRoles.RolesUniqueID
-            //                                    join users in _usersRepository.GetAsQueryable() on lnkUsersRoles.UsersUniqueID equals users.UniqueID
-            //                                    join webFunctions in _webFunctionsRepository.GetAsQueryable() on lnkRolesWebFunctions.WebFunctionUniqueID equals webFunctions.ID
-            //                                    join operations in _operationsRepository.GetAsQueryable() on lnkRolesWebFunctions.OperationsUniqueID equals operations.UniqueID
-            //                                    join lnkWebFunctionsLanguages in _lnkWebFunctionsLanguagesRepository.GetAsQueryable() on webFunctions.ID equals lnkWebFunctionsLanguages.WebFunctionUniqueID
-            //                                    join lanuages in _languagesRepository.GetAsQueryable() on lnkWebFunctionsLanguages.LanguagesUniqueID equals lanuages.UniqueID
-            //                                    where users.ID == "admin"
-            //                                    select lnkRolesWebFunctions
-
-
-
-            //                                  );
-
-
-
-
             return account;
-
         }
-
-
     }
 }

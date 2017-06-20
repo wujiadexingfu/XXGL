@@ -44,6 +44,11 @@ namespace XXGL.Base.Models.Authenticated
         public int? Seq { get; set; }
 
        /// <summary>
+       /// 描述
+       /// </summary>
+        public string Description { get; set; }
+
+       /// <summary>
        /// 操作菜单
        /// </summary>
 

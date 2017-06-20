@@ -19,11 +19,17 @@ namespace XXGL.Controllers
         public ActionResult Index()
         {
            // var user = _userService.Login("admin", "系统管理员");
-           var m= _userService.GetAccount("admin");
+           var account= _userService.GetAccount("admin");
+           Session["Account"] = account;
 
             return View();
         }
 
+
+        public ActionResult Test()
+        {
+            return View();
+        }
        
 
     }

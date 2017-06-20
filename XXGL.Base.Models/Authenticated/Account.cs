@@ -43,7 +43,12 @@ namespace XXGL.Base.Models.Authenticated
        /// 语言
        /// </summary>
 
-       public string Lanuage { get; set; }
+       public string LanuageUniqueID { get; set; }
+
+       /// <summary>
+       /// 语言ID
+       /// </summary>
+       public string LanuageID { get; set; }
 
        /// <summary>
        /// 记录菜单和操作权限
@@ -60,7 +65,5 @@ namespace XXGL.Base.Models.Authenticated
            WebFunctionOperationList = new List<WebFunctionOperation>();
            FunctionItemList = new List<FunctionItem>();
        }
-      
-
     }
 }

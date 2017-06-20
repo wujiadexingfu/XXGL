@@ -1,14 +1,55 @@
-﻿@{
+﻿@model XXGL.Base.Models.Authenticated.Account
+@{
     Layout = null;
 }
-<ul class="breadcrumb" style="width:auto; background-color:white">
-    <li>
-        <i class="ace-icon fa fa-home home-icon"></i>
-        <a href="#">Home11111111</a>
-    </li>
 
-    <li>
-        <a href="#">Forms</a>
-    </li>
-    <li class="active">Form</li>
-</ul>
+@if (Model != null)
+{
+    <ul class="breadcrumb" style="width:auto; background-color:white">
+        @*@if (Model.LanuageID == "zh-cn")
+        {
+            <i class="ace-icon fa fa-home home-icon" style="cursor: pointer"><a href="@Url.Action("Index","Home")">首页 </a></i>
+        }
+        else
+        {
+            <i class="ace-icon fa fa-home home-icon" style="cursor: pointer"><a href="@Url.Action("Index","Home")">Home </a></i>
+        }*@
+
+        <i class="ace-icon fa fa-home home-icon" style="cursor: pointer"><a href="@Url.Action("Index","Home")">@Resources.Resource.Home</a></i>
+
+        @if (!string.IsNullOrEmpty(ViewBag.firstPageDescription) || !string.IsNullOrEmpty(ViewBag.secondPageDescription) || !string.IsNullOrEmpty(ViewBag.thirdPageDescription))
+        {
+        <i>/</i>
+        }
+
+        @if (!string.IsNullOrEmpty(ViewBag.firstPageDescription))
+        {
+             <i class="ace-icon fa @ViewBag.firstPageIcon" style="cursor: pointer">@ViewBag.firstPageDescription /</i>
+        }
+        @if (!string.IsNullOrEmpty(ViewBag.secondPageDescription) || !string.IsNullOrEmpty(ViewBag.thirdPageDescription))
+        {
+            <i>/</i>
+        }
+
+
+        @if (!string.IsNullOrEmpty(ViewBag.secondPageDescription))
+        {
+            <i class="ace-icon fa @ViewBag.secondPageIcon" style="cursor: pointer">@ViewBag.secondPageDescription </i>
+        }
+
+        @if ( !string.IsNullOrEmpty(ViewBag.thirdPageDescription))
+        {
+            <i>/</i>
+        }
+
+        @if (!string.IsNullOrEmpty(ViewBag.thirdPageDescription))
+        {
+            <i class="ace-icon fa @ViewBag.thirdPageIcon" style="cursor: pointer">@ViewBag.thirdPageDescription </i>
+        }
+    </ul>
+}
+
+
+
+   
+
