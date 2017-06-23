@@ -12,7 +12,7 @@ namespace XXGL.Base.IService
 {
   public   interface IUsersService
     {
-      UserModel Login(string ID, string name);
+      UserModel  GetUser(string ID);
 
        Account GetAccount(string ID); 
     }

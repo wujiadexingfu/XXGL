@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 看不清，点击换一张 的本地化字符串。
+        /// </summary>
+        public static string ChangeVerficationCode {
+            get {
+                return ResourceManager.GetString("ChangeVerficationCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 修改头像 的本地化字符串。
         /// </summary>
         public static string EditImage {
@@ -88,11 +97,128 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 登陆 的本地化字符串。
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 用戶登录 的本地化字符串。
+        /// </summary>
+        public static string LoginTitle {
+            get {
+                return ResourceManager.GetString("LoginTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 登出 的本地化字符串。
         /// </summary>
         public static string Logout {
             get {
                 return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 用户不存在 的本地化字符串。
+        /// </summary>
+        public static string NoUser {
+            get {
+                return ResourceManager.GetString("NoUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 密码 的本地化字符串。
+        /// </summary>
+        public static string PassWord {
+            get {
+                return ResourceManager.GetString("PassWord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 密码错误 的本地化字符串。
+        /// </summary>
+        public static string PassWordError {
+            get {
+                return ResourceManager.GetString("PassWordError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 请输入密码 的本地化字符串。
+        /// </summary>
+        public static string PassWordRequired {
+            get {
+                return ResourceManager.GetString("PassWordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 记住我 的本地化字符串。
+        /// </summary>
+        public static string RememberMe {
+            get {
+                return ResourceManager.GetString("RememberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 用户编号 的本地化字符串。
+        /// </summary>
+        public static string UserID {
+            get {
+                return ResourceManager.GetString("UserID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 请输入用户名 的本地化字符串。
+        /// </summary>
+        public static string UserIDRequired {
+            get {
+                return ResourceManager.GetString("UserIDRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 用户已失效 的本地化字符串。
+        /// </summary>
+        public static string UserInvalid {
+            get {
+                return ResourceManager.GetString("UserInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 验证码 的本地化字符串。
+        /// </summary>
+        public static string VerficationCode {
+            get {
+                return ResourceManager.GetString("VerficationCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 验证码错误 的本地化字符串。
+        /// </summary>
+        public static string VerficationCodeError {
+            get {
+                return ResourceManager.GetString("VerficationCodeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 请输入验证码 的本地化字符串。
+        /// </summary>
+        public static string VerficationCodeRequired {
+            get {
+                return ResourceManager.GetString("VerficationCodeRequired", resourceCulture);
             }
         }
         

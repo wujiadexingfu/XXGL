@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChangeVerficationCode" xml:space="preserve">
+    <value>Unclear， Change another one</value>
+  </data>
   <data name="EditImage" xml:space="preserve">
     <value>EditImage</value>
   </data>
@@ -126,8 +129,47 @@
   <data name="Home" xml:space="preserve">
     <value>Hpme</value>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LoginTitle" xml:space="preserve">
+    <value>User Login</value>
+  </data>
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
+  </data>
+  <data name="NoUser" xml:space="preserve">
+    <value>NoUser</value>
+  </data>
+  <data name="PassWord" xml:space="preserve">
+    <value>PassWord</value>
+  </data>
+  <data name="PassWordError" xml:space="preserve">
+    <value>PassWord Is Error</value>
+  </data>
+  <data name="PassWordRequired" xml:space="preserve">
+    <value>PassWord Is Required</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember me</value>
+  </data>
+  <data name="UserID" xml:space="preserve">
+    <value>UserID</value>
+  </data>
+  <data name="UserIDRequired" xml:space="preserve">
+    <value>UserID Is Required</value>
+  </data>
+  <data name="UserInvalid" xml:space="preserve">
+    <value>User Invalid</value>
+  </data>
+  <data name="VerficationCode" xml:space="preserve">
+    <value>VerficationCode</value>
+  </data>
+  <data name="VerficationCodeError" xml:space="preserve">
+    <value>VerficationCode Error</value>
+  </data>
+  <data name="VerficationCodeRequired" xml:space="preserve">
+    <value>VerficationCode Is Required</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>

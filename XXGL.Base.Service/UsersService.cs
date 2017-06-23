@@ -35,12 +35,17 @@ namespace XXGL.Base.Service
         }
 
 
-        public UserModel Login(string ID, string name)
+        public UserModel GetUser(string ID)
         {
-            var user = _usersRepository.GetEntity(x => x.ID == ID && x.Name == name);
-
-            return new UserModel() { ID = user.ID, Name = user.Name };
-
+            var user = _usersRepository.GetEntity(x => x.ID == ID );
+            if (user != null)
+            {
+                return new UserModel() { ID = user.ID, Name = user.Name, PassWord = user.PassWord, State = user.State };
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public Account GetAccount(string ID)
