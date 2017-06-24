@@ -117,7 +117,10 @@
                 <img src="@Url.Content("~/Content/images/timg.jpg")" style="height:80%;width:80%;margin-top:10%" />
             </div>
             <div class=" col-md-6 col-sm-12 ">
-                <form class="form-horizontal col-sm-8 " style="margin:80px">
+               
+                @using (Html.BeginForm("Login",null,FormMethod.Post, new { @class = "form-horizontal col-sm-8 " ,@style="margin:80px" }))
+                { 
+                 @*<form class="form-horizontal col-sm-8 " style="margin:80px">*@
                     <span class="heading">@Resources.Resource.Login</span>
                     <div class="form-group">
                         @Html.TextBoxFor(x => x.UserID, new { @placeholder = Resources.Resource.UserID, @class = "form-control" })
@@ -148,7 +151,9 @@
                         <span class="text">@Resources.Resource.RememberMe</span>
                         <button type="submit" class="btn btn-default">@Resources.Resource.Login</button>
                     </div>
-                </form>
+                @*</form>*@
+                
+                }
             </div>
         </div>
     </div>

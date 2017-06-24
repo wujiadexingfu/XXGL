@@ -19,10 +19,6 @@ namespace XXGL.Filter
             filterContext.Controller.ViewBag.secondPageIcon = null;
             filterContext.Controller.ViewBag.thirdPageIcon = null;
 
-
-
-
-
             string area = string.Empty;
             if (filterContext.RouteData.DataTokens["Area"] != null)
             {
@@ -32,66 +28,29 @@ namespace XXGL.Filter
             string controller = filterContext.RouteData.Values["controller"].ToString();
             string action = filterContext.RouteData.Values["action"].ToString();
 
-            if (account != null)
+            if (controller.ToLower() != "home" && action.ToLower() != "login")
             {
-               
-                if (string.IsNullOrEmpty(area))
+
+                if (account != null)
                 {
-                    var ancestorPage=account.FunctionItemList.Where(x=>x.Controller==controller&&x.Action==action).FirstOrDefault();
-                    if(ancestorPage!=null)
+
+                    if (string.IsNullOrEmpty(area))
                     {
-                         filterContext.Controller.ViewBag.firstPageDescription =ancestorPage.Description;
-                         filterContext.Controller.ViewBag.firstPageIcon= ancestorPage.Icon;
-                      
-                    }
-                    else
-                    {
-                            foreach(var ancestorPageItem in account.FunctionItemList)
+                        var ancestorPage = account.FunctionItemList.Where(x => x.Controller == controller && x.Action == action).FirstOrDefault();
+                        if (ancestorPage != null)
+                        {
+                            filterContext.Controller.ViewBag.firstPageDescription = ancestorPage.Description;
+                            filterContext.Controller.ViewBag.firstPageIcon = ancestorPage.Icon;
+
+                        }
+                        else
+                        {
+                            foreach (var ancestorPageItem in account.FunctionItemList)
                             {
-                                var parentPage=ancestorPageItem.SubFunctionItemList.Where(x=>x.Controller==controller&&x.Action==action).FirstOrDefault();
-                                if(parentPage!=null)
-                                {    
-                                    filterContext.Controller.ViewBag.firstPageDescription =ancestorPageItem.Description;
-                                    filterContext.Controller.ViewBag.secondPageDescription = parentPage.Description;
-
-                                    filterContext.Controller.ViewBag.firstPageIcon= ancestorPageItem.Icon;
-                                    filterContext.Controller.ViewBag.secondPageIcon = parentPage.Icon;
-                                    break;
-                                }
-
-                                foreach(var currentPageItem in parentPage.SubFunctionItemList)
+                                var parentPage = ancestorPageItem.SubFunctionItemList.Where(x => x.Controller == controller && x.Action == action).FirstOrDefault();
+                                if (parentPage != null)
                                 {
-                                    var currnetPage=currentPageItem.SubFunctionItemList.Where(x=>x.Controller==controller &&x.Action==action).FirstOrDefault();
-                                    if(currnetPage!=null)
-                                    {
-                                         filterContext.Controller.ViewBag.firstPageDescription = ancestorPage.Description;
-                                        filterContext.Controller.ViewBag.secondPageDescription = parentPage.Description;
-                                        filterContext.Controller.ViewBag.thirdPageDescription = currnetPage.Description;
-
-                                        filterContext.Controller.ViewBag.firstPageIcon = ancestorPage.Icon;
-                                        filterContext.Controller.ViewBag.secondPageIcon = parentPage.Icon;
-                                        filterContext.Controller.ViewBag.thirdPageIcon = currnetPage.Icon;
-                                        break;
-                                    }
-                                }
-                            }
-                    }
-                }else
-                {
-                 var ancestorPage=account.FunctionItemList.Where(x=>x.Area==area&& x.Controller==controller&&x.Action==action).FirstOrDefault();
-                    if(ancestorPage!=null)
-                    {
-                         filterContext.Controller.ViewBag.firstPageDescription =ancestorPage.Description;
-                         filterContext.Controller.ViewBag.firstPageIcon = ancestorPage.Icon;
-                    }
-                    else
-                    {
-                            foreach(var ancestorPageItem in account.FunctionItemList)
-                            {
-                                var parentPage=ancestorPageItem.SubFunctionItemList.Where(x=>x.Area==area&& x.Controller==controller&&x.Action==action).FirstOrDefault();
-                                if(parentPage!=null)
-                                {    
-                                    filterContext.Controller.ViewBag.firstPageDescription =ancestorPageItem.Description;
+                                    filterContext.Controller.ViewBag.firstPageDescription = ancestorPageItem.Description;
                                     filterContext.Controller.ViewBag.secondPageDescription = parentPage.Description;
 
                                     filterContext.Controller.ViewBag.firstPageIcon = ancestorPageItem.Icon;
@@ -99,12 +58,12 @@ namespace XXGL.Filter
                                     break;
                                 }
 
-                                foreach(var currentPageItem in parentPage.SubFunctionItemList)
+                                foreach (var currentPageItem in parentPage.SubFunctionItemList)
                                 {
-                                    var currnetPage=currentPageItem.SubFunctionItemList.Where(x=>x.Area==area&& x.Controller==controller  &&x.Action==action).FirstOrDefault();
-                                    if(currnetPage!=null)
+                                    var currnetPage = currentPageItem.SubFunctionItemList.Where(x => x.Controller == controller && x.Action == action).FirstOrDefault();
+                                    if (currnetPage != null)
                                     {
-                                         filterContext.Controller.ViewBag.firstPageDescription = ancestorPage.Description;
+                                        filterContext.Controller.ViewBag.firstPageDescription = ancestorPage.Description;
                                         filterContext.Controller.ViewBag.secondPageDescription = parentPage.Description;
                                         filterContext.Controller.ViewBag.thirdPageDescription = currnetPage.Description;
 
@@ -115,12 +74,53 @@ namespace XXGL.Filter
                                     }
                                 }
                             }
+                        }
                     }
-                }
-             
-             
-            }
+                    else
+                    {
+                        var ancestorPage = account.FunctionItemList.Where(x => x.Area == area && x.Controller == controller && x.Action == action).FirstOrDefault();
+                        if (ancestorPage != null)
+                        {
+                            filterContext.Controller.ViewBag.firstPageDescription = ancestorPage.Description;
+                            filterContext.Controller.ViewBag.firstPageIcon = ancestorPage.Icon;
+                        }
+                        else
+                        {
+                            foreach (var ancestorPageItem in account.FunctionItemList)
+                            {
+                                var parentPage = ancestorPageItem.SubFunctionItemList.Where(x => x.Area == area && x.Controller == controller && x.Action == action).FirstOrDefault();
+                                if (parentPage != null)
+                                {
+                                    filterContext.Controller.ViewBag.firstPageDescription = ancestorPageItem.Description;
+                                    filterContext.Controller.ViewBag.secondPageDescription = parentPage.Description;
 
+                                    filterContext.Controller.ViewBag.firstPageIcon = ancestorPageItem.Icon;
+                                    filterContext.Controller.ViewBag.secondPageIcon = parentPage.Icon;
+                                    break;
+                                }
+
+                                foreach (var currentPageItem in parentPage.SubFunctionItemList)
+                                {
+                                    var currnetPage = currentPageItem.SubFunctionItemList.Where(x => x.Area == area && x.Controller == controller && x.Action == action).FirstOrDefault();
+                                    if (currnetPage != null)
+                                    {
+                                        filterContext.Controller.ViewBag.firstPageDescription = ancestorPage.Description;
+                                        filterContext.Controller.ViewBag.secondPageDescription = parentPage.Description;
+                                        filterContext.Controller.ViewBag.thirdPageDescription = currnetPage.Description;
+
+                                        filterContext.Controller.ViewBag.firstPageIcon = ancestorPage.Icon;
+                                        filterContext.Controller.ViewBag.secondPageIcon = parentPage.Icon;
+                                        filterContext.Controller.ViewBag.thirdPageIcon = currnetPage.Icon;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                }
+            }
         }
     }
 }

@@ -20,6 +20,7 @@ namespace XXGL.Filter
                 }
 
                 string controller = filterContext.RouteData.Values["controller"].ToString();
+                string action = filterContext.RouteData.Values["action"].ToString();
 
             if (account != null)
             {
@@ -27,8 +28,11 @@ namespace XXGL.Filter
             }
             else
             {
-                if (controller!="Home")
-                filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary { { "area", "" }, { "controller", "Home" }, { "action", "Login" } });
+                if (controller.ToLower() != "home" && action.ToLower() != "login")
+                {
+                    filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary { { "area", "" }, { "controller", "Home" }, { "action", "Login" } });
+                }
+               
             }
                 
         }

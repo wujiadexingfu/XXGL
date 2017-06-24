@@ -43,7 +43,7 @@ namespace XXGL.Controllers
         [HttpPost]
           public ActionResult Login(LoginFormModel model)
           {
-              if (Session["ValidateCode"] != null && Convert.ToString(Session["ValidateCode"]) == model.VerficationCode)
+              if (Session["ValidateCode"] != null && Convert.ToString(Session["ValidateCode"]).ToLower() == model.VerficationCode)
               {
                   var user = _userService.GetUser(model.UserID);
                   if (user != null)
@@ -76,7 +76,7 @@ namespace XXGL.Controllers
               }
               else
               {
-                  ModelState.AddModelError("ValidateCode",  Resources.Resource.VerficationCodeError);
+                  ModelState.AddModelError("VerficationCode", Resources.Resource.VerficationCodeError);
                   return View();
               }
           }
