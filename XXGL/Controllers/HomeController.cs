@@ -43,7 +43,7 @@ namespace XXGL.Controllers
         [HttpPost]
           public ActionResult Login(LoginFormModel model)
           {
-              if (Session["ValidateCode"] != null && Convert.ToString(Session["ValidateCode"]).ToLower() == model.VerficationCode)
+              if (Session["ValidateCode"] != null && Convert.ToString(Session["ValidateCode"]).ToLower() == model.VerficationCode.ToLower())
               {
                   var user = _userService.GetUser(model.UserID);
                   if (user != null)

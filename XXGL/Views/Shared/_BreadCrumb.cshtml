@@ -2,54 +2,42 @@
 @{
     Layout = null;
 }
-
-@if (Model != null)
+<style>
+    /*.breadcrumbs{border-width:0;background-color:#e7f2f8;border-radius:4px;margin:8px 8px 0;}*/
+    .breadcrumbs {
+        position: relative;
+        z-index: auto;
+        border-bottom: 1px solid #e5e5e5;
+        background-color: #e7f2f8;
+        min-height: 41px;
+        line-height: 40px;
+        padding: 0 12px 0 0;
+        border-radius: 4px;
+    }
+</style>
+@if(Model != null)
 {
-    <ul class="breadcrumb" style="width:auto; background-color:white">
-        @*@if (Model.LanuageID == "zh-cn")
-        {
-            <i class="ace-icon fa fa-home home-icon" style="cursor: pointer"><a href="@Url.Action("Index","Home")">首页 </a></i>
-        }
-        else
-        {
-            <i class="ace-icon fa fa-home home-icon" style="cursor: pointer"><a href="@Url.Action("Index","Home")">Home </a></i>
-        }*@
+    <div class="col-md-12 col-sm-12 breadcrumbs">
+        <ul class="breadcrumb" style="width:auto; background-color:#e7f2f8">
+            @if(!string.IsNullOrEmpty(ViewBag.firstPageDescription))
+            { 
+                <li><i class="fa fa-home @ViewBag.firstPageIcon" style="cursor: pointer; font-size:13px"><a href="#" style="color:#18a689">&nbsp;@ViewBag.firstPageDescription</a></i></li>
+            }
 
-        <i class="ace-icon fa fa-home home-icon" style="cursor: pointer"><a href="@Url.Action("Index","Home")">@Resources.Resource.Home</a></i>
+            @if(!string.IsNullOrEmpty(ViewBag.seconcdPageDescription))
+            {
+                <li><i class="fa fa-home @ViewBag.secondPageIcon" style="cursor: pointer; font-size:13px"><a href="#" style="color:#18a689">&nbsp;@ViewBag.secondPageDescription</a></i></li>
+            }
 
-        @if (!string.IsNullOrEmpty(ViewBag.firstPageDescription) || !string.IsNullOrEmpty(ViewBag.secondPageDescription) || !string.IsNullOrEmpty(ViewBag.thirdPageDescription))
-        {
-        <i>/</i>
-        }
+            @if (!string.IsNullOrEmpty(ViewBag.thirdPageDescription))
+            {
+                <li><i class="fa fa-home @ViewBag.thirdPageIcon" style="cursor: pointer; font-size:13px"><a href="#" style="color:#18a689">&nbsp;@ViewBag.secondPageDescription</a></i></li>
+            }
+        </ul>
+    </div>
 
-        @if (!string.IsNullOrEmpty(ViewBag.firstPageDescription))
-        {
-             <i class="ace-icon fa @ViewBag.firstPageIcon" style="cursor: pointer">@ViewBag.firstPageDescription /</i>
-        }
-        @if (!string.IsNullOrEmpty(ViewBag.secondPageDescription) || !string.IsNullOrEmpty(ViewBag.thirdPageDescription))
-        {
-            <i>/</i>
-        }
-
-
-        @if (!string.IsNullOrEmpty(ViewBag.secondPageDescription))
-        {
-            <i class="ace-icon fa @ViewBag.secondPageIcon" style="cursor: pointer">@ViewBag.secondPageDescription </i>
-        }
-
-        @if ( !string.IsNullOrEmpty(ViewBag.thirdPageDescription))
-        {
-            <i>/</i>
-        }
-
-        @if (!string.IsNullOrEmpty(ViewBag.thirdPageDescription))
-        {
-            <i class="ace-icon fa @ViewBag.thirdPageIcon" style="cursor: pointer">@ViewBag.thirdPageDescription </i>
-        }
-    </ul>
 }
 
 
 
-   
 

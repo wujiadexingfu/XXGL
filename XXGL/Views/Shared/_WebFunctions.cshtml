@@ -3,49 +3,153 @@
     Layout = null;
 }
 
-    <ul class="nav side-menu">
-       @foreach (var ancestor in Model.FunctionItemList)
-        {
-            <li>
-                @if (string.IsNullOrEmpty (ancestor.Action))
-                {
-                    <a><i class="fa @ancestor.Icon"></i>@ancestor.Description <span class="fa fa-chevron-down"></span></a>
-                }
-                else
-                {
-                    <a  href="@Url.Action(ancestor.Action, ancestor.Controller, new { area=ancestor.Area})"><i class="fa @ancestor.Icon" ></i>@ancestor.Description <span class="fa fa-chevron-down"></span></a>
-                }
+@*<ul class="nav side-menu">
+    @foreach (var ancestor in Model.FunctionItemList)
+     {
+         <li>
+             @if (string.IsNullOrEmpty (ancestor.Action))
+             {
+                 <a><i class="fa @ancestor.Icon"></i>@ancestor.Description <span class="fa fa-chevron-down"></span></a>
+             }
+             else
+             {
+                 <a  href="@Url.Action(ancestor.Action, ancestor.Controller, new { area=ancestor.Area})"><i class="fa @ancestor.Icon" ></i>@ancestor.Description <span class="fa fa-chevron-down"></span></a>
+             }
 
-                @*<a><i class="fa @ancestor.Icon"></i>@ancestor.Description <span class="fa fa-chevron-down"></span></a>*@
-            
-                <ul class="nav child_menu">
-                    @foreach (var parent in ancestor.SubFunctionItemList)
-                    {
-                        if (parent.SubFunctionItemList.Count == 0)
+
+
+             <ul class="nav child_menu">
+                 @foreach (var parent in ancestor.SubFunctionItemList)
+                 {
+                     if (parent.SubFunctionItemList.Count == 0)
+                     {
+                         <li>  <a  class="fa fa-user " style="width:auto" href="@Url.Action(parent.Action, parent.Controller, new { area=parent.Area})">  @parent.Description </a></li>
+                     }
+                     else
+                     {
+                         <li >
+                             <a  class="fa fa-users   "  style ="width:100%">@parent.Description <span class="fa fa-chevron-down "></span></a>
+                             @if (parent.SubFunctionItemList.Count != 0)
+                             {
+                                 <ul class="nav child_menu">
+                                     @foreach (var current in parent.SubFunctionItemList)
+                                     {
+                                         <li class=" sub_menu"><a href="@Url.Action(current.Action, current.Controller, new { area = current.Area })" class="fa fa-user " style="width:auto">   @current.Description</a></li>
+                                     }
+                                 </ul>
+
+                             }
+                         </li>
+                     }
+
+
+                 }
+             </ul>
+
+         </li>
+     }
+     </ul>*@
+
+
+
+@foreach (var ancestor in Model.FunctionItemList)
+{
+    <li>
+        @if (ancestor.SubFunctionItemList != null && ancestor.SubFunctionItemList.Count != 0)
+        {
+            <a class="J_menuItem" href="@Url.Action(ancestor.Action, ancestor.Controller, new { area = ancestor.Area })"><i class="fa @ancestor.Icon"></i> <span class="nav-label">@ancestor.Description</span><span class="fa arrow"></span></a>
+
+            <ul class="nav nav-second-level">
+                @foreach (var parent in ancestor.SubFunctionItemList)
+                {
+                    <li>
+                        @if (parent.SubFunctionItemList != null && parent.SubFunctionItemList.Count != 0)
                         {
-                            <li>  <a  class="fa fa-user " style="width:auto" href="@Url.Action(parent.Action, parent.Controller, new { area=parent.Area})">  @parent.Description </a></li>
+                            <a class="J_menuItem"  href="#"> <i class="fa @ancestor.Icon"></i><span class="nav-label">@parent.Description</span> <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level">
+
+                                @foreach (var current in parent.SubFunctionItemList)
+                                {
+
+                                    <li><a class="J_menuItem" href="@Url.Action(current.Action, current.Controller, new { area=current.Area })"><i class="fa @current.Icon"></i><span class="nav-label">@current.Description </span></a></li>
+                                }
+                            </ul>
+
+
                         }
                         else
                         {
-                            <li >
-                                <a  class="fa fa-users   "  style ="width:100%">@parent.Description <span class="fa fa-chevron-down "></span></a>
-                                @if (parent.SubFunctionItemList.Count != 0)
-                                {
-                                    <ul class="nav child_menu">
-                                        @foreach (var current in parent.SubFunctionItemList)
-                                        {
-                                            <li class=" sub_menu"><a href="@Url.Action(current.Action, current.Controller, new { area = current.Area })" class="fa fa-user " style="width:auto">   @current.Description</a></li>
-                                        }
-                                    </ul>
 
-                                }
-                            </li>
+                            <a class="J_menuItem" href="@Url.Action(parent.Action, parent.Controller, new  {area=parent.Area })"> <i class="fa @parent.Icon"></i><span class="nav-label">@parent.Description</span></a>
                         }
 
-
-                    }
-                </ul>
-
-            </li>
+                    </li>
+                }
+            </ul>
         }
-        </ul>
+        else
+        {
+            <a class="J_menuItem" href="#"><i class="fa @ancestor.Icon"></i> <span class="nav-label">@ancestor.Description</span></a>
+        }
+    </li>
+
+
+
+}
+
+@*<li>
+    <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">表单</span><span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level">
+        <li>
+            <a class="J_menuItem" href="form_basic.html">基本表单</a>
+        </li>
+        <li>
+            <a class="J_menuItem" href="form_validate.html">表单验证</a>
+        </li>
+        <li>
+            <a class="J_menuItem" href="form_advanced.html">高级插件</a>
+        </li>
+        <li>
+            <a class="J_menuItem" href="form_wizard.html">表单向导</a>
+        </li>
+        <li>
+            <a href="#">文件上传 <span class="fa arrow"></span></a>
+            <ul class="nav nav-third-level">
+                <li>
+                    <a class="J_menuItem" href="form_webuploader.html">百度WebUploader</a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="form_file_upload.html">DropzoneJS</a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="form_avatar.html">头像裁剪上传</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">编辑器 <span class="fa arrow"></span></a>
+            <ul class="nav nav-third-level">
+                <li>
+                    <a class="J_menuItem" href="form_editors.html">富文本编辑器</a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="form_simditor.html">simditor</a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="form_markdown.html">MarkDown编辑器</a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="code_editor.html">代码编辑器</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a class="J_menuItem" href="suggest.html">搜索自动补全</a>
+        </li>
+        <li>
+            <a class="J_menuItem" href="layerdate.html">日期选择器layerDate</a>
+        </li>
+    </ul>
+</li>*@
+
+

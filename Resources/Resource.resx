@@ -129,6 +129,9 @@
   <data name="Home" xml:space="preserve">
     <value>首页</value>
   </data>
+  <data name="Lanuage" xml:space="preserve">
+    <value>语言</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>登陆</value>
   </data>

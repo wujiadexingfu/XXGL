@@ -129,6 +129,9 @@
   <data name="Home" xml:space="preserve">
     <value>Hpme</value>
   </data>
+  <data name="Lanuage" xml:space="preserve">
+    <value>Lanuage</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
