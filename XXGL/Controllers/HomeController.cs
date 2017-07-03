@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Utility;
 using XXGL.Base.IService;
 using XXGL.Base.Models.Authenticated;
@@ -21,7 +22,8 @@ namespace XXGL.Controllers
         public ActionResult Index()
         {
            // var user = _userService.Login("admin", "系统管理员");
-      
+            HttpCookie authcookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            FormsAuthenticationTicket authticket = FormsAuthentication.Decrypt(authcookie.Value);
 
             return View();
         }
@@ -54,6 +56,12 @@ namespace XXGL.Controllers
                           {
                               var account = _userService.GetAccount(model.UserID);
                               Session["Account"] = account;
+
+
+                              var ticket = new FormsAuthenticationTicket(1, account.ID, DateTime.Now, DateTime.Now.AddHours(24), true, account.ID, FormsAuthentication.FormsCookiePath);
+                              string encTicket = FormsAuthentication.Encrypt(ticket);
+                              Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
+
                               return RedirectToAction("Index");
                           }
                           else
@@ -84,9 +92,9 @@ namespace XXGL.Controllers
 
           public ActionResult GetValidateCode()
           {
-              int width = 100;
-              int height = 40;
-            int fontsize = 20;
+              int width = 80;
+              int height = 30;
+            int fontsize = 15;
             string code = string.Empty;
             byte[] bytes = ValidateCode.CreateValidateGraphic(out code, 4, width, height, fontsize);
             Session["ValidateCode"] = code;

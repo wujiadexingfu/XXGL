@@ -177,6 +177,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\custom.css" />
     <Content Include="Content\HCSS\css\animate.min.css" />
     <Content Include="Content\HCSS\css\bootstrap.min.css" />
     <Content Include="Content\HCSS\css\bootstrap.min14ed.css" />
@@ -242,6 +243,9 @@
     <Content Include="Content\HCSS\css\plugins\webuploader\webuploader.css" />
     <Content Include="Content\HCSS\css\style.min.css" />
     <Content Include="Content\HCSS\css\style.min862f.css" />
+    <Content Include="Content\HCSS\img\locked.png" />
+    <Content Include="Content\HCSS\img\login-background.jpg" />
+    <Content Include="Content\HCSS\img\user.png" />
     <Content Include="Content\Images\profile_small.jpg" />
     <Content Include="Content\Images\timg.jpg" />
     <Content Include="Content\Login.css" />
