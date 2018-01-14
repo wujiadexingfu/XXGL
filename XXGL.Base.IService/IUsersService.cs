@@ -25,5 +25,6 @@ namespace XXGL.Base.IService
 
        RequestResult EditUser(EditUserInputFormViewModel editUserInputFormViewModel);
 
+
     }
 }

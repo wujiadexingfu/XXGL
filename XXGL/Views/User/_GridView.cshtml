@@ -1,0 +1,98 @@
+﻿@model XXGL.Base.Models.UserViewModel.UserViewModel
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    Layout = null;
+    var resultInfo = Model.GridItem.TotalItemCount == 0 ? "" : string.Format("总共有{0}条数据，当前显示为{1}到{2}", Model.GridItem.TotalItemCount, Model.GridItem.FirstItemOnPage, Model.GridItem.LastItemOnPage);
+    var idx = Model.GridItem.FirstItemOnPage;
+}
+@*<script src="@Url.Content("~/Content/jQueryTabeZ/jQueryTabeZsy/js/table.js")"></script>
+<link href="@Url.Content("~/Content/jQueryTabeZ/jQueryTabeZsy/css/style.css")" rel="stylesheet" />*@
+<script type="text/javascript">
+    $(function () {
+        //reference：http://blog.csdn.net/peter_qyq/article/details/51995191插件的详细说明
+        $(".userPhoto").fancybox({});
+        //$("#table-sort").setTable();  //可以参考
+    });
+</script>
+
+<small>@resultInfo</small>
+<div class="table-responsive">
+    <table  id="table-sort" class="table no-margin  table-striped table-bordered table-hover ">
+        <thead>
+            <tr>
+                <th>@Resources.Resource.Operation </th>
+                <th>@Resources.Resource.Item </th>
+                @*<a data-ajax="true" data-ajax-begin="$.ShowLoading('divGridView')" data-ajax-complete="$.HideLoading('divGridView')" data-ajax-mode="replace" data-ajax-update="#divGridView" href="@Url.Action("Query", new {Model.Parameter.PageNo,Model.Parameter.ID })">4</a>*@
+                <th>@Resources.Resource.UserID </th>
+                <th>@Resources.Resource.UserName</th>
+                <th>@Resources.Resource.Title</th>
+                <th>Email</th>
+                <th>@Resources.Resource.MobilePhone</th>
+                <th>@Resources.Resource.Organization</th>
+                <th>@Resources.Resource.LastLoginTime</th>
+                <th>@Resources.Resource.State</th>
+                <th>@Resources.Resource.UserPhoto</th>
+            </tr>
+        </thead>
+
+
+        @foreach (var item in Model.GridItem)
+        {
+        
+            <tr>
+                <td>
+                    <a href="#" title="@Resources.Resource.Edit" onclick="Edit('@item.UniqueID')">
+                        <i class=" fa fa-edit text-green  fa-lg"></i>
+                    </a>
+                    <a href="#" style="margin-left:10px" title="@Resources.Resource.Delete">
+                        <i class=" fa fa-trash-o  text-red fa-lg "></i>
+                    </a>
+                    @if (!item.State)
+                    {
+                        <a href="#" style="margin-left:10px" title="@Resources.Resource.Revert">
+                            <i class=" fa    fa-undo text-blue fa-lg "></i>
+                        </a>
+                    }
+                </td>
+
+                <td>@(idx++)</td>
+                <td>@item.ID</td>
+                <td>@item.Name</td>
+                <td>@item.Title</td>
+                <td>@item.Email</td>
+                <td>@item.MobilePhone</td>
+                <td>@item.OrganizationUniqueID</td>
+                <td>@item.LastLoginTime</td>
+                @if (item.State)
+                {
+                    <td>  <span class="badge bg-light-blue">@Resources.Resource.Normal</span> </td>
+                }
+                else
+                {
+                    <td><span class="badge bg-red">@Resources.Resource.Invalid</span></td>
+                }
+
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Photo))
+                    {
+                        @*<a class="userPhoto " href="@Url.Content(string.Format("{0}/{1}", Utility.Config.FullVirtualUserPhtoto,"1.jpg")) " title="1235">
+                                <img class="user-image" src="@Url.Content(string.Format("{0}/{1}", Utility.Config.FullVirtualUserPhtoto,"1.png")) " kesrc="@Url.Content(string.Format("{0}/{1}", Utility.Config.FullVirtualUserPhtoto,"1.jpg")) " alt="123">
+                            </a>*@
+                        <a class="userPhoto" href="@Url.Content("~/Content/Images/1.jpg")" title="@item.Name">
+                            <img src="@Url.Content("~/Content/Images/11.png")" alt="">
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+@Html.PagedListPager(Model.GridItem, pageNo => Url.Action("Query", new { pageNo, Model.Parameter.ID, Model.Parameter.Name, Model.Parameter.OrganizationUniqueID }), Utility.SiteLibrary.GetDefaultPagerOptions(null))
+
+
+
+

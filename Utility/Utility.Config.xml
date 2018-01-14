@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Config>
+  <PageConfig>
+    <PageSize>15</PageSize><!--设置分页显示的数量-->
+    <MaxPageNumber>10</MaxPageNumber> <!--设置分页显示的最大页码数-->
+  </PageConfig>
+  <File  VirtualPath="XXGLFile"> <!--虚拟目录的根路径-->
+    <Image  VirtualPath="Image"> <!--下级目录-->
+      <UserPhoto  VirtualPath="UserPhoto">F:\XXGL\XXGLFile\Image\UserPhoto</UserPhoto>
+    </Image>
+  </File>
+  
+  
+  
+</Config>
+

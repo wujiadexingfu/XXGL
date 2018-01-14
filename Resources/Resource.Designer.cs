@@ -214,6 +214,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 {0}格式错误 的本地化字符串。
+        /// </summary>
+        public static string EmailWorngFormatter {
+            get {
+                return ResourceManager.GetString("EmailWorngFormatter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 用户编号重复 的本地化字符串。
         /// </summary>
         public static string ExistsUserID {
@@ -318,6 +327,15 @@ namespace Resources {
         public static string MobilePhone {
             get {
                 return ResourceManager.GetString("MobilePhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 {0}格式错误 的本地化字符串。
+        /// </summary>
+        public static string MobilePhoneWorngFormatter {
+            get {
+                return ResourceManager.GetString("MobilePhoneWorngFormatter", resourceCulture);
             }
         }
         

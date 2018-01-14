@@ -10,6 +10,8 @@ namespace Utility
    public  class Define
     {
        public const string Version = "V2017.06.17.001";
+       public const string InitialPassword = "123456";   //初始密码
+
 
        /// <summary>
        /// xml文件的文件名

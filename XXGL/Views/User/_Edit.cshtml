@@ -1,0 +1,174 @@
+﻿@model XXGL.Base.Models.UserViewModel.EditUserInputFormViewModel
+@{
+    Layout = null;
+}
+
+
+
+
+
+<script type="text/javascript">
+    $(function () {
+
+        /*
+       * 注意这儿一定要重新注册，否则无法启用验证。
+       *reference：https://www.itsvse.com/forum.php?mod=viewthread&tid=3342
+        */
+        $.validator.unobtrusive.parse($("#EditForm"));
+
+        $('#BirthDay').datepicker({
+            autoclose: true,//选中之后自动隐藏日期选择框
+            todayHighlight: true,
+            language: "zh-CN",
+           // clearBtn: true,//清除按钮
+            format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+        })
+    });
+    var Save = function () {
+        var form = $('#EditForm');
+        if (form.valid()) {
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("Edit")",
+                data: $("#EditForm").serialize(),
+                dataType: "json",
+                success: function (data) {
+                    if (data.IsSuccess) {
+                        $.SuccessToast(data.Message);
+                    } else {
+                        $.ErrorToast(data.Message);
+                    }
+                },
+                error:function (x,t,e) {
+                    $.ErrorToast("@Resources.Resource.SystemError")
+                }
+            })
+        };
+    };
+
+    var ResetPassword = function ()
+    {
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("ResetPassword")",
+                dataType: "json",
+                data: {"UniqueID":$("#UniqueID").val()},
+                success: function (data) {
+                if (data.IsSuccess) {
+                    $.SuccessToast(data.Message);
+                } else {
+                    $.ErrorToast(data.Message);
+                }
+            },
+            error:function (x,t,e) {
+                $.ErrorToast("@Resources.Resource.SystemError")
+            }
+        })
+
+    }
+
+
+</script>
+
+<button class="btn btn-app btn-primary  " onclick="Save()" title="@Resources.Resource.Save">
+    <i class=" fa fa-save "></i>
+    @Resources.Resource.Save
+</button>
+
+<button class="btn btn-app btn-purple  " onclick="Cancel()" title="@Resources.Resource.Cancel">
+    <i class=" fa fa-repeat  "></i>
+    @Resources.Resource.Cancel
+</button>
+
+<button class="btn btn-app btn-grey " onclick="ResetPassword()" title="@Resources.Resource.ResetPassword">
+    <i class=" fa fa-refresh  "></i>
+    @Resources.Resource.ResetPassword
+</button>
+
+
+<div class="col-md-12">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">@Resources.Resource.EditUser</h3>
+        </div>
+        <div class="box-body">
+                <div class="table-responsive">
+                    <form id="EditForm">
+                        @Html.HiddenFor(x=>x.UniqueID)
+                        <table class="table no-margin  table-striped table-bordered table-hover ">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-6 col-md-2" >@Html.LabelFor(x => x.ID)</th>
+                                    <td class="col-sm-6 col-md-4">
+                                        @Html.TextBoxFor(x => x.ID, new { @class = "form-control" })
+
+                                        @Html.ValidationMessageFor(x => x.ID)
+                                    </td>
+                                    <th class="col-sm-6 col-md-2">@Html.LabelFor(x => x.Name)</th>
+                                    <td class="col-sm-6 col-md-4">
+                                        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+
+                                        @Html.ValidationMessageFor(x => x.Name)
+                                    </td>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                        <tr>
+                            <th> @Html.LabelFor(x=>x.Title)</th>
+                            <td>@Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Title)
+                
+                            </td>
+                            <th>@Html.LabelFor(x => x.Email)</th>
+                            <td>@Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Email)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>@Html.LabelFor(x => x.BirthDay)</th>
+                            <td>
+                                <div class="input-group date">
+                                
+                                    @Html.TextBoxFor(x => x.BirthDay, new { @class = "form-control",@readonly="readonly" })    
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </td>
+                            <th>@Html.LabelFor(x => x.MobilePhone)</th>
+                            <td>@Html.TextBoxFor(x => x.MobilePhone,new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.MobilePhone)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>@Html.LabelFor(x => x.OrganizationUniqueID) </th>
+                            <td>@Html.TextBoxFor(x => x.OrganizationUniqueID, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.OrganizationUniqueID)
+                            </td>
+                            <th>@Html.LabelFor(x=>x.Lanuage) </th>
+                            <td>@Html.TextBoxFor(x => x.Lanuage, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Lanuage)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>@Html.LabelFor(x =>x.Other)</th>
+
+                            <td colspan="3">
+                                
+                             
+                                @Html.TextAreaFor(x=>x.Other,new { @class = "form-control" })
+                            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
