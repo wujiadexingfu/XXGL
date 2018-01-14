@@ -1,2 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<Config>
+  <PageConfig>
+    <PageSize>15</PageSize><!--设置分页显示的数量-->
+    
+  </PageConfig>
+  
+  
+  
+</Config>
 

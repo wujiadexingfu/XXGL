@@ -2,40 +2,48 @@
 @{
     Layout = null;
 }
-<li class="nav-header">
-    <div class="dropdown profile-element">
-        <span><img alt="image" class="img-circle" src="@Url.Content("~/Content/Images/profile_small.jpg")" /></span>
-        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-            <span class="clear">
 
-                <span class="block m-t-xs"><strong class="font-bold">@Model.ID </strong></span>
-                <span class="text-muted text-xs block">@Model.Name<b class="caret"></b></span>
-            </span>
-        </a>
-        <ul class="dropdown-menu animated fadeInRight m-t-xs">
-            <li>
-                <a class="J_menuItem" href="#">@Resources.Resource.Version @Utility.Define.Version </a>
-            </li>
-            <li>
-                <a class="J_menuItem" href="#">@Resources.Resource.EditImage</a>
-            </li>
+<li class="dropdown user user-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <img src="@Url.Content("~/Content/Images/profile_small.jpg")" class="user-image" alt="User Image">
+        <span class="hidden-xs">@Model.Name</span>
+    </a>
+    <ul class="dropdown-menu">
+        <!-- User image -->
+        <li class="user-header">
+            <img src="@Url.Content("~/Content/Images/profile_small.jpg")" class="img-circle" alt="User Image">
+            <p>
+                @Model.Name
+                <small>@DateTime.Now.ToString("yyyy/MM/dd")</small>
+            </p>
+        </li>
+        <!-- Menu Body -->
+        <li class="user-body">
+            <ul style="list-style: none;">
+                <li>
+                    <a href="javascript:;">
+                        <span>@Resources.Resource.Version  </span>
+                        <span class="pull-right">@Utility.Define.Version</span>
+                    </a>
+                </li>
 
-            <li>
-                <a class="J_menuItem" href="#">@Resources.Resource.EditPassword</a>
-            </li>
-
-            <li>
-                <a class="J_menuItem" href="#">@Resources.Resource.Lanuage </a>
-            </li>
-
-
-            <li class="divider"></li>
-            <li>
-                <a class="J_menuItem" href="#">@Resources.Resource.Logout</a>
-            </li>
-        </ul>
-    </div>
-    <div class="logo-element">
-        H+
-    </div>
+                <li>
+                    <a href="javascript:;">
+                        <span>@Resources.Resource.Lanuage </span>
+                        <span class="pull-right">@Model.LanuageID </span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- Menu Footer-->
+        <li class="user-footer">
+            <div class="pull-left">
+                <a href="@Url.Action("ChangePassword", "Home", new { area = "" })" class="btn btn-default btn-flat  fa  fa-key">@Resources.Resource.EditPassword</a>
+            </div>
+            <div class="pull-right">
+                <a href="#" class="btn btn-default btn-flat  fa fa-sign-out" title="@Resources.Resource.Logout">@Resources.Resource.Logout</a>
+            </div>
+        </li>
+    </ul>
 </li>
+  

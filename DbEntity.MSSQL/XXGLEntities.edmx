@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="XXGLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="XXGLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Languages">
           <Key>
             <PropertyRef Name="UniqueID" />
@@ -58,6 +58,19 @@
           <Property Name="Name" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Seq" Type="int" />
         </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“XXGL.dbo.Organization”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="ID" Type="varchar" MaxLength="20" />
+          <Property Name="Name" Type="varchar" MaxLength="20" />
+          <Property Name="Icon" Type="varchar" MaxLength="10" />
+          <Property Name="ParentUniqueID" Type="varchar" MaxLength="40" />
+          <Property Name="ManagerUniqueID" Type="varchar" MaxLength="40" />
+        </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="UniqueID" />
@@ -92,7 +105,7 @@
           <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
           <Property Name="ModifyTime" Type="datetime" />
           <Property Name="Other" Type="varchar" MaxLength="2000" />
-          <Property Name="Lanuage" Type="varchar" MaxLength="20" />
+          <Property Name="Lanuage" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="LastLoginTime" Type="datetime" />
         </EntityType>
         <EntityType Name="WebFunctions">
@@ -121,9 +134,18 @@
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebFunctions" EntityType="Self.WebFunctions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Organization" EntityType="Self.Organization" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Organization].[UniqueID] AS [UniqueID], 
+    [Organization].[ID] AS [ID], 
+    [Organization].[Name] AS [Name], 
+    [Organization].[Icon] AS [Icon], 
+    [Organization].[ParentUniqueID] AS [ParentUniqueID], 
+    [Organization].[ManagerUniqueID] AS [ManagerUniqueID]
+    FROM [dbo].[Organization] AS [Organization]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="XXGLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -214,7 +236,7 @@
           <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="Other" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
-          <Property Name="Lanuage" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Lanuage" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastLoginTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="WebFunctions">
@@ -243,7 +265,19 @@
           <EntitySet Name="Roles" EntityType="Self.Roles" />
           <EntitySet Name="Users" EntityType="Self.Users" />
           <EntitySet Name="WebFunctions" EntityType="Self.WebFunctions" />
+          <EntitySet Name="Organization" EntityType="XXGLModel.Organization" />
         </EntityContainer>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Icon" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ParentUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ManagerUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -357,6 +391,18 @@
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
                 <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
                 <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Organization">
+            <EntityTypeMapping TypeName="XXGLModel.Organization">
+              <MappingFragment StoreEntitySet="Organization">
+                <ScalarProperty Name="ManagerUniqueID" ColumnName="ManagerUniqueID" />
+                <ScalarProperty Name="ParentUniqueID" ColumnName="ParentUniqueID" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

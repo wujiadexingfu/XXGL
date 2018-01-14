@@ -6,7 +6,9 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Utility;
 using XXGL.Base.IService;
+using XXGL.Base.Models;
 using XXGL.Base.Models.Authenticated;
+using XXGL.Base.Models.HomeViewModel;
 
 namespace XXGL.Controllers
 {
@@ -21,9 +23,10 @@ namespace XXGL.Controllers
         // GET: Home
         public ActionResult Index()
         {
-           // var user = _userService.Login("admin", "系统管理员");
-            HttpCookie authcookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-            FormsAuthenticationTicket authticket = FormsAuthentication.Decrypt(authcookie.Value);
+            var user = _userService.GetAccount("admin");
+            Session["Account"] = user;
+         //  HttpCookie authcookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+         // FormsAuthenticationTicket authticket = FormsAuthentication.Decrypt(authcookie.Value);
 
             return View();
         }
@@ -38,7 +41,7 @@ namespace XXGL.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            return View(new LoginFormModel());
+            return View(new LoginFormModel() {  UserID="admin", PassWord="admin"});
         }
 
         [AllowAnonymous]
@@ -56,7 +59,6 @@ namespace XXGL.Controllers
                           {
                               var account = _userService.GetAccount(model.UserID);
                               Session["Account"] = account;
-
 
                               var ticket = new FormsAuthenticationTicket(1, account.ID, DateTime.Now, DateTime.Now.AddHours(24), true, account.ID, FormsAuthentication.FormsCookiePath);
                               string encTicket = FormsAuthentication.Encrypt(ticket);
@@ -100,6 +102,23 @@ namespace XXGL.Controllers
             Session["ValidateCode"] = code;
             return File(bytes, @"image/jpeg");
           }
+
+
+          public ActionResult ChangePassword()
+          {
+              return View(new PasswordInputFormViewModel());
+          }
+
+        public ActionResult EditPassword(PasswordInputFormViewModel passwordInputFormViewModel)
+        {
+
+            var uniqueID = (Session["Account"] as Account).UniqueID;
+            var result = _userService.ChangePassword(uniqueID, "123");
+            return Json(JosnNetHelper.ObjectToJson<RequestResult>(result));
+        }
+
+
+
 
 
     }

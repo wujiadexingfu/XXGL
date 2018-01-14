@@ -2,41 +2,36 @@
 @{
     Layout = null;
 }
-<style>
-    /*.breadcrumbs{border-width:0;background-color:#e7f2f8;border-radius:4px;margin:8px 8px 0;}*/
-    .breadcrumbs {
-        position: relative;
-        z-index: auto;
-        border-bottom: 1px solid #e5e5e5;
-        background-color: #e7f2f8;
-        min-height: 41px;
-        line-height: 40px;
-        padding: 0 12px 0 0;
-        border-radius: 4px;
-    }
-</style>
-@if(Model != null)
-{
-    <div class="col-md-12 col-sm-12 breadcrumbs">
-        <ul class="breadcrumb" style="width:auto; background-color:#e7f2f8">
-            @if(!string.IsNullOrEmpty(ViewBag.firstPageDescription))
-            { 
-                <li><i class="fa fa-home @ViewBag.firstPageIcon" style="cursor: pointer; font-size:13px"><a href="#" style="color:#18a689">&nbsp;@ViewBag.firstPageDescription</a></i></li>
+
+    <section class="content-header">
+        <h1>
+         Home
+       <small>Control panel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a class="fa fa-home " style="cursor: pointer; font-size:13px"><a href="@Url.Action("Index","Home")">Home</a></a></li>
+            @if (!string.IsNullOrEmpty(ViewBag.firstPageDescription))
+            {
+                <li><a class="fa  @ViewBag.firstPageIcon"><i>&nbsp;@ViewBag.firstPageDescription</i></a></li>
             }
 
-            @if(!string.IsNullOrEmpty(ViewBag.seconcdPageDescription))
+            @if (!string.IsNullOrEmpty(ViewBag.secondPageDescription))
             {
-                <li><i class="fa fa-home @ViewBag.secondPageIcon" style="cursor: pointer; font-size:13px"><a href="#" style="color:#18a689">&nbsp;@ViewBag.secondPageDescription</a></i></li>
+                <li><a class="fa  @ViewBag.secondPageIcon"  ><i>&nbsp;@ViewBag.secondPageDescription</i></a></li>
             }
 
             @if (!string.IsNullOrEmpty(ViewBag.thirdPageDescription))
             {
-                <li><i class="fa fa-home @ViewBag.thirdPageIcon" style="cursor: pointer; font-size:13px"><a href="#" style="color:#18a689">&nbsp;@ViewBag.secondPageDescription</a></i></li>
+                <li><a class="fa  @ViewBag.thirdPageIcon" ><i>&nbsp;@ViewBag.thirdPageDescription</i></a></li>
             }
-        </ul>
-    </div>
+        </ol>
+    </section>
 
-}
+
+
+
+
+
 
 
 

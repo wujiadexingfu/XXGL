@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="ChangeVerficationCode" xml:space="preserve">
     <value>Unclear， Change another one</value>
+  </data>
+  <data name="Condition" xml:space="preserve">
+    <value>Condition</value>
   </data>
   <data name="EditImage" xml:space="preserve">
     <value>EditImage</value>
@@ -153,8 +159,14 @@
   <data name="PassWordRequired" xml:space="preserve">
     <value>PassWord Is Required</value>
   </data>
+  <data name="QueryResult" xml:space="preserve">
+    <value>QueryResult</value>
+  </data>
   <data name="RememberMe" xml:space="preserve">
     <value>Remember me</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
   </data>
   <data name="UserID" xml:space="preserve">
     <value>UserID</value>

@@ -34,5 +34,6 @@ namespace DbEntity.MSSQL
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<WebFunctions> WebFunctions { get; set; }
+        public virtual DbSet<Organization> Organization { get; set; }
     }
 }

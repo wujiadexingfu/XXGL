@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using XXGL.Base.IDAL;
 using XXGL.Base.Models;
 using XXGL.Base.Models.Authenticated;
+using XXGL.Base.Models.UserViewModel;
 
 namespace XXGL.Base.IService
 {
@@ -14,6 +15,15 @@ namespace XXGL.Base.IService
     {
       UserModel  GetUser(string ID);
 
-       Account GetAccount(string ID); 
+       Account GetAccount(string ID);
+
+       List<UserGridItem> GetUserList(UserParameter Parameters ,out int TotalCount);
+
+       RequestResult ChangePassword(string UniqueID, string NewPassword);
+
+       EditUserInputFormViewModel GetUserByUniqueID(string uniqueID);
+
+       RequestResult EditUser(EditUserInputFormViewModel editUserInputFormViewModel);
+
     }
 }

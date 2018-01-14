@@ -54,6 +54,7 @@
     <Compile Include="LnkUsersRolesRepository.cs" />
     <Compile Include="LnkWebFunctionsLanguagesRepository.cs" />
     <Compile Include="OperationsRepository.cs" />
+    <Compile Include="OrganizationRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RolesRepository.cs" />
     <Compile Include="UsersRepository.cs" />

@@ -45,6 +45,7 @@
     <Compile Include="ILnkUsersRolesService.cs" />
     <Compile Include="ILnkWebFunctionsLanguagesService.cs" />
     <Compile Include="IOperationsService.cs" />
+    <Compile Include="IOrganizationService.cs" />
     <Compile Include="IRolesService.cs" />
     <Compile Include="IUsersService.cs" />
     <Compile Include="IWebFunctionsService.cs" />

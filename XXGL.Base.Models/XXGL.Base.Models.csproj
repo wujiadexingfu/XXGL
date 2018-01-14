@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -44,8 +48,15 @@
     <Compile Include="Authenticated\FunctionItem.cs" />
     <Compile Include="Authenticated\LoginFormModel.cs" />
     <Compile Include="Authenticated\WebFunctionOperation.cs" />
+    <Compile Include="CommonModel\BasePageModel.cs" />
+    <Compile Include="HomeViewModel\PasswordInputFormViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestResult.cs" />
     <Compile Include="UserModel.cs" />
+    <Compile Include="UserViewModel\EditUserInputFormViewModel.cs" />
+    <Compile Include="UserViewModel\UserGridItem.cs" />
+    <Compile Include="UserViewModel\UserParameter.cs" />
+    <Compile Include="UserViewModel\UserViewModel.cs" />
     <Compile Include="WebFunction\WebFunctionOperationModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +64,13 @@
       <Project>{961a5a2f-a8d5-4e2d-947e-6e041daceb7f}</Project>
       <Name>Resources</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{a5bf972f-11b0-4219-9475-4cdfa423e6db}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

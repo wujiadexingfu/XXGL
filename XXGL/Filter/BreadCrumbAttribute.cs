@@ -12,12 +12,14 @@ namespace XXGL.Filter
         void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext)
         {
             var account = HttpContext.Current.Session["Account"] as Account;
-            filterContext.Controller.ViewBag.firstPageDescription = null;
-            filterContext.Controller.ViewBag.secondPageDescription = null;
-            filterContext.Controller.ViewBag.thirdPageDescription = null;
-            filterContext.Controller.ViewBag.firstPageIcon = null;
-            filterContext.Controller.ViewBag.secondPageIcon = null;
-            filterContext.Controller.ViewBag.thirdPageIcon = null;
+            filterContext.Controller.ViewBag.firstPageDescription = null;   //一级菜单描述
+            filterContext.Controller.ViewBag.secondPageDescription = null; //二级菜单描述
+            filterContext.Controller.ViewBag.thirdPageDescription = null; //三级菜单描述
+            filterContext.Controller.ViewBag.firstPageIcon = null; //一级菜单图案
+            filterContext.Controller.ViewBag.secondPageIcon = null; //二级级菜单图案
+            filterContext.Controller.ViewBag.thirdPageIcon = null; //三级菜单图案
+
+            filterContext.Controller.ViewBag.currentWebFunctionID = null;  //当前所在页的WebFunctionID ，主要用于设置当菜单栏的状态
 
             string area = string.Empty;
             if (filterContext.RouteData.DataTokens["Area"] != null)
@@ -42,7 +44,7 @@ namespace XXGL.Filter
                             {
                                 filterContext.Controller.ViewBag.firstPageDescription = ancestorPage.Description;
                                 filterContext.Controller.ViewBag.firstPageIcon = ancestorPage.Icon;
-
+                                filterContext.Controller.ViewBag.currentWebFunctionID = ancestorPage.ID;
                             }
                             else
                             {
@@ -56,22 +58,28 @@ namespace XXGL.Filter
 
                                         filterContext.Controller.ViewBag.firstPageIcon = ancestorPageItem.Icon;
                                         filterContext.Controller.ViewBag.secondPageIcon = parentPage.Icon;
+
+                                        filterContext.Controller.ViewBag.currentWebFunctionID = parentPage.ID;
                                         break;
                                     }
-
-                                    foreach (var currentPageItem in parentPage.SubFunctionItemList)
+                                    else
                                     {
-                                        var currnetPage = currentPageItem.SubFunctionItemList.Where(x => x.Controller == controller && x.Action == action).FirstOrDefault();
-                                        if (currnetPage != null)
+                                        foreach (var  parentPageItem in ancestorPageItem.SubFunctionItemList)
                                         {
-                                            filterContext.Controller.ViewBag.firstPageDescription = ancestorPage.Description;
-                                            filterContext.Controller.ViewBag.secondPageDescription = parentPage.Description;
-                                            filterContext.Controller.ViewBag.thirdPageDescription = currnetPage.Description;
+                                            var currnetPage = parentPageItem.SubFunctionItemList.Where(x => x.Controller == controller && x.Action == action).FirstOrDefault();
+                                            if (currnetPage != null)
+                                            {
+                                                filterContext.Controller.ViewBag.firstPageDescription = ancestorPageItem.Description;
+                                                filterContext.Controller.ViewBag.secondPageDescription = parentPageItem.Description;
+                                                filterContext.Controller.ViewBag.thirdPageDescription = currnetPage.Description;
 
-                                            filterContext.Controller.ViewBag.firstPageIcon = ancestorPage.Icon;
-                                            filterContext.Controller.ViewBag.secondPageIcon = parentPage.Icon;
-                                            filterContext.Controller.ViewBag.thirdPageIcon = currnetPage.Icon;
-                                            break;
+                                                filterContext.Controller.ViewBag.firstPageIcon = ancestorPageItem.Icon;
+                                                filterContext.Controller.ViewBag.secondPageIcon = parentPageItem.Icon;
+                                                filterContext.Controller.ViewBag.thirdPageIcon = currnetPage.Icon;
+
+                                                filterContext.Controller.ViewBag.currentWebFunctionID = currnetPage.ID;
+                                                break;
+                                            }
                                         }
                                     }
                                 }
@@ -84,6 +92,8 @@ namespace XXGL.Filter
                             {
                                 filterContext.Controller.ViewBag.firstPageDescription = ancestorPage.Description;
                                 filterContext.Controller.ViewBag.firstPageIcon = ancestorPage.Icon;
+
+                                filterContext.Controller.ViewBag.currentWebFunctionID = ancestorPage.ID;
                             }
                             else
                             {
@@ -97,31 +107,34 @@ namespace XXGL.Filter
 
                                         filterContext.Controller.ViewBag.firstPageIcon = ancestorPageItem.Icon;
                                         filterContext.Controller.ViewBag.secondPageIcon = parentPage.Icon;
+
+                                        filterContext.Controller.ViewBag.currentWebFunctionID = parentPage.ID;
                                         break;
                                     }
-
-                                    foreach (var currentPageItem in parentPage.SubFunctionItemList)
+                                    else
                                     {
-                                        var currnetPage = currentPageItem.SubFunctionItemList.Where(x => x.Area == area && x.Controller == controller && x.Action == action).FirstOrDefault();
-                                        if (currnetPage != null)
+                                        foreach (var currentPageItem in parentPage.SubFunctionItemList)
                                         {
-                                            filterContext.Controller.ViewBag.firstPageDescription = ancestorPage.Description;
-                                            filterContext.Controller.ViewBag.secondPageDescription = parentPage.Description;
-                                            filterContext.Controller.ViewBag.thirdPageDescription = currnetPage.Description;
+                                            var currnetPage = currentPageItem.SubFunctionItemList.Where(x => x.Area == area && x.Controller == controller && x.Action == action).FirstOrDefault();
+                                            if (currnetPage != null)
+                                            {
+                                                filterContext.Controller.ViewBag.firstPageDescription = ancestorPage.Description;
+                                                filterContext.Controller.ViewBag.secondPageDescription = parentPage.Description;
+                                                filterContext.Controller.ViewBag.thirdPageDescription = currnetPage.Description;
 
-                                            filterContext.Controller.ViewBag.firstPageIcon = ancestorPage.Icon;
-                                            filterContext.Controller.ViewBag.secondPageIcon = parentPage.Icon;
-                                            filterContext.Controller.ViewBag.thirdPageIcon = currnetPage.Icon;
-                                            break;
+                                                filterContext.Controller.ViewBag.firstPageIcon = ancestorPage.Icon;
+                                                filterContext.Controller.ViewBag.secondPageIcon = parentPage.Icon;
+                                                filterContext.Controller.ViewBag.thirdPageIcon = currnetPage.Icon;
+
+                                                filterContext.Controller.ViewBag.currentWebFunctionID = currnetPage.ID;
+                                                break;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-
-
                     }
-
                 }
                 else
                 {

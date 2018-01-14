@@ -117,8 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>新增</value>
+  </data>
   <data name="ChangeVerficationCode" xml:space="preserve">
     <value>看不清，点击换一张</value>
+  </data>
+  <data name="Condition" xml:space="preserve">
+    <value>查询条件</value>
+  </data>
+  <data name="CreateTime" xml:space="preserve">
+    <value>创建时间</value>
+  </data>
+  <data name="CreateUser" xml:space="preserve">
+    <value>创建人员</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>编辑</value>
   </data>
   <data name="EditImage" xml:space="preserve">
     <value>修改头像</value>
@@ -126,11 +144,26 @@
   <data name="EditPassword" xml:space="preserve">
     <value>修改密码</value>
   </data>
+  <data name="FirstPageFormat" xml:space="preserve">
+    <value>首页</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>首页</value>
   </data>
+  <data name="Invalid" xml:space="preserve">
+    <value>失效</value>
+  </data>
+  <data name="Item" xml:space="preserve">
+    <value>项次</value>
+  </data>
   <data name="Lanuage" xml:space="preserve">
     <value>语言</value>
+  </data>
+  <data name="LastLoginTime" xml:space="preserve">
+    <value>上次登陆时间</value>
+  </data>
+  <data name="LastPageFormat" xml:space="preserve">
+    <value>尾页</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>登陆</value>
@@ -141,8 +174,35 @@
   <data name="Logout" xml:space="preserve">
     <value>登出</value>
   </data>
+  <data name="MobilePhone" xml:space="preserve">
+    <value>电话</value>
+  </data>
+  <data name="ModifyTime" xml:space="preserve">
+    <value>修改时间</value>
+  </data>
+  <data name="ModifyUser" xml:space="preserve">
+    <value>修改人员</value>
+  </data>
+  <data name="NextPageFormat" xml:space="preserve">
+    <value>下一页</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>正常</value>
+  </data>
   <data name="NoUser" xml:space="preserve">
     <value>用户不存在</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="Organization" xml:space="preserve">
+    <value>部门</value>
+  </data>
+  <data name="OrganizationDescription" xml:space="preserve">
+    <value>部门名称</value>
+  </data>
+  <data name="OrganizationID" xml:space="preserve">
+    <value>部门ID</value>
   </data>
   <data name="PassWord" xml:space="preserve">
     <value>密码</value>
@@ -153,8 +213,26 @@
   <data name="PassWordRequired" xml:space="preserve">
     <value>请输入密码</value>
   </data>
+  <data name="PreviousPageFormat" xml:space="preserve">
+    <value>上一页</value>
+  </data>
+  <data name="QueryResult" xml:space="preserve">
+    <value>查询结果</value>
+  </data>
   <data name="RememberMe" xml:space="preserve">
     <value>记住我</value>
+  </data>
+  <data name="Revert" xml:space="preserve">
+    <value>恢复</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>查询</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>职称</value>
   </data>
   <data name="UserID" xml:space="preserve">
     <value>用户编号</value>
@@ -164,6 +242,12 @@
   </data>
   <data name="UserInvalid" xml:space="preserve">
     <value>用户已失效</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>用户名称</value>
+  </data>
+  <data name="UserPhoto" xml:space="preserve">
+    <value>图片</value>
   </data>
   <data name="VerficationCode" xml:space="preserve">
     <value>验证码</value>
@@ -176,5 +260,53 @@
   </data>
   <data name="Version" xml:space="preserve">
     <value>版本</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>确认密码</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>新密码</value>
+  </data>
+  <data name="PasswordRange" xml:space="preserve">
+    <value>密码应在5-16位之间</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>{0}必填</value>
+  </data>
+  <data name="EditFailed" xml:space="preserve">
+    <value>修改失败</value>
+  </data>
+  <data name="EditSuccess" xml:space="preserve">
+    <value>修改成功</value>
+  </data>
+  <data name="CompareNewPassword" xml:space="preserve">
+    <value>新密码与确认密码不一致</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="EditUser" xml:space="preserve">
+    <value>修改人员信息</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>重设密码</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="BirthDay" xml:space="preserve">
+    <value>出生日期</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>邮件地址</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>其他</value>
+  </data>
+  <data name="SystemError" xml:space="preserve">
+    <value>系统错误</value>
+  </data>
+  <data name="ExistsUserID" xml:space="preserve">
+    <value>用户编号重复</value>
   </data>
 </root>

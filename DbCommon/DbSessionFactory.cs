@@ -20,9 +20,7 @@ namespace DbCommon
          DbContext _dbSession = CallContext.GetData("DbSession") as DbContext;
 
          if (_dbSession == null)
-
          {
-
              _dbSession = new XXGLEntities();
 
              //将值设置到数据槽里面去

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using DbCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using XXGL.Base.DAL;
 using XXGL.Base.IDAL;
 using XXGL.Base.IService;
 using XXGL.Base.Service;
+using XXGL.Interface;
 
 
 namespace AutoFacRegisterType
@@ -16,6 +18,8 @@ namespace AutoFacRegisterType
   {
       public static void Register(ContainerBuilder builder)
       {
+          builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+
           builder.RegisterType<UsersRepository>().As<IUsersRepository>();
           builder.RegisterType<UsersService>().As<IUsersService>();
 
@@ -43,6 +47,9 @@ namespace AutoFacRegisterType
 
           builder.RegisterType<WebFunctionsRepository>().As<IWebFunctionsRepository>();
           builder.RegisterType<WebFunctionsService>().As<IWebFunctionsService>();
+
+          builder.RegisterType<OrganizationRepository>().As<IOrganizationRepository>();
+          builder.RegisterType<OrganizationService>().As<IOrganizationService>();
 
           
       }
