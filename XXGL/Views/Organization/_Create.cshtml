@@ -1,0 +1,112 @@
+﻿@model XXGL.Base.Models.OrganizationModel.CreateOrganizationInputFormViewModel
+@{
+    Layout = null;
+}
+
+<script type="text/javascript">
+        $(function () {
+
+            /*
+           * 注意这儿一定要重新注册，否则无法启用验证。
+           *reference：https://www.itsvse.com/forum.php?mod=viewthread&tid=3342
+            */
+            $.validator.unobtrusive.parse($("#CreateForm"));
+          
+        var Save = function () {
+            var form = $('#CreateForm');
+            if (form.valid()) {
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("Create")",
+                    data: form.serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.IsSuccess) {
+                            $.SuccessToast(data.Message);
+                            $("#divEditFormContainer").hide();
+                            $("#divQueryContainer").show();
+                            $("#criteria-form").submit();
+                        } else {
+                            $.ErrorToast(data.Message);
+                        }
+                    },
+                    error: function (x, t, e) {
+                        $.ErrorToast("系统错误")
+                    }
+                })
+            };
+        };
+
+
+
+
+</script>
+
+<button class="btn btn-app btn-primary  " onclick="Save()" title="保存">
+    <i class=" fa fa-save "></i>
+    保存
+</button>
+
+<button class="btn btn-app btn-purple  " onclick="Cancel()" title="取消">
+    <i class=" fa fa-repeat  "></i>
+    取消
+</button>
+
+<div class="col-md-12">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">新增组织信息</h3>
+        </div>
+        <div class="box-body">
+            <div class="table-responsive">
+                <form id="CreateForm">
+                    <table class="table no-margin  table-striped table-bordered table-hover ">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-6 col-md-2">@Html.LabelFor(x => x.ID)</th>
+                                <td class="col-sm-6 col-md-4">
+                                    @Html.TextBoxFor(x => x.ID, new { @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(x => x.ID)
+                                </td>
+                                <th class="col-sm-6 col-md-2">@Html.LabelFor(x => x.Name)</th>
+                                <td class="col-sm-6 col-md-4">
+                                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(x => x.Name)
+                                </td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <th> @Html.LabelFor(x => x.Icon)</th>
+                                <td>
+                                    @Html.TextBoxFor(x => x.Icon, new { @class = "form-control" })
+
+                                </td>
+                                <th>@Html.LabelFor(x => x.ParentUniqueID)</th>
+                                <td>
+                                    @Html.TextBoxFor(x => x.ParentUniqueID, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.ParentUniqueID)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th> @Html.LabelFor(x => x.ManagerUniqueID)</th>
+                                <td>
+                                    @Html.TextBoxFor(x => x.ManagerUniqueID, new { @class = "form-control" })
+
+                                </td>
+                                <th>@Html.LabelFor(x => x.Seq)</th>
+                                <td>
+                                    @Html.TextBoxFor(x => x.Seq, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.Seq)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

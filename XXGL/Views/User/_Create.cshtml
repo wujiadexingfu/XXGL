@@ -1,0 +1,201 @@
+﻿@model XXGL.Base.Models.UserViewModel.CreateUserInputFormViewModel
+    @{
+        Layout = null;
+    }
+
+    <script type="text/javascript">
+        $(function () {
+
+            /*
+           * 注意这儿一定要重新注册，否则无法启用验证。
+           *reference：https://www.itsvse.com/forum.php?mod=viewthread&tid=3342
+            */
+            $.validator.unobtrusive.parse($("#CreateForm"));
+
+            $('#BirthDay').datepicker({
+                autoclose: true,//选中之后自动隐藏日期选择框
+                todayHighlight: true,
+                language: "zh-CN",
+                // clearBtn: true,//清除按钮
+                format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+            });
+
+
+            $('#StartExpiryDate').datepicker({
+                autoclose: true,//选中之后自动隐藏日期选择框
+                todayHighlight: true,
+                language: "zh-CN",
+                clearBtn: true,//清除按钮
+                format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+            });
+
+            ///有效期结束日期
+            $('#EndExpiryDate').datepicker({
+                autoclose: true,//选中之后自动隐藏日期选择框
+                todayHighlight: true,
+                language: "zh-CN",
+                clearBtn: true,//清除按钮
+                format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+            });
+
+
+
+
+            $('.IsLogin').iCheck({
+                checkboxClass: 'icheckbox_flat-green',
+                radioClass: 'iradio_flat-green'
+            })
+        });
+        var Save = function () {
+            var form = $('#CreateForm');
+            if (form.valid()) {
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("Create")",
+                    data: form.serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.IsSuccess) {
+                            $.SuccessToast(data.Message);
+                            $("#divEditFormContainer").hide();
+                            $("#divQueryContainer").show();
+                            $("#criteria-form").submit();
+                        } else {
+                            $.ErrorToast(data.Message);
+                        }
+                    },
+                    error: function (x, t, e) {
+                        $.ErrorToast("系统错误")
+                    }
+                })
+            };
+        };
+
+      
+
+
+    </script>
+
+    <button class="btn btn-app btn-primary  " onclick="Save()" title="保存">
+        <i class=" fa fa-save "></i>
+        保存
+    </button>
+
+    <button class="btn btn-app btn-purple  " onclick="Cancel()" title="取消">
+        <i class=" fa fa-repeat  "></i>
+        取消
+    </button>
+
+    <div class="col-md-12">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">新增人员信息</h3>
+            </div>
+            <div class="box-body">
+                <div class="table-responsive">
+                    <form id="CreateForm">
+                        @Html.HiddenFor(x => x.UniqueID)
+                        <table class="table no-margin  table-striped table-bordered table-hover ">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-6 col-md-2">@Html.LabelFor(x => x.ID)</th>
+                                    <td class="col-sm-6 col-md-4">
+                                        @Html.TextBoxFor(x => x.ID, new { @class = "form-control" })
+
+                                        @Html.ValidationMessageFor(x => x.ID)
+                                    </td>
+                                    <th class="col-sm-6 col-md-2">@Html.LabelFor(x => x.Name)</th>
+                                    <td class="col-sm-6 col-md-4">
+                                        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+
+                                        @Html.ValidationMessageFor(x => x.Name)
+                                    </td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <th> @Html.LabelFor(x => x.Title)</th>
+                                    <td>
+                                        @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(x => x.Title)
+
+                                    </td>
+                                    <th>@Html.LabelFor(x => x.Email)</th>
+                                    <td>
+                                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(x => x.Email)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.LabelFor(x => x.BirthDay)</th>
+                                    <td>
+                                        <div class="input-group date">
+
+                                            @Html.TextBoxFor(x => x.BirthDay, new { @class = "form-control", @readonly = "readonly" })
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <th>@Html.LabelFor(x => x.MobilePhone)</th>
+                                    <td>
+                                        @Html.TextBoxFor(x => x.MobilePhone, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(x => x.MobilePhone)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.LabelFor(x => x.OrganizationUniqueID) </th>
+                                    <td>
+                                        @Html.TextBoxFor(x => x.OrganizationUniqueID, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(x => x.OrganizationUniqueID)
+                                    </td>
+                                    <th>@Html.LabelFor(x => x.IsLogin)</th>
+                                    <td>
+                                        @Html.RadioButtonFor(x => x.IsLogin, true, new { @id = "OK", @name = "IsLogin", @class = "IsLogin" })  是
+                                        &nbsp; &nbsp; &nbsp;   &nbsp; &nbsp; &nbsp;
+                                        @Html.RadioButtonFor(x => x.IsLogin, false, new { @id = "No", @name = "IsLogin", @class = "IsLogin" })  否
+                                        @Html.ValidationMessageFor(x => x.IsLogin)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.LabelFor(x => x.StartExpiryDate) </th>
+                                    <td>
+
+                                        <div class="input-group date">
+
+                                            @Html.TextBoxFor(x => x.StartExpiryDate, new { @class = "form-control", @readonly = "readonly" })
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                        </div>
+
+
+                                    </td>
+                                    <th>@Html.LabelFor(x => x.EndExpiryDate)</th>
+                                    <td>
+                                        <div class="input-group date">
+
+                                            @Html.TextBoxFor(x => x.EndExpiryDate, new { @class = "form-control", @readonly = "readonly" })
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>@Html.LabelFor(x => x.Other)</th>
+                                    <td colspan="3">
+                                        @Html.TextAreaFor(x => x.Other, new { @class = "form-control" })
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

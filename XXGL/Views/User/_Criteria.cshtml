@@ -1,0 +1,11 @@
+﻿@model XXGL.Base.Models.UserViewModel.UserViewModel
+@{
+    Layout = null;
+}
+@using Utility.Extension;
+
+@using (Ajax.BeginForm("Query", null, Utility.SiteLibrary.GetDefaultAjaxOptions(null), new { @id = "criteria-form" }))
+{
+    @Html.HiddenEntirelyFor(x => x.Parameter)
+}
+

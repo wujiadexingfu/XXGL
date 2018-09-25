@@ -1,0 +1,77 @@
+﻿@model XXGL.Base.Models.OrganizationModel.OrganizationUserViewModel
+@{
+    Layout = null;
+}
+<script type="text/javascript">
+    
+
+    var QueryOrganizationUser = function () {
+        $.ajax({
+            type: "Post",
+            url: "@Url.Action("QueryOrganizationUserGridList")",
+            data: $("#OrganizationUserQueryForm").serialize(),
+            dataType: "html",
+            beforeSend: function () {
+                $.ShowLoading("divOrganizationUserGridView");
+            },
+            success: function (data) {
+                $('#divOrganizationUserGridView').empty();
+                $.HideLoading("divOrganizationUserGridView");
+                $('#divOrganizationUserGridView').html(data);
+            },
+
+        });
+    }
+
+    $(function () {
+        QueryOrganizationUser();
+    });
+
+
+</script>
+
+
+
+<div id="divOrganizationUserQueryContainer">
+    <div class="row">
+        <div class="col-md-12" id="divOrganizationUserCondition" >
+            <div class="box box-success">
+                
+                <div class="box-body">
+                    <div class="row">
+                        <form id="OrganizationUserQueryForm">
+                            @Html.HiddenFor(x => x.Parameter.OrganizationUniqueID)  @*保存组织的uniqueId*@
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3  form-group">
+                                @Html.LabelFor(x => x.Parameter.ID, new { @class = "control-label" })
+                            </div>
+                            <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-3 form-group">
+                                @Html.TextBoxFor(x => x.Parameter.ID, new { @class = "form-control" })
+                            </div>
+
+                            <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-3 form-group">
+                               
+                            </div>
+
+
+                            <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-3 form-group">
+                               <input  type="button" name="submit" value="查询" onclick="QueryOrganizationUser()" class="btn  btn-primary"/>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-info">
+                <div class="box-body">
+                    <div id="divOrganizationUserGridView">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+﻿@model XXGL.Base.Models.OrganizationModel.OrganizationItem
+@{
+    Layout = null;
+}
+<input type="button" name="edit" value="编辑" onclick="QueryOrganizationUser()" class="btn  btn-primary" />
+<br />
+
+<table class="table table-bordered table-condensed table-hover table-striped">
+
+    <tr>
+        <th>@Html.LabelFor(x => x.ID)</th>
+        <td>@Html.DisplayFor(x => x.ID)</td>
+        <th>@Html.LabelFor(x => x.ID)</th>
+        <td>@Html.DisplayFor(x => x.Name)</td>
+
+    </tr>
+
+    <tr>
+        <th>@Html.LabelFor(x => x.Manager)</th>
+        <td>@Html.DisplayFor(x => x.Manager)</td>
+        <th></th>
+        <td></td>
+    </tr>
+
+    <tr>
+        <th>@Html.LabelFor(x => x.CreateTime)</th>
+        <td>@Html.DisplayFor(x => x.CreateTime)</td>
+        <th>@Html.LabelFor(x => x.CreateUser)</th>
+        <td>@Html.DisplayFor(x => x.CreateUser)</td>
+    </tr>
+
+
+
+</table>

@@ -1,0 +1,64 @@
+﻿@model XXGL.Base.Models.OrganizationModel.OrganizationUserViewModel
+@using PagedList.Mvc;
+@using Utility.Extension;
+
+@{
+    Layout = null;
+    var resultInfo = Model.GridItem.TotalItemCount == 0 ? "" : string.Format("总共有{0}条数据，当前显示为{1}到{2}", Model.GridItem.TotalItemCount, Model.GridItem.FirstItemOnPage, Model.GridItem.LastItemOnPage);
+    var idx = Model.GridItem.FirstItemOnPage;
+}
+
+<script type="text/javascript">
+
+    $(function () {
+
+
+
+    });
+
+
+</script>
+
+<small>@resultInfo</small>
+<div class="table-responsive">
+    <table id="table-sort" class="table no-margin  table-striped table-bordered table-hover ">
+        <thead>
+            <tr>
+                <th>用户编号 </th>
+                <th>用户名称</th>
+                <th>职称</th>
+                <th>状态</th>
+            </tr>
+        </thead>
+
+
+        @foreach (var item in Model.GridItem)
+        {
+
+            <tr>
+                <td>@item.ID</td>
+                <td>@item.Name</td>
+                <td>@item.Title</td>
+                @if (item.State)
+                {
+                    <td>  <span class="badge bg-light-blue">@Resources.Resource.Normal</span> </td>
+                }
+                else
+                {
+                    <td><span class="badge bg-red">@Resources.Resource.Invalid</span></td>
+                }
+            </tr>
+        }
+    </table>
+</div>
+
+
+@Html.PagedListPager(Model.GridItem, pageNo => Url.Action("QueryOrganizationUserGridList", new { pageNo, Model.Parameter.ID, Model.Parameter.OrganizationUniqueID }), Utility.SiteLibrary.GetDefaultPagerOptions("divOrganizationUserGridView"))
+
+<style>
+    td {
+        vertical-align: middle;
+        text-align: center;
+    }
+</style>
+

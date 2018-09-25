@@ -1,0 +1,156 @@
+﻿@section Scripts {
+
+    <script src="@Url.Content("~/Scripts/zstree/js/jquery.ztree.all.js")"></script>
+    <link href="~/Scripts/zstree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <script type="text/javascript">
+
+  $(function () {
+        //$("#divEditFormContainer").hide();
+        //Query();
+
+      InitTree();
+    })
+
+        var InitTree = function () {
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("InitTree")",
+                // data: $("#QueryForm").serialize(),
+                dataType: "html",
+                beforeSend: function () {
+                    $.ShowLoading("divTree");
+                },
+                success: function (data) {
+                    $('#divTree').empty();
+                    $.HideLoading("divTree");
+                    $('#divTree').html(data);
+                },
+
+            });
+            //QueryOrganiztaion();
+            //QueryOrganiztaionUser();
+        };
+
+        var QueryOrganiztaion = function () {
+            var uniqueID = $("#OrganizationUniqueID").val();
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("GetOrganizationDetail")",
+                data: { uniqueID: uniqueID},
+                dataType: "html",
+                beforeSend: function () {
+                    $.ShowLoading("tab_OrganizationDetail");
+                },
+                success: function (data) {
+                    $('#tab_OrganizationDetail').empty();
+                    $.HideLoading("tab_OrganizationDetail");
+                    $('#tab_OrganizationDetail').html(data);
+                },
+
+            });
+
+
+
+        };
+
+        var QueryOrganiztaionUser = function () {
+            var uniqueID = $("#OrganizationUniqueID").val();
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("GetOrganizationUserIndex")",
+                dataType: "html",
+                data: { organizationUniqueID: uniqueID },
+                beforeSend: function () {
+                    $.ShowLoading("tab_OrganizationUser");
+                },
+                success: function (data) {
+                    $('#tab_OrganizationUser').empty();
+                    $.HideLoading("tab_OrganizationUser");
+                    $('#tab_OrganizationUser').html(data);
+                },
+
+            });
+
+        };
+
+
+            var Create = function () {
+            $("#divEditFormContainer").show();
+            $("#divQueryContainer").hide();
+
+            $.ajax({
+                type: "Get",
+                url: "@Url.Action("Create")",
+                dataType: "html",
+                success: function (data) {
+                $('#divEditFormContainer').html(data);
+            }
+    });
+    }
+
+    </script>
+}
+
+<div id="divQueryContainer">
+    <div class="row">
+        <div class="col-md-3" id="divTreeContainer">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">部门</h3>
+                    <div class="pull-right box-tools">
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="新增" onclick="Create()">
+                            <i class="fa fa-plus  fa-lg   text-primary"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="刷新" onclick="InitTree()">
+                            <i class="fa fa-refresh fa-lg    text-primary"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="展开" onclick="ExpandAll()">
+                            <i class="fa  fa-expand fa-lg    text-primary"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="收缩" onclick="UnExpandAll()">
+                            <i class="fa fa-compress fa-lg    text-primary"></i>
+                        </button>
+
+
+                        &nbsp;
+                        &nbsp;
+                    </div>
+
+                </div>
+                <div class="box-body">
+                    <div id="divTree"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_OrganizationDetail" data-toggle="tab">部门信息</a></li>
+                    <li><a href="#tab_OrganizationUser" data-toggle="tab">用户</a></li>
+                    <li class="pull-right"><a href="#"><i class=" fa fa-edit text-green  fa-lg"></i></a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_OrganizationDetail">
+
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_OrganizationUser">
+
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<div id="divEditFormContainer">
+
+</div>
