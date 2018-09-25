@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utility;
 
 namespace XXGL.Base.Models.UserViewModel
 {
@@ -97,5 +98,16 @@ namespace XXGL.Base.Models.UserViewModel
         ///   上次登录时间
         /// </summary> 
         public DateTime? LastLoginTime { get; set; }
+
+        public bool IsLogin { get; set; }
+       /// <summary>
+       /// 是否生效和过期
+       /// </summary>
+        public string  ExpiryDateStatus { get; set; }
+
+       /// <summary>
+       /// 颜用户有效期的颜色
+       /// </summary>
+        public  string ExpiryDateStatusColor { get; set; }
     }
 }

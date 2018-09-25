@@ -65,7 +65,9 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Define.cs" />
+    <Compile Include="EnumUtitiy.cs" />
     <Compile Include="Extension\EntityValidationErrorExtensions.cs" />
+    <Compile Include="Extension\InputHelperExtension.cs" />
     <Compile Include="Extension\ModelStateExtensions.cs" />
     <Compile Include="JosnNetHelper.cs" />
     <Compile Include="PageListUtility.cs" />

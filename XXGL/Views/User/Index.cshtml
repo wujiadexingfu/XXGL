@@ -11,79 +11,151 @@
     <script src="@Url.Content("~/Content/fancyBox/source/jquery.fancybox.js")"></script>
     <script src="@Url.Content("~/Content/fancyBox/source/jquery.fancybox.pack.js")"></script>
     <link href="@Url.Content("~/Content/fancyBox/source/jquery.fancybox.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Content/AdminLTE/plugins/iCheck/icheck.js")"></script>
+    <link href="@Url.Content("~/Content/AdminLTE/plugins/iCheck/all.css")" rel="stylesheet" />
 
     <script type="text/javascript">
-  
-        $(function () {
-            $("#divEditFormContainer").hide();
-            Query();
-        })
 
-        var Query = function () {
-                 $.ajax({
-                     type: "Post",
-                     url: "@Url.Action("Query")",
-                     data: $("#QueryForm").serialize(),
-                     dataType: "html",
-                     beforeSend:function(){
-                         $.ShowLoading("divGridView");
-                     },
-                     success: function (data) {
-                         $('#divGridView').empty();
-                         $.HideLoading("divGridView");
-                        $('#divGridView').html(data);
-                     },
-                     
-            });
-        }
+    $(function () {
+        $("#divEditFormContainer").hide();
+        Query();
+    })
 
-        var Edit = function (uniqueID)
-        {
+    var Query = function () {
+        $.ajax({
+            type: "Post",
+            url: "@Url.Action("Query")",
+            data: $("#QueryForm").serialize(),
+            dataType: "html",
+            beforeSend: function () {
+                $.ShowLoading("divGridView");
+            },
+            success: function (data) {
+                $('#divGridView').empty();
+                $.HideLoading("divGridView");
+                $('#divGridView').html(data);
+            },
+
+        });
+    }
+
+    var Edit = function (uniqueID) {
+        $("#divEditFormContainer").show();
+
+        $("#divQueryContainer").hide();
+
+        $.ajax({
+            type: "Get",
+            url: "@Url.Action("Edit")",
+            data: { "uniqueID": uniqueID },
+            dataType: "html",
+            success: function (data) {
+                $('#divEditFormContainer').html(data);
+            }
+        });
+    }
+
+    var Add = function () {
+        $("#divEditFormContainer").show();
+        $("#divQueryContainer").hide();
+    }
+
+    var Cancel = function () {
+        $("#divEditFormContainer").hide();
+        $("#divQueryContainer").show();
+    }
+
+    var Delete = function (uniqueID) {
+        $.ConfirmDialog("删除用户", null, function (confirm) {
+            if (confirm)
+            {
+                var selecteds = [];
+                if (uniqueID) {
+                    selecteds.push(uniqueID);
+                } else {
+                    $(".user-check:checkbox").each(function () {
+                        if (true == $(this).is(':checked')) {
+                            selecteds.push($(this).val());
+                        }
+                    });
+                }
+                if (selecteds.length == 0) {
+                    $.WarningToast("请至少选择一项",null);
+                } else {
+                    $.ajax({
+                        type: "Post",
+                        url: "@Url.Action("Delete")",
+                        data: { "selecteds": JSON.stringify(selecteds) },
+                        dataType: "json",
+                        success: function (data) {
+                            $.SuccessToast(data.Message);
+                            $("#criteria-form").submit();
+                    }
+                })
+                }
+            }
+        });
+    }
+
+    var Create = function (uniqueID) {
             $("#divEditFormContainer").show();
-     
             $("#divQueryContainer").hide();
 
             $.ajax({
                 type: "Get",
-                url: "@Url.Action("Edit")",
-                data: {"uniqueID":uniqueID},
+                url: "@Url.Action("Create")",
                 dataType: "html",
                 success: function (data) {
-                    $('#divEditFormContainer').html(data);
+                $('#divEditFormContainer').html(data);
+            }
+    });
+    }
+
+    var Revert = function (uniqueID) {
+        $.ConfirmDialog("是否恢复正常", null, function (confirm) {
+            if (confirm) {
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("RevertUser")",
+                    data: { "uniqueID": uniqueID },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.IsSuccess) {
+                            $.SuccessToast(data.Message);
+                            $.DisminnConfirmDialog();
+                            $("#criteria-form").submit();
+                        } else {
+                            $.ErrorToast(data.Message);
+                            $.DisminnConfirmDialog();
+                            $("#criteria-form").submit();
+                        }
+                    },
+                    error: function (x, t, e) {
+                        $.ErrorToast("@Resources.Resource.SystemError")
+                    }
+                });
             }
         });
-        }
-
-        var Add = function () {
-            $("#divEditFormContainer").show();
-            $("#divQueryContainer").hide();
-        }
-
-        var Cancel = function () {
-            $("#divEditFormContainer").hide();
-            $("#divQueryContainer").show();
-        }
-
-    </script>
+    }
+</script>
 }
-
 
 <div id="divQueryContainer">
     <div class="row">
         <div class="col-md-12" id="divCondition">
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">@Resources.Resource.Condition</h3>
+                    <h3 class="box-title">查询条件</h3>
                     <div class="pull-right box-tools">
-                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="@Resources.Resource.Add" onclick="Add()">
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="新增" onclick="Create()">
                             <i class="fa fa-plus  fa-lg   text-primary"></i>
                         </button>
-                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="@Resources.Resource.Search" onclick="Query()">
+
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="查询" onclick="Query()">
                             <i class="fa fa-search fa-lg    text-primary"></i>
                         </button>
                         &nbsp;
                         &nbsp;
-
                     </div>
 
                 </div>
@@ -119,7 +191,14 @@
         <div class="col-md-12">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title"> @Resources.Resource.QueryResult</h3>
+                    <h3 class="box-title"> 查询结果</h3>
+                    <div class="pull-right box-tools">
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="删除" onclick="Delete()">
+                            <i class="fa fa-trash-o fa-lg  text-red "></i>
+                        </button>
+                        &nbsp;
+                        &nbsp;
+                    </div>
                 </div>
                 <div class="box-body">
                     <div id="divGridView"></div>
@@ -130,5 +209,30 @@
 </div>
 
 <div id="divEditFormContainer">
-    
+
 </div>
+
+
+@*<div class="modal fade" id="confirm-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"><i class=" fa  fa-warning  text-yellow"></i>是否恢复正常</h4>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body&hellip;</p>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-primary ">确认</button>
+                    <button type="button" class="btn  " data-dismiss="modal">取消</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->*@

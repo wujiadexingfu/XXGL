@@ -115,11 +115,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 确认 的本地化字符串。
+        /// </summary>
+        public static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 确认密码 的本地化字符串。
         /// </summary>
         public static string ConfirmPassword {
             get {
                 return ResourceManager.GetString("ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 创建失败 的本地化字符串。
+        /// </summary>
+        public static string CreateFail {
+            get {
+                return ResourceManager.GetString("CreateFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 创建成功 的本地化字符串。
+        /// </summary>
+        public static string CreateSuccess {
+            get {
+                return ResourceManager.GetString("CreateSuccess", resourceCulture);
             }
         }
         
@@ -147,6 +174,24 @@ namespace Resources {
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 删除失败 的本地化字符串。
+        /// </summary>
+        public static string DeleteFail {
+            get {
+                return ResourceManager.GetString("DeleteFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 删除成功 的本地化字符串。
+        /// </summary>
+        public static string DeleteSuccess {
+            get {
+                return ResourceManager.GetString("DeleteSuccess", resourceCulture);
             }
         }
         
@@ -376,6 +421,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 否 的本地化字符串。
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 正常 的本地化字符串。
         /// </summary>
         public static string Normal {
@@ -529,6 +583,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 是否恢复正常 的本地化字符串。
+        /// </summary>
+        public static string RevertUser {
+            get {
+                return ResourceManager.GetString("RevertUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 保存 的本地化字符串。
         /// </summary>
         public static string Save {
@@ -543,6 +606,60 @@ namespace Resources {
         public static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 加载失败 的本地化字符串。
+        /// </summary>
+        public static string Select2AjaxError {
+            get {
+                return ResourceManager.GetString("Select2AjaxError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 更多.... 的本地化字符串。
+        /// </summary>
+        public static string Select2LoadMore {
+            get {
+                return ResourceManager.GetString("Select2LoadMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 没有可查询的数据 的本地化字符串。
+        /// </summary>
+        public static string Select2NoMatches {
+            get {
+                return ResourceManager.GetString("Select2NoMatches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 请选择数据 的本地化字符串。
+        /// </summary>
+        public static string Select2PlaceHolder {
+            get {
+                return ResourceManager.GetString("Select2PlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 查询中，请稍等... 的本地化字符串。
+        /// </summary>
+        public static string Select2Searching {
+            get {
+                return ResourceManager.GetString("Select2Searching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 请选择一笔数据 的本地化字符串。
+        /// </summary>
+        public static string SelectOneDataItem {
+            get {
+                return ResourceManager.GetString("SelectOneDataItem", resourceCulture);
             }
         }
         
@@ -651,6 +768,15 @@ namespace Resources {
         public static string Version {
             get {
                 return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 是 的本地化字符串。
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

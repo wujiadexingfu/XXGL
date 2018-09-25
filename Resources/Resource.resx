@@ -315,4 +315,46 @@
   <data name="MobilePhoneWorngFormatter" xml:space="preserve">
     <value>{0}格式错误</value>
   </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="RevertUser" xml:space="preserve">
+    <value>是否恢复正常</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="DeleteFail" xml:space="preserve">
+    <value>删除失败</value>
+  </data>
+  <data name="DeleteSuccess" xml:space="preserve">
+    <value>删除成功</value>
+  </data>
+  <data name="SelectOneDataItem" xml:space="preserve">
+    <value>请选择一笔数据</value>
+  </data>
+  <data name="CreateFail" xml:space="preserve">
+    <value>创建失败</value>
+  </data>
+  <data name="CreateSuccess" xml:space="preserve">
+    <value>创建成功</value>
+  </data>
+  <data name="Select2PlaceHolder" xml:space="preserve">
+    <value>请选择数据</value>
+  </data>
+  <data name="Select2AjaxError" xml:space="preserve">
+    <value>加载失败</value>
+  </data>
+  <data name="Select2LoadMore" xml:space="preserve">
+    <value>更多....</value>
+  </data>
+  <data name="Select2NoMatches" xml:space="preserve">
+    <value>没有可查询的数据</value>
+  </data>
+  <data name="Select2Searching" xml:space="preserve">
+    <value>查询中，请稍等...</value>
+  </data>
 </root>

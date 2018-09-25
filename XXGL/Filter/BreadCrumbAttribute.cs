@@ -39,7 +39,7 @@ namespace XXGL.Filter
 
                         if (string.IsNullOrEmpty(area))
                         {
-                            var ancestorPage = account.FunctionItemList.Where(x => x.Controller == controller && x.Action == action).FirstOrDefault();
+                            var ancestorPage = account.WebFunctionList.Where(x => x.Controller == controller && x.Action == action).FirstOrDefault();
                             if (ancestorPage != null)
                             {
                                 filterContext.Controller.ViewBag.firstPageDescription = ancestorPage.Description;
@@ -48,9 +48,9 @@ namespace XXGL.Filter
                             }
                             else
                             {
-                                foreach (var ancestorPageItem in account.FunctionItemList)
+                                foreach (var ancestorPageItem in account.WebFunctionList)
                                 {
-                                    var parentPage = ancestorPageItem.SubFunctionItemList.Where(x => x.Controller == controller && x.Action == action).FirstOrDefault();
+                                    var parentPage = ancestorPageItem.SubWebFuntionList.Where(x => x.Controller == controller && x.Action == action).FirstOrDefault();
                                     if (parentPage != null)
                                     {
                                         filterContext.Controller.ViewBag.firstPageDescription = ancestorPageItem.Description;
@@ -64,9 +64,9 @@ namespace XXGL.Filter
                                     }
                                     else
                                     {
-                                        foreach (var  parentPageItem in ancestorPageItem.SubFunctionItemList)
+                                        foreach (var parentPageItem in ancestorPageItem.SubWebFuntionList)
                                         {
-                                            var currnetPage = parentPageItem.SubFunctionItemList.Where(x => x.Controller == controller && x.Action == action).FirstOrDefault();
+                                            var currnetPage = parentPageItem.SubWebFuntionList.Where(x => x.Controller == controller && x.Action == action).FirstOrDefault();
                                             if (currnetPage != null)
                                             {
                                                 filterContext.Controller.ViewBag.firstPageDescription = ancestorPageItem.Description;
@@ -87,7 +87,7 @@ namespace XXGL.Filter
                         }
                         else
                         {
-                            var ancestorPage = account.FunctionItemList.Where(x => x.Area == area && x.Controller == controller && x.Action == action).FirstOrDefault();
+                            var ancestorPage = account.WebFunctionList.Where(x => x.Area == area && x.Controller == controller && x.Action == action).FirstOrDefault();
                             if (ancestorPage != null)
                             {
                                 filterContext.Controller.ViewBag.firstPageDescription = ancestorPage.Description;
@@ -97,9 +97,9 @@ namespace XXGL.Filter
                             }
                             else
                             {
-                                foreach (var ancestorPageItem in account.FunctionItemList)
+                                foreach (var ancestorPageItem in account.WebFunctionList)
                                 {
-                                    var parentPage = ancestorPageItem.SubFunctionItemList.Where(x => x.Area == area && x.Controller == controller && x.Action == action).FirstOrDefault();
+                                    var parentPage = ancestorPageItem.SubWebFuntionList.Where(x => x.Area == area && x.Controller == controller && x.Action == action).FirstOrDefault();
                                     if (parentPage != null)
                                     {
                                         filterContext.Controller.ViewBag.firstPageDescription = ancestorPageItem.Description;
@@ -113,9 +113,9 @@ namespace XXGL.Filter
                                     }
                                     else
                                     {
-                                        foreach (var currentPageItem in parentPage.SubFunctionItemList)
+                                        foreach (var currentPageItem in parentPage.SubWebFuntionList)
                                         {
-                                            var currnetPage = currentPageItem.SubFunctionItemList.Where(x => x.Area == area && x.Controller == controller && x.Action == action).FirstOrDefault();
+                                            var currnetPage = currentPageItem.SubWebFuntionList.Where(x => x.Area == area && x.Controller == controller && x.Action == action).FirstOrDefault();
                                             if (currnetPage != null)
                                             {
                                                 filterContext.Controller.ViewBag.firstPageDescription = ancestorPage.Description;

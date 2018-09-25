@@ -49,10 +49,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DbCommon\DbCommon.csproj">
-      <Project>{b6615f90-05c9-4c96-b5ec-81c5879488ba}</Project>
-      <Name>DbCommon</Name>
-    </ProjectReference>
     <ProjectReference Include="..\XXGL.Base.DAL\XXGL.Base.DAL.csproj">
       <Project>{5581d5e4-f16f-42c6-969f-fdb307a78e8b}</Project>
       <Name>XXGL.Base.DAL</Name>
@@ -72,6 +68,14 @@
     <ProjectReference Include="..\XXGL.Interface\XXGL.Interface.csproj">
       <Project>{420c5699-147b-4cd1-b335-e93f4838f2b9}</Project>
       <Name>XXGL.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XXGL.Log.Log4Net\XXGL.Log.Log4Net.csproj">
+      <Project>{53b0bd5f-674e-4bcb-8339-5fa01328a4ff}</Project>
+      <Name>XXGL.Log.Log4Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XXGL.Log.Nlog\XXGL.Log.Nlog.csproj">
+      <Project>{27ca26c7-9bd5-4abb-8c21-f072e8702bd4}</Project>
+      <Name>XXGL.Log.Nlog</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

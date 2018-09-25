@@ -5,16 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d512c8a964b04d95a8a4cba280dd530c" Name="Diagram1">
-        <EntityTypeShape EntityType="XXGLModel.Languages" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="XXGLModel.LnkOperationsLanguages" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="XXGLModel.LnkRolesWebFunctions" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="XXGLModel.LnkUsersRoles" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="XXGLModel.LnkWebFunctionsLanguages" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="XXGLModel.Operations" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="XXGLModel.Roles" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="XXGLModel.Users" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="XXGLModel.WebFunctions" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="XXGLModel.Organization" Width="1.5" PointX="5.375" PointY="6.75" />
+        <EntityTypeShape EntityType="XXGLModel.Sys_Organization" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="XXGLModel.Sys_Permission" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="XXGLModel.Sys_Role" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="XXGLModel.Sys_RolePermission" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="XXGLModel.Sys_User" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="XXGLModel.Sys_UserRole" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="XXGLModel.Sys_WebFunction" Width="1.5" PointX="6.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

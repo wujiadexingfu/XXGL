@@ -22,15 +22,15 @@
             <ul style="list-style: none;">
                 <li>
                     <a href="javascript:;">
-                        <span>@Resources.Resource.Version  </span>
+                        <span>版本 </span>
                         <span class="pull-right">@Utility.Define.Version</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="javascript:;">
-                        <span>@Resources.Resource.Lanuage </span>
-                        <span class="pull-right">@Model.LanuageID </span>
+                        <span>语言 </span>
+                        <span class="pull-right">中文 </span>
                     </a>
                 </li>
             </ul>
@@ -38,10 +38,10 @@
         <!-- Menu Footer-->
         <li class="user-footer">
             <div class="pull-left">
-                <a href="@Url.Action("ChangePassword", "Home", new { area = "" })" class="btn btn-default btn-flat  fa  fa-key">@Resources.Resource.EditPassword</a>
+                <a href="@Url.Action("ChangePassword", "Home", new { area = "" })" class="btn btn-default btn-flat  fa  fa-key">修改密码</a>
             </div>
             <div class="pull-right">
-                <a href="#" class="btn btn-default btn-flat  fa fa-sign-out" title="@Resources.Resource.Logout">@Resources.Resource.Logout</a>
+                <a href="#" class="btn btn-default btn-flat  fa fa-sign-out" title="登出">登出</a>
             </div>
         </li>
     </ul>

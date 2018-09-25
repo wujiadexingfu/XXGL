@@ -31,72 +31,87 @@ using System.Threading.Tasks;
 namespace XXGL.Base.Models.UserViewModel
 {
   public  class EditUserInputFormViewModel
-    {      /// <summary> 
+    {     
+      /// <summary> 
         ///   Guid
         /// </summary> 
-          [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Resource))]
+          [Required(ErrorMessage = "{0}必填")]
         public string UniqueID { get; set; }
 
         /// <summary> 
         ///   用户编号
         /// </summary> 
-        [Display(Name = "UserID", ResourceType = typeof(Resources.Resource))]
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Resource))]
+        [Display(Name = "用户编号")]
+        [Required(ErrorMessage = "{0}必填")]
   
         public string ID { get; set; }
 
         /// <summary> 
-        ///   名字
+        ///   用户名称
         /// </summary> 
-         [Display(Name = "UserName", ResourceType = typeof(Resources.Resource))]
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Resource))]
+         [Display(Name = "用户名称")]
+         [Required(ErrorMessage = "{0}必填")]
         public string Name { get; set; }
 
         /// <summary> 
         ///   组织ID
         /// </summary> 
-         [Display(Name = "Organization", ResourceType = typeof(Resources.Resource))]
-         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Resource))]
+         [Display(Name = "部门")]
+         [Required(ErrorMessage = "{0}必填")]
         public string OrganizationUniqueID { get; set; }
 
         /// <summary> 
         ///   邮件地址
         /// </summary> 
-         [Display(Name = "Email", ResourceType = typeof(Resources.Resource))]
-         [RegularExpression("^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$", ErrorMessageResourceName = "EmailWorngFormatter", ErrorMessageResourceType = typeof(Resources.Resource))]
+         [Display(Name = " 邮件地址")]
+         [RegularExpression("^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$", ErrorMessage = "{0}格式错误")]
         public string Email { get; set; }
 
         /// <summary> 
-        ///   生日
+        ///   出生日期
         /// </summary> 
-        [Display(Name = "BirthDay", ResourceType = typeof(Resources.Resource))]
+        [Display(Name = "出生日期")]
         public DateTime? BirthDay { get; set; }
 
 
         /// <summary> 
         ///   职称
         /// </summary> 
-        [Display(Name = "Title", ResourceType = typeof(Resources.Resource))]
+        [Display(Name = "职称")]
         public string Title { get; set; }
 
         /// <summary> 
         ///   电话
         /// </summary> 
-          [RegularExpression(@"((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)", ErrorMessageResourceName = "MobilePhoneWorngFormatter", ErrorMessageResourceType = typeof(Resources.Resource))]
-        [Display(Name = "MobilePhone", ResourceType = typeof(Resources.Resource))]
+          [RegularExpression(@"((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)", ErrorMessage = "{0}格式错误")]
+          [Display(Name = "电话")]
         public string MobilePhone { get; set; }
 
         /// <summary> 
         ///   其他
         /// </summary>
-        [Display(Name = "Other", ResourceType = typeof(Resources.Resource))]
+        [Display(Name = "其他")]
         public string Other { get; set; }
 
-        /// <summary> 
-        ///   语言
-        /// </summary> 
-        [Display(Name = "Lanuage", ResourceType = typeof(Resources.Resource))]
-        public string Lanuage { get; set; }
+      /// <summary>
+      /// 有效开始日期
+      /// </summary>
+        [Display(Name = " 有效开始日期")]
+        public DateTime? StartExpiryDate { get; set; }
+
+
+        /// <summary>
+        /// 有效结束日期
+        /// </summary>
+         [Display(Name = " 有效结束日期")]
+        public DateTime? EndExpiryDate { get; set; }
+
+      /// <summary>
+      /// 是否可以登录
+      /// </summary>
+         [Display(Name = " 是否可以登录")]
+         [Required(ErrorMessage = "{0}必填")]
+         public bool IsLogin { get; set; }
 
       
     }

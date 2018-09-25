@@ -5,62 +5,7 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="XXGLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Languages">
-          <Key>
-            <PropertyRef Name="UniqueID" />
-          </Key>
-          <Property Name="UniqueID" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="ID" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="10" Nullable="false" />
-        </EntityType>
-        <EntityType Name="LnkOperationsLanguages">
-          <Key>
-            <PropertyRef Name="OperationsUnqiueID" />
-            <PropertyRef Name="LanguagesUniqueID" />
-          </Key>
-          <Property Name="OperationsUnqiueID" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="LanguagesUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="Descrrption" Type="varchar" MaxLength="10" />
-        </EntityType>
-        <EntityType Name="LnkRolesWebFunctions">
-          <Key>
-            <PropertyRef Name="RolesUniqueID" />
-            <PropertyRef Name="WebFunctionUniqueID" />
-            <PropertyRef Name="OperationsUniqueID" />
-          </Key>
-          <Property Name="RolesUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="WebFunctionUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="OperationsUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
-        </EntityType>
-        <EntityType Name="LnkUsersRoles">
-          <Key>
-            <PropertyRef Name="UsersUniqueID" />
-            <PropertyRef Name="RolesUniqueID" />
-          </Key>
-          <Property Name="UsersUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="RolesUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
-        </EntityType>
-        <EntityType Name="LnkWebFunctionsLanguages">
-          <Key>
-            <PropertyRef Name="WebFunctionUniqueID" />
-            <PropertyRef Name="LanguagesUniqueID" />
-          </Key>
-          <Property Name="WebFunctionUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="LanguagesUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="40" />
-        </EntityType>
-        <EntityType Name="Operations">
-          <Key>
-            <PropertyRef Name="UniqueID" />
-          </Key>
-          <Property Name="UniqueID" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="ID" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Seq" Type="int" />
-        </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“XXGL.dbo.Organization”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
-        <EntityType Name="Organization">
+        <EntityType Name="Sys_Organization">
           <Key>
             <PropertyRef Name="UniqueID" />
           </Key>
@@ -70,22 +15,53 @@
           <Property Name="Icon" Type="varchar" MaxLength="10" />
           <Property Name="ParentUniqueID" Type="varchar" MaxLength="40" />
           <Property Name="ManagerUniqueID" Type="varchar" MaxLength="40" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
+          <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="Seq" Type="int" />
         </EntityType>
-        <EntityType Name="Roles">
+        <EntityType Name="Sys_Permission">
           <Key>
             <PropertyRef Name="UniqueID" />
           </Key>
           <Property Name="UniqueID" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="ID" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="100" />
-          <Property Name="State" Type="bit" Nullable="false" />
-          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Area" Type="varchar" MaxLength="20" />
+          <Property Name="Controller" Type="varchar" MaxLength="20" />
+          <Property Name="Action" Type="varchar" MaxLength="20" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="Value" Type="varchar" MaxLength="20" />
+          <Property Name="Seq" Type="int" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
+          <Property Name="ModifyTime" Type="datetime" />
           <Property Name="CreateUser" Type="varchar" MaxLength="40" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="WebFunctionID" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Sys_Role">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="ID" Type="varchar" MaxLength="40" />
+          <Property Name="Description" Type="varchar" MaxLength="40" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
+          <Property Name="CreateTime" Type="datetime" />
           <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
           <Property Name="ModifyTime" Type="datetime" />
         </EntityType>
-        <EntityType Name="Users">
+        <EntityType Name="Sys_RolePermission">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="RoleUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="PermissionUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sys_User">
           <Key>
             <PropertyRef Name="UniqueID" />
           </Key>
@@ -105,15 +81,25 @@
           <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
           <Property Name="ModifyTime" Type="datetime" />
           <Property Name="Other" Type="varchar" MaxLength="2000" />
-          <Property Name="Lanuage" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="LastLoginTime" Type="datetime" />
+          <Property Name="StartExpiryDate" Type="datetime" />
+          <Property Name="EndExpiryDate" Type="datetime" />
+          <Property Name="IsLogin" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="WebFunctions">
+        <EntityType Name="Sys_UserRole">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="UsersUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="RolesUniqueID" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sys_WebFunction">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="ParentID" Type="varchar" MaxLength="10" />
+          <Property Name="ParentID" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Area" Type="varchar" MaxLength="100" />
           <Property Name="Controller" Type="varchar" MaxLength="100" />
           <Property Name="Action" Type="varchar" MaxLength="100" />
@@ -123,107 +109,95 @@
           <Property Name="CreateUser" Type="varchar" MaxLength="40" />
           <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
           <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="IsDisplay" Type="bit" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityContainer Name="XXGLModelStoreContainer">
-          <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LnkOperationsLanguages" EntityType="Self.LnkOperationsLanguages" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LnkRolesWebFunctions" EntityType="Self.LnkRolesWebFunctions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LnkUsersRoles" EntityType="Self.LnkUsersRoles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LnkWebFunctionsLanguages" EntityType="Self.LnkWebFunctionsLanguages" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Operations" EntityType="Self.Operations" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="WebFunctions" EntityType="Self.WebFunctions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Organization" EntityType="Self.Organization" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Organization].[UniqueID] AS [UniqueID], 
-    [Organization].[ID] AS [ID], 
-    [Organization].[Name] AS [Name], 
-    [Organization].[Icon] AS [Icon], 
-    [Organization].[ParentUniqueID] AS [ParentUniqueID], 
-    [Organization].[ManagerUniqueID] AS [ManagerUniqueID]
-    FROM [dbo].[Organization] AS [Organization]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="Sys_Organization" EntityType="Self.Sys_Organization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sys_Permission" EntityType="Self.Sys_Permission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sys_Role" EntityType="Self.Sys_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sys_RolePermission" EntityType="Self.Sys_RolePermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sys_User" EntityType="Self.Sys_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sys_UserRole" EntityType="Self.Sys_UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sys_WebFunction" EntityType="Self.Sys_WebFunction" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="XXGLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Languages">
+        <EntityContainer Name="XXGLEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Sys_Organization" EntityType="XXGLModel.Sys_Organization" />
+          <EntitySet Name="Sys_Permission" EntityType="XXGLModel.Sys_Permission" />
+          <EntitySet Name="Sys_Role" EntityType="XXGLModel.Sys_Role" />
+          <EntitySet Name="Sys_RolePermission" EntityType="XXGLModel.Sys_RolePermission" />
+          <EntitySet Name="Sys_User" EntityType="XXGLModel.Sys_User" />
+          <EntitySet Name="Sys_UserRole" EntityType="XXGLModel.Sys_UserRole" />
+          <EntitySet Name="Sys_WebFunction" EntityType="XXGLModel.Sys_WebFunction" />
+        </EntityContainer>
+        <EntityType Name="Sys_Organization">
           <Key>
             <PropertyRef Name="UniqueID" />
           </Key>
-          <Property Name="UniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="LnkOperationsLanguages">
-          <Key>
-            <PropertyRef Name="OperationsUnqiueID" />
-            <PropertyRef Name="LanguagesUniqueID" />
-          </Key>
-          <Property Name="OperationsUnqiueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LanguagesUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Descrrption" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="LnkRolesWebFunctions">
-          <Key>
-            <PropertyRef Name="RolesUniqueID" />
-            <PropertyRef Name="WebFunctionUniqueID" />
-            <PropertyRef Name="OperationsUniqueID" />
-          </Key>
-          <Property Name="RolesUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="WebFunctionUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="OperationsUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="LnkUsersRoles">
-          <Key>
-            <PropertyRef Name="UsersUniqueID" />
-            <PropertyRef Name="RolesUniqueID" />
-          </Key>
-          <Property Name="UsersUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="RolesUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="LnkWebFunctionsLanguages">
-          <Key>
-            <PropertyRef Name="WebFunctionUniqueID" />
-            <PropertyRef Name="LanguagesUniqueID" />
-          </Key>
-          <Property Name="WebFunctionUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LanguagesUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Operations">
-          <Key>
-            <PropertyRef Name="UniqueID" />
-          </Key>
-          <Property Name="UniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UniqueID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Icon" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ParentUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ManagerUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="Seq" Type="Int32" />
         </EntityType>
-        <EntityType Name="Roles">
+        <EntityType Name="Sys_Permission">
           <Key>
             <PropertyRef Name="UniqueID" />
           </Key>
-          <Property Name="UniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="Boolean" Nullable="false" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="UniqueID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Area" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Controller" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Action" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Seq" Type="Int32" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="WebFunctionID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Sys_Role">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="Users">
+        <EntityType Name="Sys_RolePermission">
           <Key>
             <PropertyRef Name="UniqueID" />
           </Key>
-          <Property Name="UniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PassWord" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UniqueID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="RoleUniqueID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="PermissionUniqueID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Sys_User">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PassWord" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="OrganizationUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="Photo" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
@@ -236,15 +210,25 @@
           <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="Other" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
-          <Property Name="Lanuage" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastLoginTime" Type="DateTime" Precision="3" />
+          <Property Name="StartExpiryDate" Type="DateTime" Precision="3" />
+          <Property Name="EndExpiryDate" Type="DateTime" Precision="3" />
+          <Property Name="IsLogin" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="WebFunctions">
+        <EntityType Name="Sys_UserRole">
+          <Key>
+            <PropertyRef Name="UniqueID" />
+          </Key>
+          <Property Name="UniqueID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="UsersUniqueID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="RolesUniqueID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Sys_WebFunction">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ParentID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ParentID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Area" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Controller" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Action" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -254,155 +238,126 @@
           <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="IsDisplay" Type="Boolean" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="XXGLEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Languages" EntityType="Self.Languages" />
-          <EntitySet Name="LnkOperationsLanguages" EntityType="Self.LnkOperationsLanguages" />
-          <EntitySet Name="LnkRolesWebFunctions" EntityType="Self.LnkRolesWebFunctions" />
-          <EntitySet Name="LnkUsersRoles" EntityType="Self.LnkUsersRoles" />
-          <EntitySet Name="LnkWebFunctionsLanguages" EntityType="Self.LnkWebFunctionsLanguages" />
-          <EntitySet Name="Operations" EntityType="Self.Operations" />
-          <EntitySet Name="Roles" EntityType="Self.Roles" />
-          <EntitySet Name="Users" EntityType="Self.Users" />
-          <EntitySet Name="WebFunctions" EntityType="Self.WebFunctions" />
-          <EntitySet Name="Organization" EntityType="XXGLModel.Organization" />
-        </EntityContainer>
-        <EntityType Name="Organization">
-          <Key>
-            <PropertyRef Name="UniqueID" />
-          </Key>
-          <Property Name="UniqueID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Icon" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ParentUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="ManagerUniqueID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-        </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="XXGLModelStoreContainer" CdmEntityContainer="XXGLEntities">
-          <EntitySetMapping Name="Languages">
-            <EntityTypeMapping TypeName="XXGLModel.Languages">
-              <MappingFragment StoreEntitySet="Languages">
-                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LnkOperationsLanguages">
-            <EntityTypeMapping TypeName="XXGLModel.LnkOperationsLanguages">
-              <MappingFragment StoreEntitySet="LnkOperationsLanguages">
-                <ScalarProperty Name="OperationsUnqiueID" ColumnName="OperationsUnqiueID" />
-                <ScalarProperty Name="LanguagesUniqueID" ColumnName="LanguagesUniqueID" />
-                <ScalarProperty Name="Descrrption" ColumnName="Descrrption" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LnkRolesWebFunctions">
-            <EntityTypeMapping TypeName="XXGLModel.LnkRolesWebFunctions">
-              <MappingFragment StoreEntitySet="LnkRolesWebFunctions">
-                <ScalarProperty Name="RolesUniqueID" ColumnName="RolesUniqueID" />
-                <ScalarProperty Name="WebFunctionUniqueID" ColumnName="WebFunctionUniqueID" />
-                <ScalarProperty Name="OperationsUniqueID" ColumnName="OperationsUniqueID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LnkUsersRoles">
-            <EntityTypeMapping TypeName="XXGLModel.LnkUsersRoles">
-              <MappingFragment StoreEntitySet="LnkUsersRoles">
-                <ScalarProperty Name="UsersUniqueID" ColumnName="UsersUniqueID" />
-                <ScalarProperty Name="RolesUniqueID" ColumnName="RolesUniqueID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LnkWebFunctionsLanguages">
-            <EntityTypeMapping TypeName="XXGLModel.LnkWebFunctionsLanguages">
-              <MappingFragment StoreEntitySet="LnkWebFunctionsLanguages">
-                <ScalarProperty Name="WebFunctionUniqueID" ColumnName="WebFunctionUniqueID" />
-                <ScalarProperty Name="LanguagesUniqueID" ColumnName="LanguagesUniqueID" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Operations">
-            <EntityTypeMapping TypeName="XXGLModel.Operations">
-              <MappingFragment StoreEntitySet="Operations">
-                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+          <EntitySetMapping Name="Sys_Organization">
+            <EntityTypeMapping TypeName="XXGLModel.Sys_Organization">
+              <MappingFragment StoreEntitySet="Sys_Organization">
                 <ScalarProperty Name="Seq" ColumnName="Seq" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="XXGLModel.Roles">
-              <MappingFragment StoreEntitySet="Roles">
-                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
-                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="XXGLModel.Users">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
-                <ScalarProperty Name="OrganizationUniqueID" ColumnName="OrganizationUniqueID" />
-                <ScalarProperty Name="Photo" ColumnName="Photo" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
-                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
-                <ScalarProperty Name="Other" ColumnName="Other" />
-                <ScalarProperty Name="Lanuage" ColumnName="Lanuage" />
-                <ScalarProperty Name="LastLoginTime" ColumnName="LastLoginTime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WebFunctions">
-            <EntityTypeMapping TypeName="XXGLModel.WebFunctions">
-              <MappingFragment StoreEntitySet="WebFunctions">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
-                <ScalarProperty Name="Area" ColumnName="Area" />
-                <ScalarProperty Name="Controller" ColumnName="Controller" />
-                <ScalarProperty Name="Action" ColumnName="Action" />
-                <ScalarProperty Name="Icon" ColumnName="Icon" />
-                <ScalarProperty Name="Seq" ColumnName="Seq" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
-                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Organization">
-            <EntityTypeMapping TypeName="XXGLModel.Organization">
-              <MappingFragment StoreEntitySet="Organization">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="ManagerUniqueID" ColumnName="ManagerUniqueID" />
                 <ScalarProperty Name="ParentUniqueID" ColumnName="ParentUniqueID" />
                 <ScalarProperty Name="Icon" ColumnName="Icon" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sys_Permission">
+            <EntityTypeMapping TypeName="XXGLModel.Sys_Permission">
+              <MappingFragment StoreEntitySet="Sys_Permission">
+                <ScalarProperty Name="WebFunctionID" ColumnName="WebFunctionID" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sys_Role">
+            <EntityTypeMapping TypeName="XXGLModel.Sys_Role">
+              <MappingFragment StoreEntitySet="Sys_Role">
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sys_RolePermission">
+            <EntityTypeMapping TypeName="XXGLModel.Sys_RolePermission">
+              <MappingFragment StoreEntitySet="Sys_RolePermission">
+                <ScalarProperty Name="PermissionUniqueID" ColumnName="PermissionUniqueID" />
+                <ScalarProperty Name="RoleUniqueID" ColumnName="RoleUniqueID" />
+                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sys_User">
+            <EntityTypeMapping TypeName="XXGLModel.Sys_User">
+              <MappingFragment StoreEntitySet="Sys_User">
+                <ScalarProperty Name="IsLogin" ColumnName="IsLogin" />
+                <ScalarProperty Name="EndExpiryDate" ColumnName="EndExpiryDate" />
+                <ScalarProperty Name="StartExpiryDate" ColumnName="StartExpiryDate" />
+                <ScalarProperty Name="LastLoginTime" ColumnName="LastLoginTime" />
+                <ScalarProperty Name="Other" ColumnName="Other" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="OrganizationUniqueID" ColumnName="OrganizationUniqueID" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sys_UserRole">
+            <EntityTypeMapping TypeName="XXGLModel.Sys_UserRole">
+              <MappingFragment StoreEntitySet="Sys_UserRole">
+                <ScalarProperty Name="RolesUniqueID" ColumnName="RolesUniqueID" />
+                <ScalarProperty Name="UsersUniqueID" ColumnName="UsersUniqueID" />
+                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sys_WebFunction">
+            <EntityTypeMapping TypeName="XXGLModel.Sys_WebFunction">
+              <MappingFragment StoreEntitySet="Sys_WebFunction">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsDisplay" ColumnName="IsDisplay" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

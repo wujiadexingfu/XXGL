@@ -4,36 +4,25 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
-using XXGL.Base.IService;
 using XXGL.Base.Models.UserViewModel;
 using Utility.Extension;
 using XXGL.Base.Models;
 using Utility;
 using XXGL.Base.Models.Authenticated;
+using XXGL.Base.Service;
 
 namespace XXGL.Controllers
 {
     public class UserController : Controller
     {
-        public IUsersService _userService;
-
-
-        public UserController(IUsersService userService)
-        {
-         
-            _userService = userService;
-        }
-
+        
 
         // GET: User
         public ActionResult Index()
         {
-            var user = _userService.GetAccount("admin");
+            var user = UsersService.GetAccount("admin");
             Session["Account"] = user;
             UserViewModel viewModel = new UserViewModel();
-
-            viewModel.Parameter.ID = "1";
-            viewModel.Parameter.Name = "1";
             return View(viewModel);
         }
 
@@ -42,7 +31,7 @@ namespace XXGL.Controllers
            UserViewModel viewModel = new UserViewModel();
            viewModel.Parameter = parameter;
             var totalCount=0;
-            var list= _userService.GetUserList(parameter,out totalCount);
+            var list = UsersService.GetUserList(parameter, out totalCount);
             var result = new PagedList.StaticPagedList<UserGridItem>(list, parameter.PageNo,parameter.PageSize ,totalCount);
             viewModel.GridItem = result;
             return View("_GridView",viewModel);
@@ -52,7 +41,7 @@ namespace XXGL.Controllers
         [HttpGet]
         public ActionResult Edit(string uniqueID)
         {
-            var user = _userService.GetUserByUniqueID(uniqueID);
+            var user = UsersService.GetEditUserInputFormByUniqueID(uniqueID);
             return View("_Edit", user);
         }
 
@@ -62,7 +51,7 @@ namespace XXGL.Controllers
             RequestResult result = new RequestResult();
             if (ModelState.IsValid)
             {
-                result=_userService.EditUser(editUserInputFormViewModel);
+                result = UsersService.EditUser(editUserInputFormViewModel);
             }
             else
             {
@@ -77,8 +66,38 @@ namespace XXGL.Controllers
         /// <returns></returns>
         public ActionResult ResetPassword(string uniqueID)
         {
-            var result = _userService.ChangePassword(uniqueID, Define.InitialPassword);
+            var result = UsersService.ChangePassword(uniqueID, Define.InitialPassword);
              return Content(JosnNetHelper.ObjectToJson(result));
+        }
+
+        /// <summary>
+        /// 将失效人员变为正常
+        /// </summary>
+        /// <param name="uniqueID"></param>
+        /// <returns></returns>
+        public ActionResult RevertUser(string uniqueID)
+        {
+            var result = UsersService.RevertUser(uniqueID);
+            return Content(JosnNetHelper.ObjectToJson(result));
+        }
+
+        public ActionResult Delete(string selecteds)
+        {
+            var selectedUniqueIDs = JosnNetHelper.JsonToObject<List<string>>(selecteds);
+            var result = UsersService.Delete(selectedUniqueIDs);
+            return Content(JosnNetHelper.ObjectToJson(result));
+        }
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View("_Create", new CreateUserInputFormViewModel() { IsLogin = true});
+        }
+
+        [HttpPost]
+        public ActionResult Create(CreateUserInputFormViewModel model)
+        {
+            var result = UsersService.Create(model);
+           return Content(JosnNetHelper.ObjectToJson(result));   
         }
 
     }

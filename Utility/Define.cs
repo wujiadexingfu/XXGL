@@ -11,6 +11,7 @@ namespace Utility
     {
        public const string Version = "V2017.06.17.001";
        public const string InitialPassword = "123456";   //初始密码
+       public const string Log4NetFileName = "log4Net.config";
 
 
        /// <summary>
@@ -47,10 +48,37 @@ namespace Utility
            }
        }
 
+       /// <summary>
+       /// log4net的配置文件
+       /// </summary>
+       public static string Log4NetFile
+       {
+           get
+           {
+               String exePath = System.AppDomain.CurrentDomain.BaseDirectory;
+               string fullFilePath = Path.Combine(exePath, Log4NetFileName);
+               if (File.Exists(fullFilePath))
+               {
+                   return fullFilePath;
+               }
+               else
+               {
+                   fullFilePath = Path.Combine(exePath, "bin", Log4NetFileName);
+                   if (File.Exists(fullFilePath))
+                   {
+                       return fullFilePath;
+                   }
+                   else
+                   {
+                       return Log4NetFileName;
+                   }
+
+               }
+           }
+       
+       }
 
 
-      
-     
          public enum EnumOrganizationPermission
         {
             None,
@@ -58,6 +86,8 @@ namespace Utility
             Queryable,
             Editable
         }
+
+
 
 
         

@@ -25,15 +25,12 @@ namespace DbEntity.MSSQL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Languages> Languages { get; set; }
-        public virtual DbSet<LnkOperationsLanguages> LnkOperationsLanguages { get; set; }
-        public virtual DbSet<LnkRolesWebFunctions> LnkRolesWebFunctions { get; set; }
-        public virtual DbSet<LnkUsersRoles> LnkUsersRoles { get; set; }
-        public virtual DbSet<LnkWebFunctionsLanguages> LnkWebFunctionsLanguages { get; set; }
-        public virtual DbSet<Operations> Operations { get; set; }
-        public virtual DbSet<Roles> Roles { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<WebFunctions> WebFunctions { get; set; }
-        public virtual DbSet<Organization> Organization { get; set; }
+        public virtual DbSet<Sys_Organization> Sys_Organization { get; set; }
+        public virtual DbSet<Sys_Permission> Sys_Permission { get; set; }
+        public virtual DbSet<Sys_Role> Sys_Role { get; set; }
+        public virtual DbSet<Sys_RolePermission> Sys_RolePermission { get; set; }
+        public virtual DbSet<Sys_User> Sys_User { get; set; }
+        public virtual DbSet<Sys_UserRole> Sys_UserRole { get; set; }
+        public virtual DbSet<Sys_WebFunction> Sys_WebFunction { get; set; }
     }
 }

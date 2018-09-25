@@ -3,11 +3,9 @@
     Layout = null;
 }
 
-
-
-
-
 <script type="text/javascript">
+
+
     $(function () {
 
         /*
@@ -16,14 +14,44 @@
         */
         $.validator.unobtrusive.parse($("#EditForm"));
 
+        //出生日期
         $('#BirthDay').datepicker({
             autoclose: true,//选中之后自动隐藏日期选择框
             todayHighlight: true,
             language: "zh-CN",
-           // clearBtn: true,//清除按钮
+            clearBtn: true,//清除按钮
             format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+        });
+        //有效期开始日期
+        $('#StartExpiryDate').datepicker({
+            autoclose: true,//选中之后自动隐藏日期选择框
+            todayHighlight: true,
+            language: "zh-CN",
+            clearBtn: true,//清除按钮
+            format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+        });
+
+        ///有效期结束日期
+        $('#EndExpiryDate').datepicker({
+            autoclose: true,//选中之后自动隐藏日期选择框
+            todayHighlight: true,
+            language: "zh-CN",
+            clearBtn: true,//清除按钮
+            format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+        });
+
+
+          
+
+        $('.IsLogin').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass: 'iradio_flat-green'
         })
+
+
     });
+
+
     var Save = function () {
         var form = $('#EditForm');
         if (form.valid()) {
@@ -34,13 +62,16 @@
                 dataType: "json",
                 success: function (data) {
                     if (data.IsSuccess) {
+                        debugger
                         $.SuccessToast(data.Message);
+                        Cancel();
+                        $("#criteria-form").submit();
                     } else {
                         $.ErrorToast(data.Message);
                     }
                 },
                 error:function (x,t,e) {
-                    $.ErrorToast("@Resources.Resource.SystemError")
+                    $.ErrorToast("系统错误")
                 }
             })
         };
@@ -48,12 +79,12 @@
 
     var ResetPassword = function ()
     {
-            $.ajax({
-                type: "Post",
-                url: "@Url.Action("ResetPassword")",
-                dataType: "json",
-                data: {"UniqueID":$("#UniqueID").val()},
-                success: function (data) {
+        $.ajax({
+            type: "Post",
+            url: "@Url.Action("ResetPassword")",
+            dataType: "json",
+            data: {"UniqueID":$("#UniqueID").val()},
+            success: function (data) {
                 if (data.IsSuccess) {
                     $.SuccessToast(data.Message);
                 } else {
@@ -61,7 +92,7 @@
                 }
             },
             error:function (x,t,e) {
-                $.ErrorToast("@Resources.Resource.SystemError")
+                $.ErrorToast("系统错误")
             }
         })
 
@@ -70,26 +101,26 @@
 
 </script>
 
-<button class="btn btn-app btn-primary  " onclick="Save()" title="@Resources.Resource.Save">
+<button class="btn btn-app btn-primary  " onclick="Save()" title="保存">
     <i class=" fa fa-save "></i>
-    @Resources.Resource.Save
+    保存
 </button>
 
-<button class="btn btn-app btn-purple  " onclick="Cancel()" title="@Resources.Resource.Cancel">
+<button class="btn btn-app btn-purple  " onclick="Cancel()" title="取消">
     <i class=" fa fa-repeat  "></i>
-    @Resources.Resource.Cancel
+    取消
 </button>
 
-<button class="btn btn-app btn-grey " onclick="ResetPassword()" title="@Resources.Resource.ResetPassword">
+<button class="btn btn-app btn-grey " onclick="ResetPassword()" title="重设密码">
     <i class=" fa fa-refresh  "></i>
-    @Resources.Resource.ResetPassword
+    重设密码
 </button>
 
 
 <div class="col-md-12">
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">@Resources.Resource.EditUser</h3>
+            <h3 class="box-title">修改人员信息</h3>
         </div>
         <div class="box-body">
                 <div class="table-responsive">
@@ -147,17 +178,45 @@
                             <td>@Html.TextBoxFor(x => x.OrganizationUniqueID, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(x => x.OrganizationUniqueID)
                             </td>
-                            <th>@Html.LabelFor(x=>x.Lanuage) </th>
-                            <td>@Html.TextBoxFor(x => x.Lanuage, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(x => x.Lanuage)
+                            <th>@Html.LabelFor(x=>x.IsLogin)</th>
+                            <td>
+                                @Html.RadioButtonFor(x => x.IsLogin, true, new { @id = "OK", @name = "IsLogin", @class = "IsLogin"})  是
+                                &nbsp; &nbsp; &nbsp;   &nbsp; &nbsp; &nbsp;
+                                @Html.RadioButtonFor(x => x.IsLogin, false, new { @id = "No", @name = "IsLogin", @class = "IsLogin" })  否
+                                @Html.ValidationMessageFor(x => x.IsLogin)
                             </td>
                         </tr>
+
+                        <tr>
+                            <th>@Html.LabelFor(x => x.StartExpiryDate) </th>
+                            <td>
+
+                                <div class="input-group date">
+
+                                    @Html.TextBoxFor(x => x.StartExpiryDate, new { @class = "form-control", @readonly = "readonly" })
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+
+                              
+                        </td>
+                        <th>@Html.LabelFor(x => x.EndExpiryDate)</th>
+                        <td>
+                            <div class="input-group date">
+
+                                @Html.TextBoxFor(x => x.EndExpiryDate, new { @class = "form-control", @readonly = "readonly" })
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                           
+                        </td>
+                    </tr>
+
                         <tr>
                             <th>@Html.LabelFor(x =>x.Other)</th>
-
                             <td colspan="3">
-                                
-                             
                                 @Html.TextAreaFor(x=>x.Other,new { @class = "form-control" })
                             
                             </td>

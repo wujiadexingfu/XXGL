@@ -30,7 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -41,17 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LanguagesService.cs" />
-    <Compile Include="LnkOperationsLanguagesService.cs" />
-    <Compile Include="LnkRolesWebFunctionsService.cs" />
-    <Compile Include="LnkUsersRolesService.cs" />
-    <Compile Include="LnkWebFunctionsLanguagesService.cs" />
-    <Compile Include="OperationsService.cs" />
     <Compile Include="OrganizationService.cs" />
+    <Compile Include="PermissionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RolesService.cs" />
     <Compile Include="UsersService.cs" />
-    <Compile Include="WebFunctionsService.cs" />
+    <Compile Include="WebFunctionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DbEntity.MSSQL\DbEntity.MSSQL.csproj">
@@ -62,26 +68,18 @@
       <Project>{961a5a2f-a8d5-4e2d-947e-6e041daceb7f}</Project>
       <Name>Resources</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XXGL.Base.DAL\XXGL.Base.DAL.csproj">
-      <Project>{5581d5e4-f16f-42c6-969f-fdb307a78e8b}</Project>
-      <Name>XXGL.Base.DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XXGL.Base.IDAL\XXGL.Base.IDAL.csproj">
-      <Project>{34ee3d8c-0da2-4af8-8bf9-cbcbdfe6751c}</Project>
-      <Name>XXGL.Base.IDAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XXGL.Base.IService\XXGL.Base.IService.csproj">
-      <Project>{6c6fe0d3-73cf-4321-a817-1c538a1d7c9d}</Project>
-      <Name>XXGL.Base.IService</Name>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{a5bf972f-11b0-4219-9475-4cdfa423e6db}</Project>
+      <Name>Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\XXGL.Base.Models\XXGL.Base.Models.csproj">
       <Project>{b2c79d34-ca5c-473a-b367-b9a3ca7c75ab}</Project>
       <Name>XXGL.Base.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XXGL.Interface\XXGL.Interface.csproj">
-      <Project>{420c5699-147b-4cd1-b335-e93f4838f2b9}</Project>
-      <Name>XXGL.Interface</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

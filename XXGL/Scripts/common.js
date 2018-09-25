@@ -85,7 +85,7 @@
         },
         WarningToast: function (msg, title) {
             SetToastDefault();
-            if (!!title) {
+            if (!title) {
                 title = "系统信息"
             }
             toastr.warning(msg, title);
@@ -105,8 +105,33 @@
 
         HideLoading: function (id) {
             $("#" + id).mLoading("hide");
-        }
+        },
 
+        ConfirmDialog: function (message, title, callback) {  //确认窗
+          
+            if (title) {
+                $("#confirm-modal-title").html("<i class='fa  fa-warning'>" + title + "</i>")
+            }
+            if (message) {
+                $("#confirm-modal-content").html("<p>" + message + "</p>")
+            }
+            $("#btn-modal-ok").unbind("click").bind("click", function (e) {
+                callback($(this).data("handler"));
+                $("#confirm-modal").modal("hide");
+            });//先接触绑定，在重新绑定，否则会多次绑定方法
+
+            $("#btn-modal-cancel").unbind("click").bind("click", function (e) {
+                callback($(this).data("handler"));
+                $("#confirm-modal").modal("hide");
+            });//先接触绑定，在重新绑定，否则会多次绑定方法
+            // $("#modal-footer button") 绑定有问题
+
+            $("#confirm-modal").modal("show");
+        },
+
+        DisminnConfirmDialog: function () { //确认窗消失
+            $("#confirm-modal").modal("hide");
+        }
     });
 })(jQuery);
 

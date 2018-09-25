@@ -14,24 +14,16 @@
 
 <html lang="en">
 
-
-
-
-
 <!-- Mirrored from www.zi-han.net/theme/hplus/login_v2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:49 GMT -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-    <title>x信息管理系统 - 登录</title>
-    <link href="~/Content/HCSS/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/HCSS/css/font-awesome.min93e3.css" rel="stylesheet" />
-    <link href="~/Content/HCSS/css/animate.min.css" rel="stylesheet" />
-    <link href="~/Content/HCSS/css/style.min.css" rel="stylesheet" />
-    <link href="~/Content/HCSS/css/login.min.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <title>信息管理系统 - 登录</title>
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
 
     <link href="~/Content/custom.css" rel="stylesheet" />
     <!--[if lt IE 9]>
@@ -51,25 +43,25 @@
             <div class="col-md-6">
                 @using (Html.BeginForm("Login","Home"))
                 {
-                    <h2 class="no-margins" style="text-align:center;color:black;"><strong>@Resources.Resource.Login</strong></h2>
-                    @Html.TextBoxFor(x => x.UserID, new { @class = "form-control uname ", placeholder = Resources.Resource.UserID })
+                    <h2 class="no-margins" style="text-align:center;color:black;"><strong>登录</strong></h2>
+                    @Html.TextBoxFor(x => x.UserID, new { @class = "form-control uname ", placeholder = "人员编号"})
                     @Html.ValidationMessageFor(x => x.UserID)
-                    @Html.PasswordFor(x => x.PassWord, new { @class = "form-control pword ", placeholder = Resources.Resource.PassWord })
+                    @Html.PasswordFor(x => x.PassWord, new { @class = "form-control pword ", placeholder ="密码" })
                     @Html.ValidationMessageFor(x=>x.PassWord)
 
                     <div class="row">
                         <div class="col-sm-6 col-md-6" style="float:left">
-                            @Html.TextBoxFor(x => x.VerficationCode, new { @class = "form-control", @placeholder = Resources.Resource.VerficationCode,@style="color:black;"  })
+                            @Html.TextBoxFor(x => x.VerficationCode, new { @class = "form-control", @placeholder = "验证码",@style="color:black;"  })
 
                         @Html.ValidationMessageFor(x => x.VerficationCode)
                     </div>
-                        <div class="col-sm-6 col-md-6" style="float:left"><img id="imgValidateCode" style="cursor: pointer; margin-top:15px;" src="@Url.Action("GetValidateCode", "Home")" title="@Resources.Resource.ChangeVerficationCode" onclick="CodeChange()" /></div>
+                        <div class="col-sm-6 col-md-6" style="float:left"><img id="imgValidateCode" style="cursor: pointer; margin-top:15px;" src="@Url.Action("GetValidateCode", "Home")" title="改变验证码" onclick="CodeChange()" /></div>
                     
                      
 
                     
                     </div>
-                    <button class="btn btn-success btn-block ">@Resources.Resource.Login</button>
+                    <button class="btn btn-success btn-block ">登录</button>
                 }
             </div>
             <div class="col-md-3">
@@ -77,7 +69,7 @@
         </div>
         <div class="signup-footer">
             <div class="pull-right">
-                @Resources.Resource.Version: @Utility.Define.Version
+                版本: @Utility.Define.Version
             </div>
         </div>
     </div>

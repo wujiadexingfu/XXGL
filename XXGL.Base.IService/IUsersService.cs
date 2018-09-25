@@ -25,6 +25,11 @@ namespace XXGL.Base.IService
 
        RequestResult EditUser(EditUserInputFormViewModel editUserInputFormViewModel);
 
+       RequestResult RevertUser(string uniqueID);
+
+       RequestResult Delete(List<string> selectedUniqueIDs);
+
+       RequestResult Create(CreateUserInputFormViewModel createUserInputFormViewModel); 
 
     }
 }

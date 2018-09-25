@@ -3,9 +3,9 @@
     Layout = null;
 }
 
-@foreach (var ancestor in Model.FunctionItemList)
+@foreach (var ancestor in Model.WebFunctionList)
 {
-    if (ancestor.SubFunctionItemList != null && ancestor.SubFunctionItemList.Count != 0)
+    if (ancestor.SubWebFuntionList != null && ancestor.SubWebFuntionList.Count != 0)
     {
         <li class="treeview" id="@ancestor.ID">
             <a href="#">
@@ -15,9 +15,9 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                @foreach (var parent in ancestor.SubFunctionItemList)
+                @foreach (var parent in ancestor.SubWebFuntionList)
                 {
-                    if (parent.SubFunctionItemList != null && parent.SubFunctionItemList.Count != 0)
+                    if (parent.SubWebFuntionList != null && parent.SubWebFuntionList.Count != 0)
                     {
                         <li class="treeview" id="@parent.ID">
                             <a href="#">
@@ -27,7 +27,7 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                @foreach (var currert in parent.SubFunctionItemList)
+                                @foreach (var currert in parent.SubWebFuntionList)
                                 {
                                     <li id="@currert.ID"><a href="@Url.Action(currert.Action, currert.Controller, new { area = currert.Area })"><i class="fa @currert.Icon"></i> @currert.Description</a></li>
                                 }

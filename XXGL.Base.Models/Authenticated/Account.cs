@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XXGL.Base.Models.Permission;
 
 namespace XXGL.Base.Models.Authenticated
 {
@@ -46,24 +47,19 @@ namespace XXGL.Base.Models.Authenticated
        public string LanuageUniqueID { get; set; }
 
        /// <summary>
-       /// 语言ID
-       /// </summary>
-       public string LanuageID { get; set; }
-
-       /// <summary>
        /// 记录菜单和操作权限
        /// </summary>
-       public List<WebFunctionOperation> WebFunctionOperationList { get; set; }
+       public List<PermissionModel> PermissionList { get; set; }
 
        /// <summary>
        /// 菜单
        /// </summary>
-       public List<FunctionItem> FunctionItemList { get; set; }
+       public List<WebFunction> WebFunctionList { get; set; }
 
        public Account()
        {
-           WebFunctionOperationList = new List<WebFunctionOperation>();
-           FunctionItemList = new List<FunctionItem>();
+           PermissionList = new List<PermissionModel>();
+           WebFunctionList = new List<WebFunction>();
        }
     }
 }

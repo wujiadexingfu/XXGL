@@ -9,12 +9,35 @@
 }
 @*<script src="@Url.Content("~/Content/jQueryTabeZ/jQueryTabeZsy/js/table.js")"></script>
 <link href="@Url.Content("~/Content/jQueryTabeZ/jQueryTabeZsy/css/style.css")" rel="stylesheet" />*@
+
+@*<script src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>*@
+@*<script src="@Url.Content("~/Content/AdminLTE/plugins/iCheck/icheck.min.js")"></script>>*@
+
 <script type="text/javascript">
+
     $(function () {
+
+
         //reference：http://blog.csdn.net/peter_qyq/article/details/51995191插件的详细说明
         $(".userPhoto").fancybox({});
         //$("#table-sort").setTable();  //可以参考
+
+        $("input").iCheck({
+         labelHover : false, 
+        cursor : true, 
+        checkboxClass : 'icheckbox_square-blue',   //注意blue的大小写
+        radioClass : 'iradio_square-blue', 
+        increaseArea : '20%' 
+        });
+
+        $('#all-user-check').on('ifUnchecked', function (event) {
+            $('.user-check').iCheck('uncheck');
+        }).on('ifChecked', function (event) {
+            $('.user-check').iCheck('check');
+        });
     });
+
+ 
 </script>
 
 <small>@resultInfo</small>
@@ -22,18 +45,23 @@
     <table  id="table-sort" class="table no-margin  table-striped table-bordered table-hover ">
         <thead>
             <tr>
-                <th>@Resources.Resource.Operation </th>
-                <th>@Resources.Resource.Item </th>
+                <th class="col-sm-1 center">
+                <input  type="checkbox"  id="all-user-check"/>
+                </th>
+                <th>操作</th>
+                <th>项次</th>
                 @*<a data-ajax="true" data-ajax-begin="$.ShowLoading('divGridView')" data-ajax-complete="$.HideLoading('divGridView')" data-ajax-mode="replace" data-ajax-update="#divGridView" href="@Url.Action("Query", new {Model.Parameter.PageNo,Model.Parameter.ID })">4</a>*@
-                <th>@Resources.Resource.UserID </th>
-                <th>@Resources.Resource.UserName</th>
-                <th>@Resources.Resource.Title</th>
+                <th>用户编号 </th>
+                <th>用户名称</th>
+                <th>职称</th>
                 <th>Email</th>
-                <th>@Resources.Resource.MobilePhone</th>
-                <th>@Resources.Resource.Organization</th>
-                <th>@Resources.Resource.LastLoginTime</th>
-                <th>@Resources.Resource.State</th>
-                <th>@Resources.Resource.UserPhoto</th>
+                <th>电话</th>
+                <th>部门</th>
+                <th>上次登陆时间</th>
+                <th>状态</th>
+                <th>有效期</th>
+                <th>是否可以登录</th>
+                <th>图片</th>
             </tr>
         </thead>
 
@@ -42,22 +70,22 @@
         {
         
             <tr>
-                <td>
-                    <a href="#" title="@Resources.Resource.Edit" onclick="Edit('@item.UniqueID')">
+                <td > <input type="checkbox" class="user-check "  value="@item.UniqueID"/></td>
+                <td >
+                    <a href="#" title="编辑" onclick="Edit('@item.UniqueID')">
                         <i class=" fa fa-edit text-green  fa-lg"></i>
                     </a>
-                    <a href="#" style="margin-left:10px" title="@Resources.Resource.Delete">
+                    <a href="#" style="margin-left:10px" title="删除" onclick="Delete('@item.UniqueID')">
                         <i class=" fa fa-trash-o  text-red fa-lg "></i>
                     </a>
                     @if (!item.State)
                     {
-                        <a href="#" style="margin-left:10px" title="@Resources.Resource.Revert">
+                        <a href="#" style="margin-left:10px" title="恢复" onclick="Revert('@item.UniqueID')">
                             <i class=" fa    fa-undo text-blue fa-lg "></i>
                         </a>
                     }
                 </td>
-
-                <td>@(idx++)</td>
+                <td >@(idx++)</td>
                 <td>@item.ID</td>
                 <td>@item.Name</td>
                 <td>@item.Title</td>
@@ -73,6 +101,18 @@
                 {
                     <td><span class="badge bg-red">@Resources.Resource.Invalid</span></td>
                 }
+
+                <td><span class="badge @item.ExpiryDateStatusColor">@item.ExpiryDateStatus</span></td>
+                @if (item.IsLogin)
+                {
+                    <td>  <span class="badge bg-light-blue">是</span> </td>
+                }
+                else
+                {
+                    <td><span class="badge bg-red">否</span></td>
+                }
+
+
 
                 <td>
                     @if (!string.IsNullOrEmpty(item.Photo))
@@ -92,7 +132,12 @@
 
 
 @Html.PagedListPager(Model.GridItem, pageNo => Url.Action("Query", new { pageNo, Model.Parameter.ID, Model.Parameter.Name, Model.Parameter.OrganizationUniqueID }), Utility.SiteLibrary.GetDefaultPagerOptions(null))
+@Html.Partial("_Criteria", Model) 
 
-
-
+<style>
+    td {
+    vertical-align: middle;
+    text-align: center;
+    }
+</style>
 
