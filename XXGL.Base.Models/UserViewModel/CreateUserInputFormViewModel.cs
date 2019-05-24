@@ -36,7 +36,7 @@ namespace XXGL.Base.Models.UserViewModel
         ///   Guid
         /// </summary> 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Resource))]
-        public string UniqueID { get; set; }
+        public string CreateUerUniqueID { get; set; }
 
         /// <summary> 
         ///   用户编号
@@ -44,74 +44,74 @@ namespace XXGL.Base.Models.UserViewModel
         [Display(Name = "UserID", ResourceType = typeof(Resources.Resource))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Resource))]
 
-        public string ID { get; set; }
+        public string CreateUerID { get; set; }
 
         /// <summary> 
         ///   名字
         /// </summary> 
         [Display(Name = "UserName", ResourceType = typeof(Resources.Resource))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Resource))]
-        public string Name { get; set; }
+        public string CreateUerName { get; set; }
 
         /// <summary> 
         ///   组织ID
         /// </summary> 
         [Display(Name = "Organization", ResourceType = typeof(Resources.Resource))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Resource))]
-        public string OrganizationUniqueID { get; set; }
+        public string CreateUserOrganizationUniqueID { get; set; }
 
         /// <summary> 
         ///   邮件地址
         /// </summary> 
         [Display(Name = "Email", ResourceType = typeof(Resources.Resource))]
         [RegularExpression("^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$", ErrorMessageResourceName = "EmailWorngFormatter", ErrorMessageResourceType = typeof(Resources.Resource))]
-        public string Email { get; set; }
+        public string CreateUerEmail { get; set; }
 
         /// <summary> 
         ///   生日
         /// </summary> 
         [Display(Name = "BirthDay", ResourceType = typeof(Resources.Resource))]
-        public DateTime? BirthDay { get; set; }
+        public DateTime? CreateUerBirthDay { get; set; }
 
 
         /// <summary> 
         ///   职称
         /// </summary> 
         [Display(Name = "Title", ResourceType = typeof(Resources.Resource))]
-        public string Title { get; set; }
+        public string CreateUerTitle { get; set; }
 
         /// <summary> 
         ///   电话
         /// </summary> 
         [RegularExpression(@"((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)", ErrorMessageResourceName = "MobilePhoneWorngFormatter", ErrorMessageResourceType = typeof(Resources.Resource))]
         [Display(Name = "MobilePhone", ResourceType = typeof(Resources.Resource))]
-        public string MobilePhone { get; set; }
+        public string CreateUerMobilePhone { get; set; }
 
         /// <summary> 
         ///   其他
         /// </summary>
         [Display(Name = "Other", ResourceType = typeof(Resources.Resource))]
-        public string Other { get; set; }
+        public string CreateUerOther { get; set; }
 
         /// <summary>
         /// 有效开始日期
         /// </summary>
         [Display(Name = " 有效开始日期")]
-        public DateTime? StartExpiryDate { get; set; }
+        public DateTime? CreateUerStartExpiryDate { get; set; }
 
 
         /// <summary>
         /// 有效结束日期
         /// </summary>
         [Display(Name = " 有效结束日期")]
-        public DateTime? EndExpiryDate { get; set; }
+        public DateTime? CreateUerEndExpiryDate { get; set; }
 
         /// <summary>
         /// 是否可以登录
         /// </summary>
         [Display(Name = " 是否可以登录")]
         [Required(ErrorMessage = "{0}必填")]
-        public bool IsLogin { get; set; }
+        public bool CreateUerIsLogin { get; set; }
 
     }
 }

@@ -1,153 +1,31 @@
 ﻿@model XXGL.Base.Models.UserViewModel.UserViewModel
 @{
+    Layout = null;
     ViewBag.Title = "用户信息";
 }
 
 
 
-@section Scripts {
-    <!--图片弹出窗fancybox-->
-    <script src="@Url.Content("~/Content/fancyBox/lib/jquery.mousewheel.pack.js")"></script>
-    <script src="@Url.Content("~/Content/fancyBox/source/jquery.fancybox.js")"></script>
-    <script src="@Url.Content("~/Content/fancyBox/source/jquery.fancybox.pack.js")"></script>
-    <link href="@Url.Content("~/Content/fancyBox/source/jquery.fancybox.css")" rel="stylesheet" />
-    <script src="@Url.Content("~/Content/AdminLTE/plugins/iCheck/icheck.js")"></script>
-    <link href="@Url.Content("~/Content/AdminLTE/plugins/iCheck/all.css")" rel="stylesheet" />
 
-    <script type="text/javascript">
+<!--图片弹出窗fancybox-->
+<script src="@Url.Content("~/Content/fancyBox/lib/jquery.mousewheel.pack.js")"></script>
+<script src="@Url.Content("~/Content/fancyBox/source/jquery.fancybox.js")"></script>
+<script src="@Url.Content("~/Content/fancyBox/source/jquery.fancybox.pack.js")"></script>
+<link href="@Url.Content("~/Content/fancyBox/source/jquery.fancybox.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Content/AdminLTE/plugins/iCheck/icheck.js")"></script>
+<link href="@Url.Content("~/Content/AdminLTE/plugins/iCheck/all.css")" rel="stylesheet" />
 
-    $(function () {
-        $("#divEditFormContainer").hide();
-        Query();
-    })
 
-    var Query = function () {
-        $.ajax({
-            type: "Post",
-            url: "@Url.Action("Query")",
-            data: $("#QueryForm").serialize(),
-            dataType: "html",
-            beforeSend: function () {
-                $.ShowLoading("divGridView");
-            },
-            success: function (data) {
-                $('#divGridView').empty();
-                $.HideLoading("divGridView");
-                $('#divGridView').html(data);
-            },
 
-        });
-    }
 
-    var Edit = function (uniqueID) {
-        $("#divEditFormContainer").show();
-
-        $("#divQueryContainer").hide();
-
-        $.ajax({
-            type: "Get",
-            url: "@Url.Action("Edit")",
-            data: { "uniqueID": uniqueID },
-            dataType: "html",
-            success: function (data) {
-                $('#divEditFormContainer').html(data);
-            }
-        });
-    }
-
-    var Add = function () {
-        $("#divEditFormContainer").show();
-        $("#divQueryContainer").hide();
-    }
-
-    var Cancel = function () {
-        $("#divEditFormContainer").hide();
-        $("#divQueryContainer").show();
-    }
-
-    var Delete = function (uniqueID) {
-        $.ConfirmDialog("删除用户", null, function (confirm) {
-            if (confirm)
-            {
-                var selecteds = [];
-                if (uniqueID) {
-                    selecteds.push(uniqueID);
-                } else {
-                    $(".user-check:checkbox").each(function () {
-                        if (true == $(this).is(':checked')) {
-                            selecteds.push($(this).val());
-                        }
-                    });
-                }
-                if (selecteds.length == 0) {
-                    $.WarningToast("请至少选择一项",null);
-                } else {
-                    $.ajax({
-                        type: "Post",
-                        url: "@Url.Action("Delete")",
-                        data: { "selecteds": JSON.stringify(selecteds) },
-                        dataType: "json",
-                        success: function (data) {
-                            $.SuccessToast(data.Message);
-                            $("#criteria-form").submit();
-                    }
-                })
-                }
-            }
-        });
-    }
-
-    var Create = function (uniqueID) {
-            $("#divEditFormContainer").show();
-            $("#divQueryContainer").hide();
-
-            $.ajax({
-                type: "Get",
-                url: "@Url.Action("Create")",
-                dataType: "html",
-                success: function (data) {
-                $('#divEditFormContainer').html(data);
-            }
-    });
-    }
-
-    var Revert = function (uniqueID) {
-        $.ConfirmDialog("是否恢复正常", null, function (confirm) {
-            if (confirm) {
-                $.ajax({
-                    type: "Post",
-                    url: "@Url.Action("RevertUser")",
-                    data: { "uniqueID": uniqueID },
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.IsSuccess) {
-                            $.SuccessToast(data.Message);
-                            $.DisminnConfirmDialog();
-                            $("#criteria-form").submit();
-                        } else {
-                            $.ErrorToast(data.Message);
-                            $.DisminnConfirmDialog();
-                            $("#criteria-form").submit();
-                        }
-                    },
-                    error: function (x, t, e) {
-                        $.ErrorToast("@Resources.Resource.SystemError")
-                    }
-                });
-            }
-        });
-    }
-</script>
-}
-
-<div id="divQueryContainer">
+<div id="divUserContainer">
     <div class="row">
-        <div class="col-md-12" id="divCondition">
+        <div class="col-md-12" id="divUserQueryCondition">
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">查询条件</h3>
+                    <h3 class="box-title"><a class="fa fa-fw fa-filter success"></a>查询条件</h3>
                     <div class="pull-right box-tools">
-                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="新增" onclick="Create()">
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="新增" onclick="Create('divUserEditFormContainer', 'divUserContainer','@Url.Action("Create")')">
                             <i class="fa fa-plus  fa-lg   text-primary"></i>
                         </button>
 
@@ -161,7 +39,7 @@
                 </div>
                 <div class="box-body">
                     <div class=" row ">
-                        <form id="QueryForm">
+                        <form id="QueryUserForm">
                             <div class=" col-lg-1 col-md-3 col-sm-3 col-xs-3  form-group">
                                 @Html.LabelFor(x => x.Parameter.ID, new { @class = "control-label" })
                             </div>
@@ -177,8 +55,12 @@
                             <div class=" col-lg-1 col-md-3 col-sm-3 col-xs-3  form-group">
                                 @Html.LabelFor(x => x.Parameter.OrganizationUniqueID, new { @class = "control-label" })
                             </div>
-                            <div class=" col-lg-2 col-md-3 col-sm-9 col-xs-9 form-group">
-                                @Html.TextBoxFor(x => x.Parameter.OrganizationUniqueID, new { @class = "form-control" })
+                            <div class="col-lg-2 col-md-3 col-sm-9 col-xs-9 form-group">
+                                <div class="input-group" id="divUserParameterOrganization">
+                                    <input type="text" class="form-control" id="Parameter_OrganizationName"  readonly />
+                                    <span class="input-group-addon"><i class="fa fa-plus"></i></span>
+                                    @Html.HiddenFor(x => x.Parameter.OrganizationUniqueID)
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -190,8 +72,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box box-info">
-                <div class="box-header with-border">
-                    <h3 class="box-title"> 查询结果</h3>
+                <div class="box-header with-border ">
+                    <h3 class="box-title"> <a class="fa fa-fw fa-cogs  "></a> 查询结果</h3>
                     <div class="pull-right box-tools">
                         <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="删除" onclick="Delete()">
                             <i class="fa fa-trash-o fa-lg  text-red "></i>
@@ -201,38 +83,40 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div id="divGridView"></div>
+                    <div id="divUserGridView"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="divEditFormContainer">
+<div id="divUserEditFormContainer">
 
 </div>
 
 
-@*<div class="modal fade" id="confirm-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title"><i class=" fa  fa-warning  text-yellow"></i>是否恢复正常</h4>
-                </div>
-                <div class="modal-body">
-                    <p>One fine body&hellip;</p>
-                </div>
-                <div class="modal-footer">
 
-                    <button type="button" class="btn btn-primary ">确认</button>
-                    <button type="button" class="btn  " data-dismiss="modal">取消</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->*@
+
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#divEditFormContainer").hide();
+
+        $("#divUserParameterOrganization").click(function () {
+            $.ShowModalOrganizationTree(function () {
+                var treeObj = $.fn.zTree.getZTreeObj("modalOgranizationTree");
+                //1. 获取当前被选中的节点数据集合
+                var nodes = treeObj.getSelectedNodes();
+           
+                $("#Parameter_OrganizationName").val(nodes[0].id + "/" + nodes[0].name);
+                $("#Parameter_OrganizationUniqueID").val(nodes[0].uniqueid);  
+
+            });
+        })
+
+
+        Query("@Url.Action("Query")", $("#QueryUserForm").serialize(),"divUserGridView");
+    })
+</script>

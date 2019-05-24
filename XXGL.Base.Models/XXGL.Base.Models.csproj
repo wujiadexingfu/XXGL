@@ -69,6 +69,7 @@
     <Compile Include="UserViewModel\UserParameter.cs" />
     <Compile Include="UserViewModel\UserViewModel.cs" />
     <Compile Include="WebFunction\WebFunctionModel.cs" />
+    <Compile Include="WebFunction\WebFunctionTreeNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Resources\Resources.csproj">

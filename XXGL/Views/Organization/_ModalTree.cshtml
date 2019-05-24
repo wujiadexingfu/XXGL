@@ -1,0 +1,147 @@
+﻿@{
+    Layout = null;
+}
+
+<script type="text/javascript">
+    var zTreeObj;
+    // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+    var setting = {
+
+        view: {
+            selectedMulti: false,
+            fontCss: setFontCss
+        },
+        async: {
+            enable: true,
+            dataType: 'json',
+            type: 'post',
+            url: "@Url.Action("GetTreeNodes")",
+            autoParam: ["id","uniqueid"],
+        },
+        callback: {
+            beforeAsync: beforeAsync,
+            onAsyncSuccess: onAsyncSuccess
+
+        }
+    };
+
+
+    //设置文字的颜色
+    function setFontCss(treeId, treeNode) {
+        if (treeNode.level == 0) {
+            return { 'font-weight': 'bold', 'color': 'red', 'font-family': '微软雅黑'};
+        } else if (treeNode.level == 1) {
+            return { 'font-weight': 'bold', 'color': 'green',  'font-family': '微软雅黑'};
+        } else if (treeNode.level == 2) {
+            return { 'font-weight': 'bold', 'color': 'blue', 'font-family': '微软雅黑' };
+        } else {
+            return {};
+        }
+    };
+
+    function beforeAsync() {
+        curAsyncCount++;
+    };
+
+
+    function onAsyncSuccess(event, treeId, treeNode, msg) {
+        curAsyncCount--;
+        if (curStatus == "expand") {
+            expandNodes(treeNode.children);
+        } else if (curStatus == "async") {
+            asyncNodes(treeNode.children);
+        }
+
+        if (curAsyncCount <= 0) {
+            curStatus = "";
+        }
+    }
+
+    var curStatus = "init";
+    var  curAsyncCount = 0;
+    var goAsync = false;
+
+    function UnExpandAll() {
+        var zTree = $.fn.zTree.getZTreeObj("modalOgranizationTree");
+        zTree.expandAll(false);
+    }
+
+    function ExpandAll() {
+        if (!check()) {
+            return;
+        }
+        var zTree = $.fn.zTree.getZTreeObj("modalOgranizationTree");
+        expandNodes(zTree.getNodes());
+        if (!goAsync) {
+            curStatus = "";
+        }
+    };
+    function expandNodes(nodes) {
+        if (!nodes) return;
+        curStatus = "expand";
+        var zTree = $.fn.zTree.getZTreeObj("modalOgranizationTree");
+        for (var i = 0, l = nodes.length; i < l; i++) {
+            zTree.expandNode(nodes[i], true, false, false);//展开节点就会调用后台查询子节点
+            if (nodes[i].isParent && nodes[i].zAsync) {
+                expandNodes(nodes[i].children);//递归
+            } else {
+                goAsync = true;
+            }
+        }
+    };
+
+    function check() {
+        if (curAsyncCount > 0) {
+            return false;
+        }
+        return true;
+    };
+
+    function zTreeOnClick(event, treeId, treeNode) {
+        //$("#OrganizationUniqueID").val(treeNode.uniqueid);
+        //QueryOrganiztaion();
+        //QueryOrganiztaionUser();
+    }
+
+
+    $(document).ready(function () {
+        zTreeObj = $.fn.zTree.init($("#modalOgranizationTree"), setting);
+
+    });
+
+
+
+
+</script>
+
+<div class="modal " id="organization-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              <h4>  <a class="fa fa-fw fa-filter success"></a>组织</h4>
+            </div>
+            <div class="modal-body" id="confirm-modal-content">
+                <input type="hidden" id="ModalOrganizationUniqueID" />
+                <ul id="modalOgranizationTree" class="ztree"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-organization-modal-ok" class="btn btn-primary " data-handler="1">是</button>
+                <button type="button" class="btn btn-danger" id="btn-organization-modal-cancel" data-handler="0">否</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div>
+
+</div>
+
+
+
+

@@ -183,8 +183,10 @@
     <Compile Include="Controllers\ExceptionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrganizationController.cs" />
+    <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UtilityController.cs" />
+    <Compile Include="Controllers\WebFunctionController.cs" />
     <Compile Include="Filter\BreadCrumbAttribute.cs" />
     <Compile Include="Filter\ExceptionLogAttribute.cs" />
     <Compile Include="Filter\MyExceptionAttribute.cs" />
@@ -490,6 +492,39 @@
     <Content Include="Content\AdminLTE\bower_components\select2-3.5.2\META-INF\resources\webjars\select2\3.5.2\select2_locale_zh-CN.js" />
     <Content Include="Content\AdminLTE\bower_components\select2-3.5.2\META-INF\resources\webjars\select2\3.5.2\select2_locale_zh-TW.js" />
     <Content Include="Content\AdminLTE\dist\css\AdminLTE.css" />
+    <Content Include="Content\AdminLTE\plugins\layer\build\layer.js" />
+    <Content Include="Content\AdminLTE\plugins\layer\build\mobile\layer.js" />
+    <Content Include="Content\AdminLTE\plugins\layer\build\mobile\need\layer.css" />
+    <Content Include="Content\AdminLTE\plugins\layer\build\skin\default\icon-ext.png" />
+    <Content Include="Content\AdminLTE\plugins\layer\build\skin\default\icon.png" />
+    <Content Include="Content\AdminLTE\plugins\layer\build\skin\default\layer.css" />
+    <Content Include="Content\AdminLTE\plugins\layer\build\skin\default\loading-0.gif" />
+    <Content Include="Content\AdminLTE\plugins\layer\build\skin\default\loading-1.gif" />
+    <Content Include="Content\AdminLTE\plugins\layer\build\skin\default\loading-2.gif" />
+    <Content Include="Content\AdminLTE\plugins\layer\build\skin\moon\default.png" />
+    <Content Include="Content\AdminLTE\plugins\layer\build\skin\moon\style.css" />
+    <Content Include="Content\AdminLTE\plugins\layer\gulpfile.js" />
+    <Content Include="Content\AdminLTE\plugins\layer\layer.js" />
+    <Content Include="Content\AdminLTE\plugins\layer\mobile\layer.js" />
+    <Content Include="Content\AdminLTE\plugins\layer\mobile\need\layer.css" />
+    <Content Include="Content\AdminLTE\plugins\layer\skin\default\icon-ext.png" />
+    <Content Include="Content\AdminLTE\plugins\layer\skin\default\icon.png" />
+    <Content Include="Content\AdminLTE\plugins\layer\skin\default\layer.css" />
+    <Content Include="Content\AdminLTE\plugins\layer\skin\default\loading-0.gif" />
+    <Content Include="Content\AdminLTE\plugins\layer\skin\default\loading-1.gif" />
+    <Content Include="Content\AdminLTE\plugins\layer\skin\default\loading-2.gif" />
+    <Content Include="Content\AdminLTE\plugins\layer\src\layer.js" />
+    <Content Include="Content\AdminLTE\plugins\layer\src\mobile\layer.js" />
+    <Content Include="Content\AdminLTE\plugins\layer\src\mobile\need\layer.css" />
+    <Content Include="Content\AdminLTE\plugins\layer\src\skin\default\icon-ext.png" />
+    <Content Include="Content\AdminLTE\plugins\layer\src\skin\default\icon.png" />
+    <Content Include="Content\AdminLTE\plugins\layer\src\skin\default\layer.css" />
+    <Content Include="Content\AdminLTE\plugins\layer\src\skin\default\loading-0.gif" />
+    <Content Include="Content\AdminLTE\plugins\layer\src\skin\default\loading-1.gif" />
+    <Content Include="Content\AdminLTE\plugins\layer\src\skin\default\loading-2.gif" />
+    <Content Include="Content\bootstrap-addtabs\bootstrap.addtabs.css" />
+    <Content Include="Content\bootstrap-addtabs\bootstrap.addtabs.js" />
+    <Content Include="Content\bootstrap-addtabs\bootstrap.addtabs.min.js" />
     <Content Include="Content\fancyBox\demo\1_b.jpg" />
     <Content Include="Content\fancyBox\demo\1_s.jpg" />
     <Content Include="Content\fancyBox\demo\2_b.jpg" />
@@ -7955,6 +7990,13 @@
     <Content Include="Content\AdminLTE\bower_components\select2-3.5.2\META-INF\resources\webjars\select2\3.5.2\release.sh" />
     <Content Include="Content\AdminLTE\bower_components\select2-3.5.2\META-INF\resources\webjars\select2\3.5.2\select2.jquery.json" />
     <Content Include="Content\AdminLTE\bower_components\select2-3.5.2\META-INF\resources\webjars\select2\3.5.2\select2_locale_en.js.template" />
+    <Content Include="Content\AdminLTE\plugins\layer\bower.json" />
+    <Content Include="Content\AdminLTE\plugins\layer\CHANGELOG.md" />
+    <Content Include="Content\AdminLTE\plugins\layer\LICENSE" />
+    <Content Include="Content\AdminLTE\plugins\layer\package.json" />
+    <Content Include="Content\AdminLTE\plugins\layer\README.md" />
+    <Content Include="Content\AdminLTE\plugins\layer\src\mobile\README.md" />
+    <Content Include="Content\AdminLTE\plugins\layer\src\README.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -7971,6 +8013,10 @@
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\zstree\css\awesomeStyle\awesome.css" />
     <Content Include="Scripts\zstree\css\awesomeStyle\img\loading.gif" />
+    <Content Include="Scripts\zstree\css\bootstrapStyle\bootstrapStyle.css" />
+    <Content Include="Scripts\zstree\css\bootstrapStyle\img\bootstrap.png" />
+    <Content Include="Scripts\zstree\css\bootstrapStyle\img\line_conn.png" />
+    <Content Include="Scripts\zstree\css\bootstrapStyle\img\loading.gif" />
     <Content Include="Scripts\zstree\css\demo.css" />
     <Content Include="Scripts\zstree\css\metroStyle\img\line_conn.png" />
     <Content Include="Scripts\zstree\css\metroStyle\img\loading.gif" />
@@ -8039,6 +8085,10 @@
     <Content Include="Views\Organization\_OrganizationUserGridView.cshtml" />
     <Content Include="Views\Organization\_Edit.cshtml" />
     <Content Include="Views\Organization\_Create.cshtml" />
+    <Content Include="Views\Organization\_ModalTree.cshtml" />
+    <Content Include="Views\Permission\Index.cshtml" />
+    <Content Include="Views\WebFunction\Index.cshtml" />
+    <Content Include="Views\WebFunction\_Tree.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -8054,10 +8104,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Resources\Resources.csproj">
-      <Project>{961a5a2f-a8d5-4e2d-947e-6e041daceb7f}</Project>
-      <Name>Resources</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Utility\Utility.csproj">
       <Project>{a5bf972f-11b0-4219-9475-4cdfa423e6db}</Project>
       <Name>Utility</Name>

@@ -74,5 +74,12 @@ namespace XXGL.Controllers
 
 
 
+        public ActionResult ModalTree()
+        {
+
+            return PartialView("_ModalTree");
+        }
+
+
     }
 }

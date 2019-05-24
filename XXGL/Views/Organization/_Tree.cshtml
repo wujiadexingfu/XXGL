@@ -2,12 +2,7 @@
     Layout = null;
 }
 
-
 <script type="text/javascript">
-
-
-
-
     var zTreeObj;
     // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
     var setting = {
@@ -15,7 +10,7 @@
         view: {
             selectedMulti: false,
             fontCss: setFontCss
-        },  
+        },
         async: {
             enable: true,
             dataType: 'json',
@@ -43,7 +38,7 @@
         } else {
             return {};
         }
-    };  
+    };
 
     function beforeAsync() {
         curAsyncCount++;
@@ -106,23 +101,27 @@
     function zTreeOnClick(event, treeId, treeNode) {
         $("#OrganizationUniqueID").val(treeNode.uniqueid);
         QueryOrganiztaion();
-        QueryOrganiztaionUser(); 
+        QueryOrganiztaionUser();
     }
 
 
     $(document).ready(function () {
+        alert("")
         zTreeObj = $.fn.zTree.init($("#OgranizationTree"), setting);
 
     });
 
 
- 
+
 
 </script>
 
 <div>
 
-    <input  type="hidden" id="OrganizationUniqueID"/>
+    <input type="hidden" id="OrganizationUniqueID" />
     <ul id="OgranizationTree" class="ztree"></ul>
 </div>
+
+
+
 

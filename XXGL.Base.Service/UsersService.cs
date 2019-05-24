@@ -105,6 +105,7 @@ namespace XXGL.Base.Service
             account.Name = user.Name;
             account.Title = user.Title;
             account.Photo = user.Photo;
+            account.OrganizationUniqueID = user.OrganizationUniqueID;
 
 
             var permissionList = PermissionService.GetPermissionByUserId(user.ID);  //人员所有的操作权限
@@ -455,7 +456,7 @@ namespace XXGL.Base.Service
             try
             {
                 var db = new XXGLEntities();
-                var exitsUser = db.Sys_User.Where(x => x.ID == createUserInputFormViewModel.ID).FirstOrDefault();
+                var exitsUser = db.Sys_User.Where(x => x.ID == createUserInputFormViewModel.CreateUerID).FirstOrDefault();
                 if (exitsUser != null)
                 {
                     result.ReturnFailMessage("用户编号重复");  //用户编号重复
@@ -464,16 +465,16 @@ namespace XXGL.Base.Service
                 {
                     Sys_User user = new Sys_User();
                     user.UniqueID = Guid.NewGuid().ToString();
-                    user.ID = createUserInputFormViewModel.ID;
-                    user.Name = createUserInputFormViewModel.Name;
-                    user.OrganizationUniqueID = createUserInputFormViewModel.OrganizationUniqueID;
-                    user.BirthDay = createUserInputFormViewModel.BirthDay;
-                    user.Email = createUserInputFormViewModel.Email;
-                    user.MobilePhone = createUserInputFormViewModel.MobilePhone;
-                    user.Other = createUserInputFormViewModel.Other;
+                    user.ID = createUserInputFormViewModel.CreateUerID;
+                    user.Name = createUserInputFormViewModel.CreateUerName;
+                    user.OrganizationUniqueID = createUserInputFormViewModel.CreateUserOrganizationUniqueID;
+                    user.BirthDay = createUserInputFormViewModel.CreateUerBirthDay;
+                    user.Email = createUserInputFormViewModel.CreateUerEmail;
+                    user.MobilePhone = createUserInputFormViewModel.CreateUerMobilePhone;
+                    user.Other = createUserInputFormViewModel.CreateUerOther;
                     user.PassWord = Define.InitialPassword;
                     user.State = true;
-                    user.Title = createUserInputFormViewModel.Title;
+                    user.Title = createUserInputFormViewModel.CreateUerTitle;
                     db.Sys_User.Add(user);
                     db.SaveChanges();
                     result.RetunSuccessMessage("新增成功");

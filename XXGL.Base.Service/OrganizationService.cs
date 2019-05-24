@@ -94,5 +94,77 @@ namespace XXGL.Base.Service
             return result;
         }
 
+
+
+        /// <summary>
+        /// 根据父节点获取下属组织
+        /// </summary>
+        /// <param name="parentUniqueID">父节点的UnqieID</param>
+        /// <param name="contains"></param>
+        /// <returns></returns>
+        public static List<OrganizationItem> GetDownOrganizationsByParentUniqueID(string parentUniqueID,bool contains)
+        {
+
+            var db = new XXGLEntities();
+            var result = db.Sys_Organization.Where(x => x.ParentUniqueID == parentUniqueID).Select(x => new OrganizationItem()
+            {
+                UniqueID = x.UniqueID,
+                ID = x.ID,
+                Name = x.Name,
+                Manager = db.Sys_User.Where(x1 => x1.UniqueID == x.ManagerUniqueID).Select(x1 => x1.Name).FirstOrDefault(),
+                CreateUser = db.Sys_User.Where(x1 => x1.UniqueID == x.CreateUser).Select(x1 => x1.Name).FirstOrDefault(),
+                CreateTime = x.CreateTime.Value
+            }).ToList();  //下属组织
+             
+           
+
+            if (contains)  //如果包含，则加入本组织信息
+            {
+                var parentOrganizationItem = db.Sys_Organization.Where(x => x.UniqueID == parentUniqueID).Select(x=>new OrganizationItem()
+                {
+                    UniqueID =x.UniqueID,
+                    ID =x.ID,
+                    Manager = db.Sys_User.Where(x1 => x1.UniqueID == x.ManagerUniqueID).Select(x1 => x1.Name).FirstOrDefault(),
+                    CreateUser = db.Sys_User.Where(x1 => x1.UniqueID == x.CreateUser).Select(x1 => x1.Name).FirstOrDefault(),
+                    CreateTime = x.CreateTime.Value
+                }).FirstOrDefault();
+                result.Add(parentOrganizationItem);
+            }
+            return result;
+
+        }
+
+
+
+        ///// <summary>
+        ///// 获取组织结构树
+        ///// </summary>
+        ///// <param name="list"></param>
+        ///// <param name="id"></param>
+        ///// <param name="treeNodes"></param>
+        ///// <returns></returns>
+        //static void GetOrganizeSelectTreeNodes(List<BaseOrganizeEntity> list, string id, ref List<SelectTreeNode> treeNodes)
+        //{
+        //    if (list == null)
+        //        return;
+        //    List<BaseOrganizeEntity> sublist;
+        //    if (!string.IsNullOrWhiteSpace(id))
+        //    {
+        //        sublist = list.Where(t => t.ParentId == id).ToList();
+        //    }
+        //    else
+        //    {
+        //        sublist = list.Where(t => string.IsNullOrWhiteSpace(t.ParentId)).ToList();
+        //    }
+        //    if (!sublist.Any())
+        //        return;
+        //    foreach (var item in sublist)
+        //    {
+        //        treeNodes.Add(new SelectTreeNode() { id = item.Id, name = item.FullName, parentId = item.ParentId });
+        //        GetOrganizeSelectTreeNodes(list, item.Id, ref treeNodes);
+        //    }
+        //}
+
+
     }
 }

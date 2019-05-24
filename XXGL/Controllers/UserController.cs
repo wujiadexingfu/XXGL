@@ -90,7 +90,7 @@ namespace XXGL.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return View("_Create", new CreateUserInputFormViewModel() { IsLogin = true});
+            return View("_Create", new CreateUserInputFormViewModel() { CreateUerIsLogin = true});
         }
 
         [HttpPost]

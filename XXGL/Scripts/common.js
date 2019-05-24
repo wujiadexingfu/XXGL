@@ -21,8 +21,8 @@
 
 (function ($) {
     $.extend({
-        Alert: function (msg, callback, title, isError) {
-            var isError = isError || false;
+        Alert: function (msg, callback, title, isErrors) {
+            var isError = isErrors || false;
             var classIcon = isError ? 'glyphicon glyphicon-ok   text-success bigger-120' : 'glyphicon glyphicon-ok   text-success bigger-120';
             var title_text = title ? title : "系统信息";
             var title_template = '<h4 class="modal-title"><i class="' + classIcon + '"></i>' + title_text + '</h4>';
@@ -31,7 +31,7 @@
             var bodyArea = $("<div class='modal-body'></div>").html(msg);
             var footArea = $("<div class='modal-footer'></div>");
             var btn_OK = $("<button>确定</button>").addClass("btn btn-primary").attr({ "data-dismiss": "modal" }).appendTo(footArea);
-            if (callback != undefined) {
+            if (callback !== undefined) {
                 btn_OK.click(function () {
                     callback();
                 });
@@ -131,7 +131,28 @@
 
         DisminnConfirmDialog: function () { //确认窗消失
             $("#confirm-modal").modal("hide");
+        },
+
+        ShowModalOrganizationTree: function (callback)
+        {
+            $("#organization-modal").modal('show');
+
+            $("#btn-organization-modal-ok").unbind("click").bind("click", function (e) {
+ 
+                callback($(this).data("handler"));
+                $("#organization-modal").modal("hide");
+            });//先接触绑定，在重新绑定，否则会多次绑定方法
+
+            $("#btn-organization-modal-cancel").unbind("click").bind("click", function (e) {
+                //callback($(this).data("handler"));
+                $("#organization-modal").modal("hide");
+            });//先接触绑定，在重新绑定，否则会多次绑定方法
+
         }
+
+
+
+
     });
 })(jQuery);
 

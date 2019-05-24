@@ -1,62 +1,140 @@
-﻿
-@{
-
-    
-}
-
-@*<div class="row">
-        <!-- Left col -->
-        
-        <!-- /.Left col -->
-        <!-- right col (We are only adding the ID to make the widgets sortable)-->
-        <section class="col-lg-5 connectedSortable">
-            <!-- Map box -->
-            <div class="box box-solid bg-light-blue-gradient">
-                <div class="box-header">
-                    <!-- tools box -->
-                    <div class="pull-right box-tools">
-                        <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip"
-                                title="Date range">
-                            <i class="fa fa-calendar"></i>
-                        </button>
-                        <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
-                                data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                    <!-- /. tools -->
-                    <i class="fa fa-map-marker"></i>
-                    <h3 class="box-title">
-                        Visitors
-                    </h3>
-                </div>
-                <div class="box-body">
-                    <div id="world-map" style="height: 250px; width: 100%;"></div>
-                </div>
-                <!-- /.box-body-->
-                <div class="box-footer no-border">
-                    <div class="row">
-                        <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                            <div id="sparkline-1"></div>
-                            <div class="knob-label">Visitors</div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                            <div id="sparkline-2"></div>
-                            <div class="knob-label">Online</div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-xs-4 text-center">
-                            <div id="sparkline-3"></div>
-                            <div class="knob-label">Exists</div>
-                        </div>
-                        <!-- ./col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
+﻿<div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content container-fluid" style="padding:0px">
+        <ul class="nav nav-tabs" id="MasterTabs" role="tablist">
+            <li class="nav-tabs-header active" role="presentation">
+                <a aria-controls="home" data-toggle="tab" href="#home" role="tab">
+                    <i class="fa fa-home"></i> Home
+                </a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content fixheight">
+            <div class="tab-pane active" id="home" role="tabpanel">
+                I'm a homepage.
             </div>
-            <!-- /.box -->
-            <!-- /.box -->
-        </section>
-        <!-- right col -->
-    </div>*@
+        </div>
+    </section>
+    </div>
+
+<script type="text/javascript">
+
+   /**
+    *
+    * 通用查询方法
+    * @@param url 地址
+    * @@param data 数据
+    * @@param divGridView GridView
+    */
+    var Query = function (url,data,divGridView) {
+        $.ajax({
+            type: "Post",
+            url: url,
+            data: data,
+            dataType: "html",
+            beforeSend: function () {
+                $.ShowLoading(divGridView);
+            },
+            success: function (data) {
+                $('#' + divGridView).empty();
+                $.HideLoading(divGridView);
+                $('#' + divGridView).html(data);
+            },
+
+        });
+    }
+
+    /**
+     * 
+     * @@param showContainer 展示视图
+     * @@param hideContainer 隐藏视图
+     * @@param url 访问的url
+     * @@param data 数据 uniqueId
+     */
+    var Edit = function (showContainer,hideContainer,url,data) {
+        $("#" + showContainer).show();
+        $("#" + hideContainer).hide();
+        $.ajax({
+            type: "Get",
+            url: url,
+            data: { "uniqueID": data },
+            dataType: "html",
+            success: function (data) {
+                $('#' + showContainer).html(data);
+            }
+        });
+    }
+
+    /**
+     * 新增方法
+     * */
+    var Add = function () {
+        $("#divEditFormContainer").show();
+        $("#divQueryContainer").hide();
+    }
+
+    /**
+     * 取消方法
+     * @@param showContainer
+     * @@param hideContainer
+     */
+    var Cancel = function (showContainer, hideContainer) {
+        $("#" + showContainer).show();
+        $("#" + hideContainer).hide();
+     
+    }
+
+    var Delete = function (uniqueID) {
+        $.ConfirmDialog("删除用户", null, function (confirm) {
+            if (confirm)
+            {
+                var selecteds = [];
+                if (uniqueID) {
+                    selecteds.push(uniqueID);
+                } else {
+                    $(".user-check:checkbox").each(function () {
+                        if (true == $(this).is(':checked')) {
+                            selecteds.push($(this).val());
+                        }
+                    });
+                }
+                if (selecteds.length == 0) {
+                    $.WarningToast("请至少选择一项",null);
+                } else {
+                    $.ajax({
+                        type: "Post",
+                        url: "@Url.Action("Delete")",
+                        data: { "selecteds": JSON.stringify(selecteds) },
+                        dataType: "json",
+                        success: function (data) {
+                            $.SuccessToast(data.Message);
+                            $("#criteria-form").submit();
+                    }
+                })
+                }
+            }
+        });
+    }
+
+    /**
+     * 新增方法
+     * 
+     * @@param showContainer 展示视图
+     * @@param hideContainer 隐藏视图
+     * @@param url  地址
+     */
+    var Create = function (showContainer, hideContainer, url) {
+        $("#" + showContainer).show();
+        $("#" + hideContainer).hide();
+            $.ajax({
+                type: "Get",
+                url: url,
+                dataType: "html",
+                success: function (data) {
+                    $('#' + showContainer).html(data);
+            }
+    });
+    }
+
+
+</script>

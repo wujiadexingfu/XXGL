@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+
+}
+
+<script type="text/javascript">
+
+
+        var InitWebPermissionTree = function () {
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("InitTree")",
+                dataType: "html",
+                beforeSend: function () {
+                    $.ShowLoading("divWebPermissionTree");
+                },
+                success: function (data) {
+                    $('#divWebPermissionTree').empty();
+                    $.HideLoading("divWebPermissionTree");
+                    $('#divWebPermissionTree').html(data);
+                },
+
+            });
+    };
+
+    $(function () {
+        //$("#divEditFormContainer").hide();
+        //Query();
+
+        InitWebPermissionTree();
+    })
+    </script>
+
+
+<div id="divWebPermissionQueryContainer">
+    <div class="row">
+        <div class="col-md-3" id="divWebPermissionTreeContainer">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><a class="fa fa-fw fa-filter success"></a>菜单</h3>
+
+                    <div class="pull-right box-tools">
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="刷新" onclick="InitWebPermissionTree()">
+                            <i class="fa fa-refresh fa-lg    text-primary"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="展开" onclick="ExpandAllWebPermission()">
+                            <i class="fa  fa-expand fa-lg    text-primary"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="收缩" onclick="UnExpandAllWebPermission()">
+                            <i class="fa fa-compress fa-lg    text-primary"></i>
+                        </button>
+
+
+                        &nbsp;
+                        &nbsp;
+                    </div>
+
+                </div>
+                <div class="box-body">
+                    <div id="divWebPermissionTree"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title"> <a class="fa fa-fw fa-cogs  "></a> 查询结果</h3>
+                    <div class="pull-right box-tools">
+                    </div>
+
+                </div>
+                <div class="box-body">
+                    11111
+                </div>
+
+            </div>
+
+    </div>
+</div>
+
+<div id="divWebPermissionEditFormContainer">
+
+</div>
+

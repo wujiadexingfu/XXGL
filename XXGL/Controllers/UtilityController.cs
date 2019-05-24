@@ -4,12 +4,16 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using XXGL.Base.Models.Authenticated;
+using XXGL.Base.Service;
+using PagedList;
 
 namespace XXGL.Controllers
 {
     public class UtilityController : Controller
     {
-
+      
+     
         //public ActionResult GetLanguage([DefaultValue(1)]int pageNo, [DefaultValue(10)]int pageSize, string term)
         //{
         //    try
@@ -24,7 +28,32 @@ namespace XXGL.Controllers
 
         //    }
         //    return Json(new { success = false, message = "发生错误" }, "text/plain", JsonRequestBehavior.AllowGet);
-        
-       // }
+
+        // }
+
+
+        public ActionResult GetDownOrganizationsByParentUniqueID([DefaultValue(1)]int pageNo, [DefaultValue(10)]int pageSize, string term)
+        {
+            try
+            {
+                var account=(Account)Session["Account"];
+                var result = OrganizationService.GetDownOrganizationsByParentUniqueID(account.OrganizationUniqueID,true);
+             
+                if (!string.IsNullOrEmpty(term))
+                {
+                    result = result.Where(x => x.ID.Contains(term) || x.Name.Contains(term)).ToList();
+                }
+                var results = result.OrderBy(x => x.ID).Select(x => new { id = x.UniqueID, text = x.ID + "/" + x.Name }).ToPagedList(pageNo, pageSize);
+
+                return Json(new { results = results, total = results.TotalItemCount }, "text/plain", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "发生错误" }, "text/plain", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+
     }
 }

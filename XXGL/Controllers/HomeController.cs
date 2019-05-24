@@ -17,6 +17,7 @@ namespace XXGL.Controllers
    
         public ActionResult Index()
         {
+        
             var user = UsersService.GetAccount("admin");
             Session["Account"] = user;
          //  HttpCookie authcookie = Request.Cookies[FormsAuthentication.FormsCookieName];
@@ -87,25 +88,25 @@ namespace XXGL.Controllers
                           }
                           else
                           {
-                              ModelState.AddModelError("PassWord", Resources.Resource.UserInvalid);   //用户失效
+                              ModelState.AddModelError("PassWord","该用户已经失效");   //用户失效
                               return View();
                           }
                       }
                       else
                       {
-                          ModelState.AddModelError("PassWord", Resources.Resource.PassWordError);   //密码错误
+                          ModelState.AddModelError("PassWord", "密码错误");   //密码错误
                           return View();
                       }
                   }
                   else
                   {
-                      ModelState.AddModelError("UserID", Resources.Resource.NoUser);   //用户不存在
+                      ModelState.AddModelError("UserID", "该用户不存在");   //用户不存在
                       return View();
                   }
               }
               else
               {
-                  ModelState.AddModelError("VerficationCode", Resources.Resource.VerficationCodeError);
+                  ModelState.AddModelError("VerficationCode", "验证码错误");
                   return View();
               }
           }

@@ -1,6 +1,8 @@
 ﻿@model XXGL.Base.Models.Authenticated.Account
 @{
-    Layout = null;
+                /**/
+
+                Layout = null;
 }
 
 @foreach (var ancestor in Model.WebFunctionList)
@@ -29,14 +31,28 @@
                             <ul class="treeview-menu">
                                 @foreach (var currert in parent.SubWebFuntionList)
                                 {
-                                    <li id="@currert.ID"><a href="@Url.Action(currert.Action, currert.Controller, new { area = currert.Area })"><i class="fa @currert.Icon"></i> @currert.Description</a></li>
+
+
+                                    <li id="@currert.ID">
+                                        <a href="#" data-addtab="@currert.Description" data-target="#MasterTabs" data-title="@currert.Description" data-ajax="true" data-url="@Url.Action(currert.Action, currert.Controller, new { area = currert.Area })"><i class="fa @currert.Icon"></i>@currert.Description</a>
+
+
+
+
+                                    </li>
+
+                                    @*<li id="@currert.ID"><a href="@Url.Action(currert.Action, currert.Controller, new { area = currert.Area })"><i class="fa @currert.Icon"></i> @currert.Description</a></li>*@
                                 }
                             </ul>
                         </li>
                     }
                     else
                     {
-                        <li id="@parent.ID"><a href="@Url.Action(parent.Action, parent.Controller, new { area = parent.Area })"><i class="fa @parent.Icon"></i> @parent.Description</a></li>
+
+                        <li id="@parent.ID">
+                            <a href="#" data-addtab="@parent.Description" data-target="#MasterTabs" data-title="@parent.Description" data-ajax="true" data-url="@Url.Action(parent.Action, parent.Controller, new { area = parent.Area })"><i class="fa @parent.Icon"></i>@parent.Description</a>
+                        </li>
+                        @*<li id="@parent.ID"><a href="@Url.Action(parent.Action, parent.Controller, new { area = parent.Area })"><i class="fa @parent.Icon"></i> @parent.Description</a></li>*@
                     }
                 }
             </ul>
@@ -44,7 +60,11 @@
     }
     else
     {
-        <li id="@ancestor.ID"><a href="@Url.Action(ancestor.Action, ancestor.Controller, new { area = ancestor.Area })"><i class="fa @ancestor.Icon"></i> @ancestor.Description</a></li>
+
+        <li id="@ancestor.ID">
+            <a href="#" data-addtab="@ancestor.Description" data-target="#MasterTabs" data-title="@ancestor.Description" data-ajax="true" data-url="@Url.Action(ancestor.Action, ancestor.Controller, new { area = ancestor.Area })"><i class="fa @ancestor.Icon"></i>@ancestor.Description</a>
+        </li>
+        @*<li id="@ancestor.ID"><a href="@Url.Action(ancestor.Action, ancestor.Controller, new { area = ancestor.Area })"><i class="fa @ancestor.Icon"></i> @ancestor.Description</a></li>*@
     }
 }
 
