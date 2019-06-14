@@ -41,5 +41,10 @@ namespace XXGL.Base.Models.OrganizationModel
         [Display(Name = "创建时间")]
         public DateTime CreateTime { get; set; }
 
+        /// <summary>
+        /// 父节点
+        /// </summary>
+        public string ParentUniqueId { get; set; }
+
     }
 }

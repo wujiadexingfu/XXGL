@@ -64,6 +64,10 @@
       <Project>{cef89cf2-0561-480a-8b06-2c1a7e3e409c}</Project>
       <Name>DbEntity.MSSQL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Extends\Extends.csproj">
+      <Project>{67c51e6d-ca01-4f8e-b8a7-083661726cff}</Project>
+      <Name>Extends</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Resources\Resources.csproj">
       <Project>{961a5a2f-a8d5-4e2d-947e-6e041daceb7f}</Project>
       <Name>Resources</Name>

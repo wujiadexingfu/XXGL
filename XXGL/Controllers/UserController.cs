@@ -29,12 +29,10 @@ namespace XXGL.Controllers
         public ActionResult Query(UserParameter parameter)
         {
            UserViewModel viewModel = new UserViewModel();
-           viewModel.Parameter = parameter;
-            var totalCount=0;
-            var list = UsersService.GetUserList(parameter, out totalCount);
-            var result = new PagedList.StaticPagedList<UserGridItem>(list, parameter.PageNo,parameter.PageSize ,totalCount);
-            viewModel.GridItem = result;
-            return View("_GridView",viewModel);
+            int count = 0;
+            var list = UsersService.GetUserList(parameter, out count);
+            return Json(new { total = count, rows = list }, JsonRequestBehavior.AllowGet);
+
         }
 
         

@@ -54,15 +54,15 @@ namespace XXGL.Base.Service
         }
 
 
-        public static RequestResult Create(CreateOrganizationInputFormViewModel createOrganizationInputFormViewModel)
+        public static RequestResult Create(CreateOrganizationInputForm createOrganizationInputForm)
         {
             RequestResult result = new RequestResult();
 
             try
             {
                 var db = new XXGLEntities();
-                var exitsUser = db.Sys_Organization.Where(x => x.ID == createOrganizationInputFormViewModel.ID).FirstOrDefault();
-                if (exitsUser != null)
+                var exits = db.Sys_Organization.Where(x => x.ID == createOrganizationInputForm.CreateOrganizationID).FirstOrDefault();
+                if (exits != null)
                 {
                     result.ReturnFailMessage("部门编号重复"); 
                 }
@@ -70,15 +70,15 @@ namespace XXGL.Base.Service
                 {
                     Sys_Organization organization = new Sys_Organization();
                     organization.UniqueID = Guid.NewGuid().ToString();
-                    organization.ID = createOrganizationInputFormViewModel.ID;
-                    organization.Name = createOrganizationInputFormViewModel.Name;
-                    organization.Icon = createOrganizationInputFormViewModel.Icon;
-                    organization.ParentUniqueID = createOrganizationInputFormViewModel.ParentUniqueID;
-                    organization.ManagerUniqueID = createOrganizationInputFormViewModel.ManagerUniqueID;
+                    organization.ID = createOrganizationInputForm.CreateOrganizationID;
+                    organization.Name = createOrganizationInputForm.CreateOrganizationName;
+                    organization.Icon = createOrganizationInputForm.CreateOrganizationIcon;
+                    organization.ParentUniqueID = createOrganizationInputForm.CreateOrganizationParentUniqueID;
+                    organization.ManagerUniqueID = createOrganizationInputForm.CreateOrganizationManagerUniqueID;
                     organization.IsDelete = false;
                     organization.CreateTime = DateTime.Now;
                     organization.CreateUser = (HttpContext.Current.Session["Account"] as Account).UniqueID;
-                    organization.Seq = Convert.ToInt32(createOrganizationInputFormViewModel.Seq);
+                    organization.Seq = Convert.ToInt32(createOrganizationInputForm.CreateOrganizationSeq);
                  
                     db.Sys_Organization.Add(organization);
                     db.SaveChanges();
@@ -102,36 +102,100 @@ namespace XXGL.Base.Service
         /// <param name="parentUniqueID">父节点的UnqieID</param>
         /// <param name="contains"></param>
         /// <returns></returns>
-        public static List<OrganizationItem> GetDownOrganizationsByParentUniqueID(string parentUniqueID,bool contains)
+        public static List<OrganizationItem> GetDownOrganizationsByParentUniqueID(string uniqueID)
         {
-
             var db = new XXGLEntities();
-            var result = db.Sys_Organization.Where(x => x.ParentUniqueID == parentUniqueID).Select(x => new OrganizationItem()
+            var organizationList = db.Sys_Organization.Select(x => new OrganizationItem()
             {
                 UniqueID = x.UniqueID,
                 ID = x.ID,
                 Name = x.Name,
                 Manager = db.Sys_User.Where(x1 => x1.UniqueID == x.ManagerUniqueID).Select(x1 => x1.Name).FirstOrDefault(),
                 CreateUser = db.Sys_User.Where(x1 => x1.UniqueID == x.CreateUser).Select(x1 => x1.Name).FirstOrDefault(),
-                CreateTime = x.CreateTime.Value
-            }).ToList();  //下属组织
-             
-           
+                CreateTime = x.CreateTime.Value,
+                ParentUniqueId = x.ParentUniqueID
+            }).ToList();
 
-            if (contains)  //如果包含，则加入本组织信息
+            List<OrganizationItem> selectedOrganizationList = new List<OrganizationItem>();
+            GetOrganizationByParentUniqueId(organizationList, uniqueID, selectedOrganizationList);
+
+            return selectedOrganizationList;
+
+        }
+
+
+        public static void GetOrganizationByParentUniqueId(List<OrganizationItem> allOrganizationList, string uniqueID, List<OrganizationItem> selectedOrganizationList)
+        {
+            var parentWOrganization = allOrganizationList.Where(x => x.UniqueID == uniqueID).FirstOrDefault();
+            selectedOrganizationList.Add(parentWOrganization);
+
+            var sonWOrganizationList = allOrganizationList.Where(x => x.ParentUniqueId == uniqueID).ToList();
+            if (sonWOrganizationList != null && sonWOrganizationList.Count > 0)
             {
-                var parentOrganizationItem = db.Sys_Organization.Where(x => x.UniqueID == parentUniqueID).Select(x=>new OrganizationItem()
+                foreach (var item in sonWOrganizationList)
                 {
-                    UniqueID =x.UniqueID,
-                    ID =x.ID,
-                    Manager = db.Sys_User.Where(x1 => x1.UniqueID == x.ManagerUniqueID).Select(x1 => x1.Name).FirstOrDefault(),
-                    CreateUser = db.Sys_User.Where(x1 => x1.UniqueID == x.CreateUser).Select(x1 => x1.Name).FirstOrDefault(),
-                    CreateTime = x.CreateTime.Value
-                }).FirstOrDefault();
-                result.Add(parentOrganizationItem);
+                    GetOrganizationByParentUniqueId(allOrganizationList, item.UniqueID, selectedOrganizationList);
+                }
             }
-            return result;
+        }
 
+
+        public static  EditOrganizationInputForm GetEditOrganizationInputFormByUniqueId(string uniqueId)
+        {
+            var db = new XXGLEntities();
+            var model = db.Sys_Organization.Where(x => x.UniqueID == uniqueId).Select(x=>new EditOrganizationInputForm() {
+
+                 EditOrganizationUniqueId=x.UniqueID,
+                 EditOrganizationID=x.ID,
+                 EditOrganizationIcon=x.Icon,
+                 EditOrganizationManagerUniqueID=x.ManagerUniqueID,
+                 EditOrganizationName=x.Name,
+                 EditOrganizationParentUniqueID=x.ParentUniqueID,
+                 EditOrganizationSeq=x.Seq,
+                 EditOrganizationParentName=db.Sys_Organization.Where(x1=>x1.UniqueID==x.ParentUniqueID).FirstOrDefault().ID+"/"+ db.Sys_Organization.Where(x1 => x1.UniqueID == x.ParentUniqueID).FirstOrDefault().Name
+            }).FirstOrDefault();
+
+            return model;
+        }
+
+
+        public static RequestResult Edit(EditOrganizationInputForm editOrganizationInputForm)
+        {
+            RequestResult result = new RequestResult();
+
+            try
+            {
+                var db = new XXGLEntities();
+                var exits = db.Sys_Organization.Where(x => x.ID == editOrganizationInputForm.EditOrganizationID&&x.UniqueID!= editOrganizationInputForm.EditOrganizationUniqueId).FirstOrDefault();
+                if (exits != null)
+                {
+                    result.ReturnFailMessage("部门编号重复");
+                }
+                else
+                {
+                    Sys_Organization organization = new Sys_Organization();
+                    var editOrganization = db.Sys_Organization.Where(x => x.UniqueID == editOrganizationInputForm.EditOrganizationUniqueId).FirstOrDefault();
+
+                    editOrganization.ID = editOrganizationInputForm.EditOrganizationID;
+                    editOrganization.Icon = editOrganizationInputForm.EditOrganizationIcon;
+                    editOrganization.ManagerUniqueID = editOrganizationInputForm.EditOrganizationManagerUniqueID;
+                    editOrganization.Name = editOrganizationInputForm.EditOrganizationName;
+                    editOrganization.ParentUniqueID = editOrganizationInputForm.EditOrganizationParentUniqueID;
+                    editOrganization.Seq = editOrganizationInputForm.EditOrganizationSeq;
+
+
+
+                    db.SaveChanges();
+                    result.RetunSuccessMessage("修改成功");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                result.ReturnFailMessage("修改失败");
+            }
+
+            return result;
         }
 
 

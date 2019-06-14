@@ -8,7 +8,7 @@ namespace XXGL.Filter
 {
     public class ExceptionLogAttribute : HandleErrorAttribute, IExceptionFilter
     {
-        public void OnException(ExceptionContext filterContext)
+        public new  void OnException(ExceptionContext filterContext)
         {
             Exception exception = filterContext.Exception;
 

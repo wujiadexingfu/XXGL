@@ -1,4 +1,4 @@
-﻿@model XXGL.Base.Models.OrganizationModel.CreateOrganizationInputFormViewModel
+﻿@model XXGL.Base.Models.OrganizationModel.CreateOrganizationInputForm
 @{
     Layout = null;
 }
@@ -10,7 +10,7 @@
        * 注意这儿一定要重新注册，否则无法启用验证。
        *reference：https://www.itsvse.com/forum.php?mod=viewthread&tid=3342
         */
-        $.validator.unobtrusive.parse($("#CreateForm"));
+        $.validator.unobtrusive.parse($("#CreateOrganizationForm"));
 
 
         $(".icon").click(function () {
@@ -20,14 +20,14 @@
 
 
 
-        //$("#ParentUniqueID").selectExtend("请选择父节点", "100%", "@Url.Action("GetDownOrganizationsByParentUniqueID", "Utility")");
-        $("#ParentUniqueID").click(function () {
-            $.ShowModalOrganizationTree(function () {
-                alert(zTreeObj.getCheckedNodes().id);
-                console.log(zTreeObj.getCheckedNodes());
-                console.log($.fn.zTree.getZTreeObj("modalOgranizationTree").getCheckedNodes())
-            });
-        })
+       $("#CreateOrganizationParentUniqueID").selectExtend("请选择父节点", "100%", "@Url.Action("GetDownOrganizationsByParentUniqueID", "Utility")");
+        //$("#ParentUniqueID").click(function () {
+        //    $.ShowModalOrganizationTree(function () {
+        //        alert(zTreeObj.getCheckedNodes().id);
+        //        console.log(zTreeObj.getCheckedNodes());
+        //        console.log($.fn.zTree.getZTreeObj("modalOgranizationTree").getCheckedNodes())
+        //    });
+        //})
     
         
 
@@ -38,8 +38,8 @@
 
     });
 
-        var Save = function () {
-            var form = $('#CreateForm');
+        var CreateOrganizationSave = function () {
+            var form = $('#CreateOrganizationForm');
             if (form.valid()) {
                 $.ajax({
                     type: "Post",
@@ -49,9 +49,9 @@
                     success: function (data) {
                         if (data.IsSuccess) {
                             $.SuccessToast(data.Message);
-                            $("#divEditFormContainer").hide();
-                            $("#divQueryContainer").show();
-                            $("#criteria-form").submit();
+                            $("#divOrganizationEditFormContainer").hide();
+                            $("#divOrganizationQueryContainer").show();
+                            RefreshOrganizationTable();
                         } else {
                             $.ErrorToast(data.Message);
                         }
@@ -60,7 +60,9 @@
                         $.ErrorToast("系统错误")
                     }
                 })
-            };
+            } else {
+                alert("error");
+            }
         };
 
       var SelectOrganiztaionIcon = function () {
@@ -73,12 +75,12 @@
 
 </script>
 
-<button class="btn btn-app btn-primary  " onclick="Save()" title="保存">
+<button class="btn btn-app btn-primary  " onclick="CreateOrganizationSave()" title="保存">
     <i class=" fa fa-save "></i>
     保存
 </button>
 
-<button class="btn btn-app btn-purple  " onclick="Cancel()" title="取消">
+<button class="btn btn-app btn-purple  " onclick="Cancel('divOrganizationQueryContainer','divOrganizationEditFormContainer')" title="取消">
     <i class=" fa fa-repeat  "></i>
     取消
 </button>
@@ -90,51 +92,52 @@
         </div>
         <div class="box-body">
             <div class="table-responsive">
-                <form id="CreateForm">
+                <form id="CreateOrganizationForm">
                     <table class="table no-margin  table-striped table-bordered table-hover ">
                         <thead>
                             <tr>
-                                <th class="col-sm-6 col-md-2">@Html.LabelFor(x => x.ID)</th>
+                                <th class="col-sm-6 col-md-2">@Html.LabelFor(x => x.CreateOrganizationID)</th>
                                 <td class="col-sm-6 col-md-4">
-                                    @Html.TextBoxFor(x => x.ID, new { @class = "form-control" })
+                                    @Html.TextBoxFor(x => x.CreateOrganizationID, new { @class = "form-control" })
 
-                                    @Html.ValidationMessageFor(x => x.ID)
+                                    @Html.ValidationMessageFor(x => x.CreateOrganizationID)
                                 </td>
-                                <th class="col-sm-6 col-md-2">@Html.LabelFor(x => x.Name)</th>
+                                <th class="col-sm-6 col-md-2">@Html.LabelFor(x => x.CreateOrganizationName)</th>
                                 <td class="col-sm-6 col-md-4">
-                                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                                    @Html.TextBoxFor(x => x.CreateOrganizationName, new { @class = "form-control" })
 
-                                    @Html.ValidationMessageFor(x => x.Name)
+                                    @Html.ValidationMessageFor(x => x.CreateOrganizationName)
                                 </td>
                             </tr>
                         </thead>
 
                         <tbody>
                             <tr>
-                                <th> @Html.LabelFor(x => x.Icon)</th>
+                                <th> @Html.LabelFor(x => x.CreateOrganizationIcon)</th>
                                 <td>
                                     @*@Html.TextBoxFor(x => x.Icon, new { @class = "form-control" })*@
-                                    @Html.HiddenFor(x => x.Icon)
+                                    @Html.HiddenFor(x => x.CreateOrganizationIcon)
                                     <span id="selected_icon" class="fa fa-edit text-green fa-lg" onclick="SelectOrganiztaionIcon()"></span>
                                
 
                                 </td>
-                                <th>@Html.LabelFor(x => x.ParentUniqueID)</th>
+                                <th>@Html.LabelFor(x => x.CreateOrganizationParentUniqueID)</th>
                                 <td>
-                                    @Html.TextBoxFor(x => x.ParentUniqueID)
-                                    @Html.ValidationMessageFor(x => x.ParentUniqueID)
+                                    @Html.TextBoxFor(x => x.CreateOrganizationParentUniqueID)
+                           
+                                    @Html.ValidationMessageFor(x => x.CreateOrganizationParentUniqueID)
                                 </td>
                             </tr>
                             <tr>
-                                <th> @Html.LabelFor(x => x.ManagerUniqueID)</th>
+                                <th> @Html.LabelFor(x => x.CreateOrganizationManagerUniqueID)</th>
                                 <td>
-                                    @Html.TextBoxFor(x => x.ManagerUniqueID, new { @class = "form-control" })
+                                    @Html.TextBoxFor(x => x.CreateOrganizationManagerUniqueID, new { @class = "form-control" })
 
                                 </td>
-                                <th>@Html.LabelFor(x => x.Seq)</th>
+                                <th>@Html.LabelFor(x => x.CreateOrganizationSeq)</th>
                                 <td>
-                                    @Html.TextBoxFor(x => x.Seq, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(x => x.Seq)
+                                    @Html.TextBoxFor(x => x.CreateOrganizationSeq, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.CreateOrganizationSeq)
                                 </td>
                             </tr>
                         </tbody>

@@ -8,7 +8,7 @@ using XXGL.Base.Models.CommonModel;
 
 namespace XXGL.Base.Models.UserViewModel
 {
-    public class UserParameter : BasePageModel
+    public class UserParameter : BasePageParameter
     {
 
         //<Reference>https://www.cnblogs.com/artech/p/asp-net-mvc-validation-programming.html</Reference>

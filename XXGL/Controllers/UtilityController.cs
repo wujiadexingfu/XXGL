@@ -37,18 +37,21 @@ namespace XXGL.Controllers
             try
             {
                 var account=(Account)Session["Account"];
-                var result = OrganizationService.GetDownOrganizationsByParentUniqueID(account.OrganizationUniqueID,true);
+                var result = OrganizationService.GetDownOrganizationsByParentUniqueID(account.OrganizationUniqueID);
              
                 if (!string.IsNullOrEmpty(term))
                 {
                     result = result.Where(x => x.ID.Contains(term) || x.Name.Contains(term)).ToList();
                 }
-                var results = result.OrderBy(x => x.ID).Select(x => new { id = x.UniqueID, text = x.ID + "/" + x.Name }).ToPagedList(pageNo, pageSize);
 
-                return Json(new { results = results, total = results.TotalItemCount }, "text/plain", JsonRequestBehavior.AllowGet);
+                int  count = result.Count();
+                var results = result.Select(x => new { id = x.UniqueID, text = x.ID + "/" + x.Name }).Skip((pageNo-1)*pageSize).Take(pageSize).ToList();
+            
+                return Json(new { results = results, total = count }, "text/plain", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
+                var message = ex.ToString();
                 return Json(new { success = false, message = "发生错误" }, "text/plain", JsonRequestBehavior.AllowGet);
             }
         }

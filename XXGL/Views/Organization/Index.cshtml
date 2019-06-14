@@ -1,39 +1,27 @@
 ﻿@{
-    Layout = null;   
-    
+    Layout = null;
+
 }
 
-
-@section Scripts {
-
- 
     <script type="text/javascript">
 
-  $(function () {
-        //$("#divEditFormContainer").hide();
-        //Query();
-
-      InitTree();
-    })
-
-        var InitTree = function () {
+     
+        var InitOrganizationTree = function () {
             $.ajax({
                 type: "Post",
                 url: "@Url.Action("InitTree")",
-                // data: $("#QueryForm").serialize(),
                 dataType: "html",
                 beforeSend: function () {
-                    $.ShowLoading("divTree");
+                    $.ShowLoading("divOrganizationTree");
                 },
                 success: function (data) {
-                    $('#divTree').empty();
-                    $.HideLoading("divTree");
-                    $('#divTree').html(data);
+                    $('#divOrganizationTree').empty();
+                    $.HideLoading("divOrganizationTree");
+                    $('#divOrganizationTree').html(data);
                 },
 
             });
-            //QueryOrganiztaion();
-            //QueryOrganiztaionUser();
+          
         };
 
         var QueryOrganiztaion = function () {
@@ -79,42 +67,71 @@
         };
 
 
-            var Create = function () {
-            $("#divEditFormContainer").show();
-            $("#divQueryContainer").hide();
+        var CreateOrganization = function () {
+            $("#divOrganizationEditFormContainer").show();
+            $("#divOrganizationQueryContainer").hide();
 
             $.ajax({
                 type: "Get",
                 url: "@Url.Action("Create")",
                 dataType: "html",
                 success: function (data) {
-                $('#divEditFormContainer').html(data);
-            }
-    });
-    }
+                    $('#divOrganizationEditFormContainer').html(data);
+                }
+            });
+        };
+
+
+        var EditOrganization = function (uniqueId) {
+            $("#divOrganizationEditFormContainer").show();
+            $("#divOrganizationQueryContainer").hide();
+
+            $.ajax({
+                type: "Get",
+                url: "@Url.Action("Edit")",
+                data: { uniqueId: uniqueId },
+                dataType: "html",
+                success: function (data) {
+                    $('#divOrganizationEditFormContainer').html(data);
+                }
+            });
+        };
+
+        var RefreshOrganizationTable = function () {
+            InitOrganizationTree();
+            QueryOrganiztaion();
+        }
+
+
+
+
+        $(function () {
+            InitOrganizationTree();
+        });
+
 
     </script>
-}
 
-<div id="divQueryContainer">
+
+<div id="divOrganizationQueryContainer">
     <div class="row">
-        <div class="col-md-3" id="divTreeContainer">
+        <div class="col-md-3" id="divOrganizationTreeContainer">
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">部门</h3>
                     <div class="pull-right box-tools">
-                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="新增" onclick="Create()">
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="新增" onclick="CreateOrganization()">
                             <i class="fa fa-plus  fa-lg   text-primary"></i>
                         </button>
 
-                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="刷新" onclick="InitTree()">
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="刷新" onclick="InitOrganizationTree()">
                             <i class="fa fa-refresh fa-lg    text-primary"></i>
                         </button>
-                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="展开" onclick="ExpandAll()">
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="展开" onclick="ExpandAllOrganization()">
                             <i class="fa  fa-expand fa-lg    text-primary"></i>
                         </button>
 
-                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="收缩" onclick="UnExpandAll()">
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="收缩" onclick="UnExpandAllOrganization()">
                             <i class="fa fa-compress fa-lg    text-primary"></i>
                         </button>
 
@@ -125,7 +142,7 @@
 
                 </div>
                 <div class="box-body">
-                    <div id="divTree"></div>
+                    <div id="divOrganizationTree"></div>
                 </div>
             </div>
         </div>
@@ -156,7 +173,7 @@
     </div>
 </div>
 
-<div id="divEditFormContainer">
+<div id="divOrganizationEditFormContainer">
 
 </div>
 

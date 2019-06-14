@@ -18,6 +18,40 @@
 
 
 
+<script type="text/javascript">
+
+
+     var QueryUser = function () {
+        Query("@Url.Action("Query")", $("#QueryUserForm").serialize(), "divUserGridView");
+    }
+
+    $(function () {
+        $("#divEditFormContainer").hide();
+
+        $("#divUserParameterOrganization").click(function () {
+            $.ShowModalOrganizationTree(function () {
+                var treeObj = $.fn.zTree.getZTreeObj("modalOgranizationTree");
+                //1. 获取当前被选中的节点数据集合
+                var nodes = treeObj.getSelectedNodes();
+
+                $("#Parameter_OrganizationName").val(nodes[0].id + "/" + nodes[0].name);
+                $("#Parameter_OrganizationUniqueID").val(nodes[0].uniqueid);
+
+            });
+        })
+
+        QueryUser();
+
+
+       
+    });
+
+   
+
+
+
+</script>
+
 <div id="divUserContainer">
     <div class="row">
         <div class="col-md-12" id="divUserQueryCondition">
@@ -29,7 +63,7 @@
                             <i class="fa fa-plus  fa-lg   text-primary"></i>
                         </button>
 
-                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="查询" onclick="Query()">
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="查询" onclick="QueryUser()">
                             <i class="fa fa-search fa-lg    text-primary"></i>
                         </button>
                         &nbsp;
@@ -57,7 +91,7 @@
                             </div>
                             <div class="col-lg-2 col-md-3 col-sm-9 col-xs-9 form-group">
                                 <div class="input-group" id="divUserParameterOrganization">
-                                    <input type="text" class="form-control" id="Parameter_OrganizationName"  readonly />
+                                    <input type="text" class="form-control" id="Parameter_OrganizationName" readonly />
                                     <span class="input-group-addon"><i class="fa fa-plus"></i></span>
                                     @Html.HiddenFor(x => x.Parameter.OrganizationUniqueID)
                                 </div>
@@ -97,26 +131,3 @@
 
 
 
-
-
-<script type="text/javascript">
-
-    $(function () {
-        $("#divEditFormContainer").hide();
-
-        $("#divUserParameterOrganization").click(function () {
-            $.ShowModalOrganizationTree(function () {
-                var treeObj = $.fn.zTree.getZTreeObj("modalOgranizationTree");
-                //1. 获取当前被选中的节点数据集合
-                var nodes = treeObj.getSelectedNodes();
-           
-                $("#Parameter_OrganizationName").val(nodes[0].id + "/" + nodes[0].name);
-                $("#Parameter_OrganizationUniqueID").val(nodes[0].uniqueid);  
-
-            });
-        })
-
-
-        Query("@Url.Action("Query")", $("#QueryUserForm").serialize(),"divUserGridView");
-    })
-</script>

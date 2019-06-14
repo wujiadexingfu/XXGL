@@ -4,10 +4,10 @@
     $.fn.extend({
 
         //select2擴展至jQuery中,引用能轉化成select2
-        selectExtend: function (placeholder, width, url, data, pageSize, DefaultText) {
+        selectExtend: function (placeholder, width, url, defaultText, defaultValue) {
             placeholder = placeholder || "@Resources.Resource.Select2PlaceHolder";
             width = width || "200px";
-            pageSize = pageSize || 10;
+            pageSize =  10;
 
             var options = {
                 placeholder: placeholder,
@@ -33,7 +33,7 @@
                 initSelection: function (element, callback) {  //设置初始化显示的text
                     debugger;
                         //var data = { id: $(element).val(), text: $(element).val() };
-                        var data = { id: DefaultText, text: DefaultText };//这里初始化
+                    var data = { id: defaultValue , text: defaultText  };//这里初始化
                         callback(data);
                 },  //在input中value存在的时候才可以使用，否则不会进来
                 allowClear: true,
@@ -45,16 +45,14 @@
                 formatSearching:  function () { return "搜寻中"; },
                 formatAjaxError: function () { return "错误"; },
                 formatLoadMore: function () { return "更多..."; },
-              //  createSearchChoice: function (term, data) { if ($(data).filter(function () { return this.text.localeCompare(term) === 0; }).length === 0) { return { id: term, text: term }; } },   //这种方式可以主动创建需要的标签，一般用于需要新增的
-                //  multiple: true, 开启的话则可以多选，
+                //  createSearchChoice: function (term, data) { if ($(data).filter(function () { return this.text.localeCompare(term) === 0; }).length === 0) { return { id: term, text: term }; } },   //这种方式可以主动创建需要的标签，一般用于需要新增的
+                //multiple: false, //开启的话则可以多选，
                 minimunInputLength: 0,
                 dropdownAutoWidth: true,
                 escapeMarkup: function (markup) { return markup; }, // 自定义格式化防止xss注入
                  selectOnBlur: true,
             };
-            if (data != undefined) {
-                options.ajax.data = data;
-            }
+          
             //return options;
             $(this).select2(options);
         }

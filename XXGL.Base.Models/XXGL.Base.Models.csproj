@@ -51,8 +51,10 @@
     <Compile Include="Authenticated\LoginFormModel.cs" />
     <Compile Include="Authenticated\WebFunction.cs" />
     <Compile Include="CommonModel\BasePageModel.cs" />
+    <Compile Include="CommonModel\BasePageParameter.cs" />
     <Compile Include="HomeViewModel\PasswordInputFormViewModel.cs" />
-    <Compile Include="OrganizationModel\CreateOrganizationInputFormViewModel.cs" />
+    <Compile Include="OrganizationModel\CreateOrganizationInputForm.cs" />
+    <Compile Include="OrganizationModel\EditOrganizationInputForm.cs" />
     <Compile Include="OrganizationModel\OrganizationItem.cs" />
     <Compile Include="OrganizationModel\OrganizationTreeNode.cs" />
     <Compile Include="OrganizationModel\OrganizationUserGridItem.cs" />
@@ -68,7 +70,11 @@
     <Compile Include="UserViewModel\UserGridItem.cs" />
     <Compile Include="UserViewModel\UserParameter.cs" />
     <Compile Include="UserViewModel\UserViewModel.cs" />
+    <Compile Include="WebFunction\CreateWebFunctionInputForm.cs" />
+    <Compile Include="WebFunction\EditWebFunctionInputForm.cs" />
+    <Compile Include="WebFunction\WebFunctionGridItem.cs" />
     <Compile Include="WebFunction\WebFunctionModel.cs" />
+    <Compile Include="WebFunction\WebFunctionParameter.cs" />
     <Compile Include="WebFunction\WebFunctionTreeNode.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,9 +3,9 @@
 }
 
 <script type="text/javascript">
-    var zTreeObj;
+    var zTreeObjOrganization;
     // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
-    var setting = {
+    var settingOrganization = {
 
         view: {
             selectedMulti: false,
@@ -19,9 +19,9 @@
             autoParam: ["id","uniqueid"],
         },
         callback: {
-            beforeAsync: beforeAsync,
-            onAsyncSuccess: onAsyncSuccess,
-            onClick: zTreeOnClick
+            beforeAsync: beforeAsyncOrganization,
+            onAsyncSuccess: onAsyncSuccessOrganization,
+            onClick: zTreeOnClickOrganization
 
         }
     };
@@ -40,65 +40,65 @@
         }
     };
 
-    function beforeAsync() {
-        curAsyncCount++;
+    function beforeAsyncOrganization() {
+        curAsyncCountOrganization++;
     };
 
 
-    function onAsyncSuccess(event, treeId, treeNode, msg) {
-        curAsyncCount--;
-        if (curStatus == "expand") {
-            expandNodes(treeNode.children);
-        } else if (curStatus == "async") {
+    function onAsyncSuccessOrganization(event, treeId, treeNode, msg) {
+        curAsyncCountOrganization--;
+        if (curStatusOrganization == "expand") {
+            expandNodesOrganization(treeNode.children);
+        } else if (curStatusOrganization == "async") {
             asyncNodes(treeNode.children);
         }
 
-        if (curAsyncCount <= 0) {
-            curStatus = "";
+        if (curAsyncCountOrganization <= 0) {
+            curStatusOrganization = "";
         }
     }
 
-    var curStatus = "init";
-    var  curAsyncCount = 0;
-    var goAsync = false;
+    var curStatusOrganization = "init";
+    var  curAsyncCountOrganization = 0;
+    var goAsyncOrganization = false;
 
-    function UnExpandAll() {
+    function UnExpandAllOrganization() {
         var zTree = $.fn.zTree.getZTreeObj("OgranizationTree");
         zTree.expandAll(false);
     }
 
-    function ExpandAll() {
-        if (!check()) {
+    function ExpandAllOrganization() {
+        if (!checkOrganization()) {
             return;
         }
         var zTree = $.fn.zTree.getZTreeObj("OgranizationTree");
-        expandNodes(zTree.getNodes());
-        if (!goAsync) {
-            curStatus = "";
+        expandNodesOrganization(zTree.getNodes());
+        if (!goAsyncOrganization) {
+            curStatusOrganization = "";
         }
     };
-    function expandNodes(nodes) {
+    function expandNodesOrganization(nodes) {
         if (!nodes) return;
-        curStatus = "expand";
+        curStatusOrganization = "expand";
         var zTree = $.fn.zTree.getZTreeObj("OgranizationTree");
         for (var i = 0, l = nodes.length; i < l; i++) {
             zTree.expandNode(nodes[i], true, false, false);//展开节点就会调用后台查询子节点
             if (nodes[i].isParent && nodes[i].zAsync) {
-                expandNodes(nodes[i].children);//递归
+                expandNodesOrganization(nodes[i].children);//递归
             } else {
-                goAsync = true;
+                goAsyncOrganization = true;
             }
         }
     };
 
-    function check() {
-        if (curAsyncCount > 0) {
+    function checkOrganization() {
+        if (curAsyncCountOrganization > 0) {
             return false;
         }
         return true;
     };
 
-    function zTreeOnClick(event, treeId, treeNode) {
+    function zTreeOnClickOrganization(event, treeId, treeNode) {
         $("#OrganizationUniqueID").val(treeNode.uniqueid);
         QueryOrganiztaion();
         QueryOrganiztaionUser();
@@ -106,8 +106,7 @@
 
 
     $(document).ready(function () {
-        alert("")
-        zTreeObj = $.fn.zTree.init($("#OgranizationTree"), setting);
+        zTreeObjOrganization = $.fn.zTree.init($("#OgranizationTree"), settingOrganization);
 
     });
 

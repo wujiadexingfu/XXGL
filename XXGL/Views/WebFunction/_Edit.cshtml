@@ -1,0 +1,148 @@
+﻿@model XXGL.Base.Models.WebFunction.EditWebFunctionInputForm
+@{
+    Layout = null;
+}
+
+<script type="text/javascript">
+        $(function () {
+
+            /*
+           * 注意这儿一定要重新注册，否则无法启用验证。
+           *reference：https://www.itsvse.com/forum.php?mod=viewthread&tid=3342
+            */
+            $.validator.unobtrusive.parse($("#WebFunctionEditForm"));
+
+
+            $('.EditWebFunctionIsDisplay').iCheck({
+                checkboxClass: 'icheckbox_flat-green',
+                radioClass: 'iradio_flat-green'
+            });
+
+        });
+    var EditWebFunctionSave = function () {
+        var form = $('#WebFunctionEditForm');
+            if (form.valid()) {
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("Edit")",
+                    data: form.serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.IsSuccess) {
+                            $.SuccessToast(data.Message);
+                            $("#divWebFunctionEditFormContainer").hide();
+                            $("#divWebFunctionQueryContainer").show();
+                            RefreshWebFunctionTable();
+                        } else {
+                            $.ErrorToast(data.Message);
+                        }
+                    },
+                    error: function (x, t, e) {
+                        $.ErrorToast("系统错误")
+                    }
+                })
+            };
+        };
+</script>
+
+<button class="btn btn-app btn-primary  " onclick="EditWebFunctionSave()" title="保存">
+    <i class=" fa fa-save "></i>
+    保存
+</button>
+
+
+
+<button class="btn btn-app btn-purple  " onclick="Cancel('divWebFunctionQueryContainer','divWebFunctionEditFormContainer')" title="取消">
+    <i class=" fa fa-repeat  "></i>
+    取消
+</button>
+
+<div class="col-md-12">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <a class="fa  fa-plus success"> </a><h3 class="box-title text-success">修改菜单信息 </h3>
+        </div>
+        <div class="box-body">
+            <div class="table-responsive">
+                <form id="WebFunctionEditForm">
+                    <table class="table no-margin  table-striped table-bordered table-hover ">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-6 col-md-2">@Html.LabelFor(x => x)</th>
+                                <td class="col-sm-6 col-md-4">
+                                    @Html.TextBoxFor(x => x.EditWebFunctionId, new { @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(x => x.EditWebFunctionId)
+                                </td>
+                                <th class="col-sm-6 col-md-2">@Html.LabelFor(x => x.EditWebFunctionDescription)</th>
+                                <td class="col-sm-6 col-md-4">
+                                    @Html.TextBoxFor(x => x.EditWebFunctionDescription, new { @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(x => x.EditWebFunctionDescription)
+                                </td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <th> @Html.LabelFor(x => x.EditWebFunctionParentId)</th>
+                                <td>
+                                    @Html.TextBoxFor(x => x.EditWebFunctionParentId, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.EditWebFunctionParentId)
+
+                                </td>
+                                <th>@Html.LabelFor(x => x.EditWebFunctionArea)</th>
+                                <td>
+                                    @Html.TextBoxFor(x => x.EditWebFunctionArea, new { @class = "form-control" })
+
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <th> @Html.LabelFor(x => x.EditWebFunctionController)</th>
+                                <td>
+                                    @Html.TextBoxFor(x => x.EditWebFunctionController, new { @class = "form-control" })
+
+
+                                </td>
+                                <th>@Html.LabelFor(x => x.EditWebFunctionAction)</th>
+                                <td>
+                                    @Html.TextBoxFor(x => x.EditWebFunctionAction, new { @class = "form-control" })
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th> @Html.LabelFor(x => x.EditWebFunctionIcon)</th>
+                                <td>
+                                    @Html.TextBoxFor(x => x.EditWebFunctionIcon, new { @class = "form-control" })
+
+
+                                </td>
+                                <th>@Html.LabelFor(x => x.EditWebFunctionSeq)</th>
+                                <td>
+                                    @Html.TextBoxFor(x => x.EditWebFunctionSeq, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.EditWebFunctionSeq)
+
+                                </td>
+                            </tr>
+
+
+                            <tr>
+
+                                <th>@Html.LabelFor(x => x.EditWebFunctionIsDisplay)</th>
+                                <td>
+                                    @Html.RadioButtonFor(x => x.EditWebFunctionIsDisplay, true, new { @id = "OK", @name = "EditWebFunctionIsDisplay", @class = "EditWebFunctionIsDisplay" })  是
+                                    &nbsp; &nbsp; &nbsp;   &nbsp; &nbsp; &nbsp;
+                                    @Html.RadioButtonFor(x => x.EditWebFunctionIsDisplay, false, new { @id = "No", @name = "EditWebFunctionIsDisplay", @class = "EditWebFunctionIsDisplay" })  否
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

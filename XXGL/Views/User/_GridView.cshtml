@@ -1,138 +1,198 @@
-﻿@model XXGL.Base.Models.UserViewModel.UserViewModel
-@using PagedList;
-@using PagedList.Mvc;
-
+﻿
 @{
     Layout = null;
-    var resultInfo = Model.GridItem.TotalItemCount == 0 ? "" : string.Format("总共有{0}条数据，当前显示为{1}到{2}", Model.GridItem.TotalItemCount, Model.GridItem.FirstItemOnPage, Model.GridItem.LastItemOnPage);
-    var idx = Model.GridItem.FirstItemOnPage;
 }
-@*<script src="@Url.Content("~/Content/jQueryTabeZ/jQueryTabeZsy/js/table.js")"></script>
-<link href="@Url.Content("~/Content/jQueryTabeZ/jQueryTabeZsy/css/style.css")" rel="stylesheet" />*@
+<table id="tableUserGrid">
 
-@*<script src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>*@
-@*<script src="@Url.Content("~/Content/AdminLTE/plugins/iCheck/icheck.min.js")"></script>>*@
+
+</table>
 
 <script type="text/javascript">
 
-    $(function () {
+    //$(function () {
 
 
-        //reference：http://blog.csdn.net/peter_qyq/article/details/51995191插件的详细说明
-        $(".userPhoto").fancybox({});
-        //$("#table-sort").setTable();  //可以参考
+    //    //reference：http://blog.csdn.net/peter_qyq/article/details/51995191插件的详细说明
+    //    $(".userPhoto").fancybox({});
+    //    //$("#table-sort").setTable();  //可以参考
 
-        $("input").iCheck({
-         labelHover : false, 
-        cursor : true, 
-        checkboxClass : 'icheckbox_square-blue',   //注意blue的大小写
-        radioClass : 'iradio_square-blue', 
-        increaseArea : '20%' 
-        });
+    //    $("input").iCheck({
+    //     labelHover : false, 
+    //    cursor : true, 
+    //    checkboxClass : 'icheckbox_square-blue',   //注意blue的大小写
+    //    radioClass : 'iradio_square-blue', 
+    //    increaseArea : '20%' 
+    //    });
 
-        $('#all-user-check').on('ifUnchecked', function (event) {
-            $('.user-check').iCheck('uncheck');
-        }).on('ifChecked', function (event) {
-            $('.user-check').iCheck('check');
-        });
+    //    $('#all-user-check').on('ifUnchecked', function (event) {
+    //        $('.user-check').iCheck('uncheck');
+    //    }).on('ifChecked', function (event) {
+    //        $('.user-check').iCheck('check');
+    //    });
+    //});
+
+   var  queryParams = function (params) {
+        var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+            limit: params.limit,   //页面大小
+            offset: params.offset,  //页码,
+            order: params.order,
+            ordername: params.sort,
+        };
+        return temp;
+    }
+
+
+   $(function () {
+
+       $('#tableUserGrid').bootstrapTable({
+              url: '@Url.Action("Query")',         //请求后台的URL（*）
+                method: 'get',                      //请求方式（*）
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sortable: true,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                showExport: true,
+                exportDataType: "basic",              //basic', 'all', 'selected'.
+                queryParams: queryParams,
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber: 1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                //search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                strictSearch: true,
+                showColumns: true,                  //是否显示所有的列
+               // showRefresh: true,                  //是否显示刷新按钮
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: false,                //是否启用点击选中行
+               // height: "auto",                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+             //   showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+              cardView: false,                    //是否显示详细视图
+              detailView: false,                   //是否显示父子表
+
+              columns: [
+                  {
+                      field: 'null',
+                      title: '<input  type="checkbox"  id="all-user-check"/>',
+                      align: 'center',
+                      formatter: function (value, row, index) {
+                          return '<input type="checkbox" class="user-check "  value="' + row.UniqueID + '"/>';
+                      }
+                  },
+                  {
+                      field: 'null',
+                      title: '操作',
+                      formatter: function (value, row, index) {
+
+                          var result = ' <a href="#" title="编辑" onclick="Edit(\'divUserEditFormContainer\',\'divUserContainer\',\'@Url.Action("Edit")\',  \'' + row.UniqueID + '\')"><i class=" fa fa-edit text-green  fa-lg"></i></a>' +
+                              '<a href="#" style="margin-left:10px" title="删除" onclick="Delete(\'' + row.UniqueID + '\')"> <i class=" fa fa-trash-o  text-red fa-lg "></i></a>';
+
+                          if (!row.State) {
+                              result += ' <a href="#" style="margin-left:10px" title="恢复" onclick="Revert(\''+row.UniqueID+'\')"><i class=" fa    fa-undo text-blue fa-lg "></i> </a>';
+
+                          }
+                          return result;
+
+
+                      },
+                      align: 'center',
+                  },
+
+                {
+                    field: 'ID',
+                    title: '用户编号',
+                    sortable: true,
+                    align: 'center',
+                },
+                    {
+                        field: 'Name',
+                        title: '用户名称',
+                        sortable: true,
+                        align: 'center',
+                    },
+                    {
+                        field: 'Title',
+                        title: '职称',
+                        sortable: true,
+                        align: 'center',
+                },
+                {
+                    field: 'Email',
+                    title: 'Email',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    field: 'MobilePhone',
+                    title: '电话',
+                    sortable: true,
+                    align: 'center',
+                },
+                {
+                    field: 'Organization',
+                    title: '部门',
+                    sortable: true,
+                    align: 'center',
+                },
+                {
+                    field: 'LastLoginTime',
+                    title: '上次登陆时间',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    field: 'Description',
+                    title: '描述',
+                    sortable: true,
+                    align: 'center',
+                  },
+                  {
+                      field: 'ExpiryDateStatus',
+                      title: '有效期',
+                      sortable: true,
+                      align: 'center',
+                      formatter: function (value, row, index) {
+                          if (row.ExpiryDateStatus) {
+                              return ' <span class="badge bg-light-blue">正常</span> </td>'
+                          } else {
+                              return ' <span class="badge bg-red">失效</span>'
+                          }
+                      }
+                  },
+                  {
+                      field: 'IsLogin',
+                      title: '是否可以登录',
+                      sortable: true,
+                      align: 'center',
+                      formatter: function (value, row, index) {
+                          if (row.IsLogin) {
+                              return ' <span class="badge bg - light - blue">是</span> ';
+                          } else {
+                              return '<span class="badge bg-red">否</span>';
+                          }
+                      }
+                  },
+                  {
+                      field: '图片',
+                      title: 'Photo',
+                      sortable: true,
+                      align: 'center',
+                      formatter: function (value, row, index) {
+                          return '    <a class="userPhoto" href="@Url.Content("~/Content/Images/1.jpg")" title="'+row.Name+'"><img src="@Url.Content("~/Content/Images/11.png")" alt=""> </a>';
+                      }
+                  }
+               ]
     });
+    });
+
+
+
+
+
 
  
 </script>
-
-<small>@resultInfo</small>
-<div class="table-responsive">
-    <table  id="table-sort" class="table no-margin  table-striped table-bordered table-hover ">
-        <thead>
-            <tr>
-                <th class="col-sm-1 center">
-                <input  type="checkbox"  id="all-user-check"/>
-                </th>
-                <th>操作</th>
-                <th>项次</th>
-                @*<a data-ajax="true" data-ajax-begin="$.ShowLoading('divGridView')" data-ajax-complete="$.HideLoading('divGridView')" data-ajax-mode="replace" data-ajax-update="#divGridView" href="@Url.Action("Query", new {Model.Parameter.PageNo,Model.Parameter.ID })">4</a>*@
-                <th>用户编号 </th>
-                <th>用户名称</th>
-                <th>职称</th>
-                <th>Email</th>
-                <th>电话</th>
-                <th>部门</th>
-                <th>上次登陆时间</th>
-                <th>状态</th>
-                <th>有效期</th>
-                <th>是否可以登录</th>
-                <th>图片</th>
-            </tr>
-        </thead>
-
-
-        @foreach (var item in Model.GridItem)
-        {
-        
-            <tr>
-                <td > <input type="checkbox" class="user-check "  value="@item.UniqueID"/></td>
-                <td >
-                    <a href="#" title="编辑" onclick="Edit('divUserEditFormContainer','divUserContainer','@Url.Action("Edit")',  '@item.UniqueID')">
-                        <i class=" fa fa-edit text-green  fa-lg"></i>
-                    </a>
-                    <a href="#" style="margin-left:10px" title="删除" onclick="Delete('@item.UniqueID')">
-                        <i class=" fa fa-trash-o  text-red fa-lg "></i>
-                    </a>
-                    @if (!item.State)
-                    {
-                        <a href="#" style="margin-left:10px" title="恢复" onclick="Revert('@item.UniqueID')">
-                            <i class=" fa    fa-undo text-blue fa-lg "></i>
-                        </a>
-                    }
-                </td>
-                <td >@(idx++)</td>
-                <td>@item.ID</td>
-                <td>@item.Name</td>
-                <td>@item.Title</td>
-                <td>@item.Email</td>
-                <td>@item.MobilePhone</td>
-                <td>@item.OrganizationUniqueID</td>
-                <td>@item.LastLoginTime</td>
-                @if (item.State)
-                {
-                    <td>  <span class="badge bg-light-blue">@Resources.Resource.Normal</span> </td>
-                }
-                else
-                {
-                    <td><span class="badge bg-red">@Resources.Resource.Invalid</span></td>
-                }
-
-                <td><span class="badge @item.ExpiryDateStatusColor">@item.ExpiryDateStatus</span></td>
-                @if (item.IsLogin)
-                {
-                    <td>  <span class="badge bg-light-blue">是</span> </td>
-                }
-                else
-                {
-                    <td><span class="badge bg-red">否</span></td>
-                }
-
-
-
-                <td>
-                    @if (!string.IsNullOrEmpty(item.Photo))
-                    {
-                        @*<a class="userPhoto " href="@Url.Content(string.Format("{0}/{1}", Utility.Config.FullVirtualUserPhtoto,"1.jpg")) " title="1235">
-                                <img class="user-image" src="@Url.Content(string.Format("{0}/{1}", Utility.Config.FullVirtualUserPhtoto,"1.png")) " kesrc="@Url.Content(string.Format("{0}/{1}", Utility.Config.FullVirtualUserPhtoto,"1.jpg")) " alt="123">
-                            </a>*@
-                        <a class="userPhoto" href="@Url.Content("~/Content/Images/1.jpg")" title="@item.Name">
-                            <img src="@Url.Content("~/Content/Images/11.png")" alt="">
-                        </a>
-                    }
-                </td>
-            </tr>
-        }
-    </table>
-</div>
-
-
-@Html.PagedListPager(Model.GridItem, pageNo => Url.Action("Query", new { pageNo, Model.Parameter.ID, Model.Parameter.Name, Model.Parameter.OrganizationUniqueID }), Utility.SiteLibrary.GetDefaultPagerOptions("divUserGridView"))
-@Html.Partial("_Criteria", Model) 
 
 <style>
     td {

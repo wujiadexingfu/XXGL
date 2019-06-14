@@ -12,6 +12,7 @@ using System.Web;
 using Utility;
 using XXGL.Base.Models.Permission;
 using XXGL.Base.Models.OrganizationModel;
+using Extends;
 
 namespace XXGL.Base.Service
 {
@@ -248,23 +249,9 @@ namespace XXGL.Base.Service
         public static List<UserGridItem> GetUserList(UserParameter Parameters, out int TotalCount)
         {
             var db = new XXGLEntities();
-            var query = (from user in db.Sys_User
-                         select new
-                             {
-                                 user.UniqueID,
-                                 user.ID,
-                                 user.Name,
-                                 user.LastLoginTime,
-                                 //OrganizationUniqueID = organization.Name,
-                                 user.Photo,
-                                 user.State,
-                                 user.Title,
-                                 user.Email,
-                                user.StartExpiryDate,
-                                user.EndExpiryDate,
-                                 user.IsLogin,
-                                 user.MobilePhone
-                             });
+            var query = db.Sys_User.AsQueryable();
+
+
 
             if (!string.IsNullOrEmpty(Parameters.ID)) //查询ID
             {
@@ -282,11 +269,11 @@ namespace XXGL.Base.Service
 
             TotalCount = query.Count();  //获取总共的数量
 
-            query = query.OrderBy(x => x.ID).Skip((Parameters.PageNo - 1) * Parameters.PageSize).Take(Parameters.PageSize); //获取需要的分页数据
+           var result= query.OrderByField<Sys_User>(Parameters.OrderName, Parameters.Order).Skip(Parameters.Offset).Take(Parameters.Limit).ToList();
 
 
             List<UserGridItem> list = new List<UserGridItem>();
-            foreach (var item in query)
+            foreach (var item in result)
             {
                 UserGridItem userGridItem = new UserGridItem();
                 userGridItem.UniqueID = item.UniqueID;

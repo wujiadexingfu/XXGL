@@ -3,9 +3,9 @@
 }
 
 <script type="text/javascript">
-    var zTreeObjWebPermission;
+    var zTreeObjWebFunction;
     // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
-    var settingWebPermission = {
+    var settingWebFunction = {
         view: {
             selectedMulti: false,
             fontCss: setFontCss
@@ -18,9 +18,9 @@
             autoParam: ["id","uniqueid"],
         },
         callback: {
-            beforeAsync: beforeAsyncWebPermission,
-            onAsyncSuccess: onAsyncSuccessWebPermission,
-            onClick: zTreeOnClickWebPermission
+            beforeAsync: beforeAsyncWebFunction,
+            onAsyncSuccess: onAsyncSuccessWebFunction,
+            onClick: zTreeOnClickWebFunction
 
         }
     };
@@ -39,67 +39,69 @@
         }
     };
 
-    function beforeAsyncWebPermission() {
-        curAsyncCountWebPermission++;
+    function beforeAsyncWebFunction() {
+        curAsyncCountWebFunction++;
     };
 
 
-    function onAsyncSuccessWebPermission(event, treeId, treeNode, msg) {
-        curAsyncCountWebPermission--;
-        if (curStatusWebPermission == "expand") {
-            expandNodesWebPermission(treeNode.children);
-        } else if (curStatusWebPermission == "async") {
+    function onAsyncSuccessWebFunction(event, treeId, treeNode, msg) {
+        curAsyncCountWebFunction--;
+        if (curStatusWebFunction == "expand") {
+            expandNodesWebFunction(treeNode.children);
+        } else if (curStatusWebFunction == "async") {
             asyncNodes(treeNode.children);
         }
 
-        if (curAsyncCountWebPermission <= 0) {
-            curStatusWebPermission = "";
+        if (curAsyncCountWebFunction <= 0) {
+            curStatusWebFunction = "";
         }
     }
 
-    var curStatusWebPermission = "init";
-    var curAsyncCountWebPermission = 0;
-    var goAsyncWebPermissionWebPermission = false;
+    var curStatusWebFunction = "init";
+    var curAsyncCountWebFunction = 0;
+    var goAsyncWebFunctionWebFunction = false;
 
-    function UnExpandAllWebPermission() {
-        var zTree = $.fn.zTree.getZTreeObj("WebPermissionTree");
+    function UnExpandAllWebFunction() {
+        var zTree = $.fn.zTree.getZTreeObj("WebFunctionTree");
         zTree.expandAll(false);
     }
 
-    function ExpandAllWebPermission() {
-        if (!checkWebPermission()) {
+    function ExpandAllWebFunction() {
+        if (!checkWebFunction()) {
             return;
         }
-        var zTree = $.fn.zTree.getZTreeObj("WebPermissionTree");
-        expandNodesWebPermission(zTree.getNodes());
-        if (!goAsyncWebPermission) {
-            curStatusWebPermission = "";
+        var zTree = $.fn.zTree.getZTreeObj("WebFunctionTree");
+        expandNodesWebFunction(zTree.getNodes());
+        if (!goAsyncWebFunction) {
+            curStatusWebFunction = "";
         }
     };
-    function expandNodesWebPermission(nodes) {
+    function expandNodesWebFunction(nodes) {
         if (!nodes) return;
-        curStatusWebPermission = "expand";
-        var zTree = $.fn.zTree.getZTreeObj("WebPermissionTree");
+        curStatusWebFunction = "expand";
+        var zTree = $.fn.zTree.getZTreeObj("WebFunctionTree");
         for (var i = 0, l = nodes.length; i < l; i++) {
             zTree.expandNode(nodes[i], true, false, false);//展开节点就会调用后台查询子节点
             if (nodes[i].isParent && nodes[i].zAsync) {
-                expandNodesWebPermission(nodes[i].children);//递归
+                expandNodesWebFunction(nodes[i].children);//递归
             } else {
-                goAsyncWebPermission = true;
+                goAsyncWebFunction = true;
             }
         }
     };
 
-    function checkWebPermission() {
-        if (curAsyncCountWebPermission > 0) {
+    function checkWebFunction() {
+        if (curAsyncCountWebFunction > 0) {
             return false;
         }
         return true;
     };
 
-    function zTreeOnClickWebPermission(event, treeId, treeNode) {
+    function zTreeOnClickWebFunction(event, treeId, treeNode) {
 
-        alert(treeNode.uniqueid);
+
+        Query("@Url.Action("GridView")", { "webFunctionUniqueId": treeNode.uniqueid },"divWebFunctionGridView")
+
         //$("#OrganizationUniqueID").val();
         //QueryOrganiztaion();
         //QueryOrganiztaionUser();
@@ -107,7 +109,7 @@
 
 
     $(document).ready(function () {
-        zTreeObjWebPermission = $.fn.zTree.init($("#WebPermissionTree"), settingWebPermission);
+        zTreeObjWebFunction = $.fn.zTree.init($("#WebFunctionTree"), settingWebFunction);
 
     });
 
@@ -117,7 +119,7 @@
 </script>
 
 <div>
-    <ul id="WebPermissionTree" class="ztree"></ul>
+    <ul id="WebFunctionTree" class="ztree"></ul>
 </div>
 
 

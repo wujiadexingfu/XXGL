@@ -2,52 +2,128 @@
     Layout = null;
 
 }
+<script src="@Url.Content("~/Content/AdminLTE/plugins/iCheck/icheck.js")"></script>
+<link href="@Url.Content("~/Content/AdminLTE/plugins/iCheck/all.css")" rel="stylesheet" />
 
 <script type="text/javascript">
 
 
-        var InitWebPermissionTree = function () {
-            $.ajax({
-                type: "Post",
-                url: "@Url.Action("InitTree")",
-                dataType: "html",
-                beforeSend: function () {
-                    $.ShowLoading("divWebPermissionTree");
-                },
-                success: function (data) {
-                    $('#divWebPermissionTree').empty();
-                    $.HideLoading("divWebPermissionTree");
-                    $('#divWebPermissionTree').html(data);
-                },
+ var InitWebFunctionTree = function () {
+     $.ajax({
+              type: "Post",
+              url: "@Url.Action("InitTree")",
+              dataType: "html",
+         beforeSend: function ()
+         {
+            $.ShowLoading("divWebFunctionTree");
 
-            });
+         },
+         success: function (data)
+         {
+           $('#divWebFunctionTree').empty();
+           $.HideLoading("divWebFunctionTree");
+           $('#divWebFunctionTree').html(data);
+
+         } });
+ };
+
+ var QueryWebFunction = function () {
+    $.ajax({
+            type: "Post",
+            url: "@Url.Action("GridView")",
+            dataType: "html",
+            beforeSend: function () {
+               $.ShowLoading("divWebFunctionEditFormContainer");
+               $("#divWebFunctionQueryContainer").hide();},
+            success: function (data) {
+               $('#divWebFunctionEditFormContainer').empty();
+               $.HideLoading("divWebFunctionEditFormContainer");
+               $('#divWebFunctionEditFormContainer').html(data);
+           },});
+ }
+var CreateWebFunction = function (WebFunctionId) {
+        $("#divWebFunctionEditFormContainer").show();
+        $("#divWebFunctionQueryContainer").hide();
+
+        $.ajax({
+            type: "Get",
+            url: "@Url.Action("Create")",
+            dataType: "html",
+            data: {WebFunctionId: WebFunctionId }  ,
+            success: function (data) {
+                $('#divWebFunctionEditFormContainer').html(data);
+            }
+    });
+    };
+    var EditWebFunction = function (WebFunctionId) {
+        $("#divWebFunctionEditFormContainer").show();
+        $("#divWebFunctionQueryContainer").hide();
+
+        $.ajax({
+            type: "Get",
+            url: "@Url.Action("Edit")",
+            dataType: "html",
+            data: {WebFunctionId: WebFunctionId }  ,
+            success: function (data) {
+                $('#divWebFunctionEditFormContainer').html(data);
+            }
+    });
     };
 
-    $(function () {
-        //$("#divEditFormContainer").hide();
-        //Query();
 
-        InitWebPermissionTree();
-    })
-    </script>
+        var DeleteWebFunction = function (webFunctionId) {
+
+        $.ConfirmDialog("删除菜单", null, function (confirm) {
+            if (confirm) {
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("Delete")",
+                    data: { "webFunctionId": webFunctionId },
+                    dataType: "json",
+                    success: function (data) {
+                        $.SuccessToast(data.Message);
+                        RefreshWebFunctionTable();
+                    }
+
+                })
+            }
+        }
+        );
+
+    };
 
 
-<div id="divWebPermissionQueryContainer">
+    var RefreshWebFunctionTable = function () {
+        var options = $('#tableWebFunctionGrid').bootstrapTable('getOptions');
+        $('#tableWebFunctionGrid').bootstrapTable('refresh', options);
+        InitWebFunctionTree();
+    }
+
+  $(function () {
+
+      InitWebFunctionTree();
+  })
+</script>
+
+
+
+
+<div id="divWebFunctionQueryContainer">
     <div class="row">
-        <div class="col-md-3" id="divWebPermissionTreeContainer">
+        <div class="col-md-3" id="divWebFunctionTreeContainer">
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title"><a class="fa fa-fw fa-filter success"></a>菜单</h3>
 
                     <div class="pull-right box-tools">
-                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="刷新" onclick="InitWebPermissionTree()">
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="刷新" onclick="InitWebFunctionTree()">
                             <i class="fa fa-refresh fa-lg    text-primary"></i>
                         </button>
-                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="展开" onclick="ExpandAllWebPermission()">
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="展开" onclick="ExpandAllWebFunction()">
                             <i class="fa  fa-expand fa-lg    text-primary"></i>
                         </button>
 
-                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="收缩" onclick="UnExpandAllWebPermission()">
+                        <button type="button" class="btn btn-box-tool " data-toggle="tooltip" title="收缩" onclick="UnExpandAllWebFunction()">
                             <i class="fa fa-compress fa-lg    text-primary"></i>
                         </button>
 
@@ -58,7 +134,7 @@
 
                 </div>
                 <div class="box-body">
-                    <div id="divWebPermissionTree"></div>
+                    <div id="divWebFunctionTree"></div>
                 </div>
             </div>
         </div>
@@ -72,15 +148,18 @@
 
                 </div>
                 <div class="box-body">
-                    11111
+                    <div id="divWebFunctionGridView"></div>
                 </div>
 
             </div>
 
+
+
+        </div>
     </div>
 </div>
 
-<div id="divWebPermissionEditFormContainer">
+<div id="divWebFunctionEditFormContainer">
 
 </div>
 

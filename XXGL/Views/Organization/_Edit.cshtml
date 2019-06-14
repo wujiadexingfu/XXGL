@@ -1,17 +1,122 @@
-﻿@{
+﻿@model XXGL.Base.Models.OrganizationModel.EditOrganizationInputForm
+@{
     Layout = null;
 }
 
-<!DOCTYPE html>
+<script type="text/javascript">
+    $(function () {
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
+        /*
+       * 注意这儿一定要重新注册，否则无法启用验证。
+       *reference：https://www.itsvse.com/forum.php?mod=viewthread&tid=3342
+        */
+        $.validator.unobtrusive.parse($("#CreateOrganizationForm"));
+
+
     
+
+
+        $("#EditOrganizationParentUniqueID").selectExtend("请选择父节点", "100%", "@Url.Action("GetDownOrganizationsByParentUniqueID", "Utility")","@Model.EditOrganizationParentName","@Model.EditOrganizationParentUniqueID");
+
+    });
+
+        var EditOrganizationSave = function () {
+            var form = $('#EditOrganizationForm');
+            if (form.valid()) {
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("Edit")",
+                    data: form.serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.IsSuccess) {
+                            $.SuccessToast(data.Message);
+                            $("#divOrganizationEditFormContainer").hide();
+                            $("#divOrganizationQueryContainer").show();
+                            RefreshOrganizationTable();
+                        } else {
+                            $.ErrorToast(data.Message);
+                        }
+                    },
+                    error: function (x, t, e) {
+                        $.ErrorToast("系统错误")
+                    }
+                })
+            } 
+        };
+
+</script>
+
+<button class="btn btn-app btn-primary  " onclick="EditOrganizationSave()" title="保存">
+    <i class=" fa fa-save "></i>
+    保存
+</button>
+
+<button class="btn btn-app btn-purple  " onclick="Cancel('divOrganizationQueryContainer','divOrganizationEditFormContainer')" title="取消">
+    <i class=" fa fa-repeat  "></i>
+    取消
+</button>
+
+<div class="col-md-12">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">修改组织信息</h3>
+        </div>
+        <div class="box-body">
+            <div class="table-responsive">
+                <form id="EditOrganizationForm">
+                    <table class="table no-margin  table-striped table-bordered table-hover ">
+                        <thead>
+                            <tr>
+                                @Html.HiddenFor(x=>x.EditOrganizationUniqueId)
+                                <th class="col-sm-6 col-md-2">@Html.LabelFor(x => x.EditOrganizationID)</th>
+                                <td class="col-sm-6 col-md-4">
+                                    @Html.TextBoxFor(x => x.EditOrganizationID, new { @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(x => x.EditOrganizationID)
+                                </td>
+                                <th class="col-sm-6 col-md-2">@Html.LabelFor(x => x.EditOrganizationName)</th>
+                                <td class="col-sm-6 col-md-4">
+                                    @Html.TextBoxFor(x => x.EditOrganizationName, new { @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(x => x.EditOrganizationName)
+                                </td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <th> @Html.LabelFor(x => x.EditOrganizationIcon)</th>
+                                <td>
+                                    @*@Html.TextBoxFor(x => x.Icon, new { @class = "form-control" })*@
+                                    @Html.HiddenFor(x => x.EditOrganizationIcon)
+                                    <span id="selected_icon" class="fa fa-edit text-green fa-lg" onclick="SelectOrganiztaionIcon()"></span>
+
+
+                                </td>
+                                <th>@Html.LabelFor(x => x.EditOrganizationParentUniqueID)</th>
+                                <td>
+                                    @Html.TextBoxFor(x => x.EditOrganizationParentUniqueID)
+
+                                    @Html.ValidationMessageFor(x => x.EditOrganizationParentUniqueID)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th> @Html.LabelFor(x => x.EditOrganizationManagerUniqueID)</th>
+                                <td>
+                                    @Html.TextBoxFor(x => x.EditOrganizationManagerUniqueID, new { @class = "form-control" })
+
+                                </td>
+                                <th>@Html.LabelFor(x => x.EditOrganizationSeq)</th>
+                                <td>
+                                    @Html.TextBoxFor(x => x.EditOrganizationSeq, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.EditOrganizationSeq)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+</div>

@@ -62,13 +62,13 @@ namespace XXGL.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return View("_Create", new CreateOrganizationInputFormViewModel() );
+            return View("_Create", new CreateOrganizationInputForm() );
         }
 
         [HttpPost]
-        public ActionResult Create(CreateOrganizationInputFormViewModel model)
+        public ActionResult Create(CreateOrganizationInputForm model)
         {
-            var result = UsersService.Create(null);
+            var result =OrganizationService.Create(model);
             return Content(JosnNetHelper.ObjectToJson(result));
         }
 
@@ -78,6 +78,22 @@ namespace XXGL.Controllers
         {
 
             return PartialView("_ModalTree");
+        }
+
+
+
+        [HttpGet]
+        public ActionResult Edit(string uniqueId)
+        {
+            var model = OrganizationService.GetEditOrganizationInputFormByUniqueId(uniqueId);
+            return View("_Edit", model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(EditOrganizationInputForm model)
+        {
+            var result = OrganizationService.Edit(model);
+            return Content(JosnNetHelper.ObjectToJson(result));
         }
 
 
